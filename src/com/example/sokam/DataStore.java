@@ -9,16 +9,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Importer {
+public class DataStore {
 
     public static final String DELIMITER = "\\|";
+    public static final String FILENAME = "sample.txt";
     private String filename;
     private List<List<String>> data;
 
-    Importer (String filename) {
+    DataStore(String filename) {
         this.filename = filename;
         this.data = new ArrayList<List<String>>();
-        readFile();
+        readFromFile();
     }
 
     public String getFilename() {
@@ -41,7 +42,7 @@ public class Importer {
         return result;
     }
 
-    private void readFile() {
+    private void readFromFile() {
         String line = "";
         List<String> strList;
         Scanner in = null;
@@ -56,11 +57,13 @@ public class Importer {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
     }
 
+
+
     public static void main(String[] args) {
-	// write your code here
+	  // write your code here
+
 
     }
 }
