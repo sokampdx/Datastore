@@ -15,11 +15,29 @@ public class DataStore {
     public static final String FILENAME = "sample.txt";
     private String filename;
     private List<List<String>> data;
+    private ArrayList<String> header;
+    private List<List<Record>> record;
+
 
     DataStore(String filename) {
         this.filename = filename;
         this.data = new ArrayList<List<String>>();
         readFromFile();
+
+        this.header = new ArrayList<String>(this.data.get(0));
+
+        ArrayList<Record> current = new ArrayList<Record>();
+
+ /*       int len = data.size();
+        for (int i = 1; i < len; ++i) {
+            List<String> list = data.get(i);
+            current.add(new TextRecord(list.get(0)));
+            current.add(new TextRecord(list.get(1)));
+            current.add(new TextRecord(list.get(2)));
+            current.add(new DateRecord(list.get(3)));
+            current.add(new DollarRecord(list.get(4)));
+            current.add(new TimeRecord(list.get(5)));
+        }*/
     }
 
     public String getFilename() {

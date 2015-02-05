@@ -1,6 +1,8 @@
+import com.example.sokam.DollarRecord
 import com.example.sokam.Record;
 import com.example.sokam.TextRecord;
 import com.example.sokam.DateRecord
+import com.example.sokam.TimeRecord
 import org.junit.Test
 
 import java.text.ParseException;
@@ -45,6 +47,44 @@ class RecordTest extends GroovyTestCase {
         shouldFail(RuntimeException) {
             DateRecord record = new DateRecord(str);
         }
-
     }
+
+    @Test
+    public void testNewCorrectDollarRecord() {
+        String str = "2.59";
+        DollarRecord record = new DollarRecord(str);
+        assertEquals(str, record.getData());
+    }
+
+    @Test
+    public void testNewCorrectDollarRecordAsValue() {
+        String str = "2.59";
+        DollarRecord record = new DollarRecord(str);
+        assertEquals(Double.parseDouble(str), record.getValue());
+    }
+
+    @Test
+    public void testNewInCorrectDollarRecord() {
+        String str = "abc";
+        shouldFail(RuntimeException) {
+            DollarRecord record = new DollarRecord(str);
+        }
+    }
+
+    @Test
+    public void testNewCorrectTimeRecord() {
+        String str = "13:59";
+        TimeRecord record = new TimeRecord(str);
+        assertEquals(str, record.getData());
+    }
+
+    @Test
+    public void testNewInCorrectTimeRecord() {
+        String str = "24:77";
+        shouldFail(RuntimeException) {
+            TimeRecord record = new TimeRecord(str);
+        }
+    }
+
+
 }
