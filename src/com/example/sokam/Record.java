@@ -7,6 +7,10 @@ package com.example.sokam;
 public class Record implements Comparable<Record>{
   protected String data;
 
+  public Record () {
+    this.data = "";
+  }
+
   public Record(String text) {
     this.data = text;
   }

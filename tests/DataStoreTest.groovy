@@ -12,11 +12,11 @@ class DataStoreTest extends GroovyTestCase {
     private String[] line;
     private DataStore dataStore = new DataStore(DataStore.FILENAME);
 
-    public void testFileNameIsReadCorrectly() {
+    public void testDatastoreReadCorrectFilename() {
         assertEquals(DataStore.FILENAME, dataStore.getFilename());
     }
 
-    public void testHeaderFromData() {
+    public void testHeaderDataIsCorrect() {
         String expected = DataStoreTest.convertArrayToString(HEADER);
         assertEquals(expected, dataStore.getHeader());
     }
@@ -29,7 +29,7 @@ class DataStoreTest extends GroovyTestCase {
         return expected;
     }
 
-    public void testLastLineFromData() {
+    public void testLine11OfTheRecord() {
         line = "stb10|the matrix|warner bros|2014-04-02|3.00|1:05".split(DataStore.DELIMITER);
         String expected = DataStoreTest.convertArrayToString(line);
         assertEquals(expected, dataStore.getRow(11));

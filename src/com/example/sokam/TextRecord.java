@@ -7,7 +7,5 @@ public class TextRecord extends Record{
     super(text, MAX_CHAR);
   }
 
-
-
-
 }
+
