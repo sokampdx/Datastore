@@ -29,15 +29,23 @@ class ImporterTest extends GroovyTestCase {
         return expected;
     }
 
-    public void testLastLineOfTheRecord() {
+    public void testSpecificLineOfTheRecord() {
         line = "stb10|the matrix|warner bros|2014-04-02|3.00|1:05".split(Importer.DELIMITER);
         String expected = ImporterTest.convertArrayToString(line);
-        assertEquals(expected, importer.getRow(11));
+        assertEquals(expected, importer.getRow(10));
     }
 
     public void testOutOfBoundIndexForData() {
         assertEquals("", importer.getRow(-1));
     }
 
+    public void testInvalidDataDoesNotAdd() {
+        assertEquals(11, importer.getRow());
+    }
+
+    public void testGetAllImportData() {
+        //System.out.println(importer.toString());
+        assertEquals(importer.toString(), Importer.convertToText(importer.getData()));
+    }
 
 }

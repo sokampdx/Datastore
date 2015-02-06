@@ -9,6 +9,7 @@ class DataStoreTest extends GroovyTestCase {
     private final String[] keys = "STB|TITLE|DATE".split("\\|");
     private final String[] data1 = "stb1|the matrix|warner bros|2014-04-01|4.00|1:30".split("\\|");
     private final String[] data2 = "stb1|unbreakable|buena vista|2014-04-03|6.00|2:05".split("\\|");
+    private final String[] data3 = "stb1|the matrix|buena vista|2014-04-01|6.00|2:05".split("\\|");
 
     public void testNewDataStore() {
         DataStore dataStore = new DataStore();
@@ -36,8 +37,31 @@ class DataStoreTest extends GroovyTestCase {
         assertEquals(header.toString(), dataStore.getHeader().toString());
     }
 
-    public void testAddData() {
+    public void testNoRecordReturnZero() {
         DataStore dataStore = new DataStore(name, header, keys);
-        
+        assertEquals(0, dataStore.getRows());
     }
+
+    public void testAddOneRowDataReturnOneRow() {
+        DataStore dataStore = new DataStore(name, header, keys);
+        dataStore.insert(data1);
+        assertEquals(1, dataStore.getRows());
+    }
+
+    public void testAddTwoRowDataReturnTwoRow() {
+        DataStore dataStore = new DataStore(name, header, keys);
+        dataStore.insert(data1);
+        dataStore.insert(data2);
+        assertEquals(2, dataStore.getRows());
+    }
+
+    public void testAddSameKeyDataReturnUniqueRow() {
+        DataStore dataStore = new DataStore(name, header, keys);
+        dataStore.insert(data3);
+        dataStore.insert(data1);
+        dataStore.insert(data2);
+        assertEquals(2, dataStore.getRows());
+    }
+
+
 }
