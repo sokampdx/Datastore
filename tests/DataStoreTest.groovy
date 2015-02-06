@@ -69,5 +69,5 @@ class DataStoreTest extends GroovyTestCase {
         DataStore dataStore = new DataStore(name, importer.getData(), keys);
         assertEquals(10, dataStore.getRows());
     }
-    
+
 }
