@@ -1,43 +1,43 @@
-
-
-import com.example.sokam.DataStore
+import com.example.sokam.DataStore;
 
 /**
- * Created by sokam on 2/4/15.
+ * Created by sokam on 2/5/15.
  */
 class DataStoreTest extends GroovyTestCase {
+    private final String[] header = "STB|TITLE|PROVIDER|DATE|REV|VIEW_TIME".split("\\|");
+    private final String name = "sample";
+    private final String[] keys = "STB|TITLE|DATE".split("\\|");
+    private final String[] data1 = "stb1|the matrix|warner bros|2014-04-01|4.00|1:30".split("\\|");
+    private final String[] data2 = "stb1|unbreakable|buena vista|2014-04-03|6.00|2:05".split("\\|");
 
-    private final String FILENAME = "sample.txt";
-    private final String[] HEADER = "STB|TITLE|PROVIDER|DATE|REV|VIEW_TIME".split(DataStore.DELIMITER);
-    private String[] line;
-    private DataStore dataStore = new DataStore(DataStore.FILENAME);
-
-    public void testDatastoreReadCorrectFilename() {
-        assertEquals(DataStore.FILENAME, dataStore.getFilename());
+    public void testNewDataStore() {
+        DataStore dataStore = new DataStore();
     }
 
-    public void testHeaderDataIsCorrect() {
-        String expected = DataStoreTest.convertArrayToString(HEADER);
-        assertEquals(expected, dataStore.getHeader());
+    public void testCreateTable() {
+        DataStore dataStore = new DataStore();
+        dataStore.create(name, header, keys);
     }
 
-    private static String convertArrayToString(String[] inputStr) {
-        String expected = "";
-        for (String str : inputStr) {
-            expected += str;
-        }
-        return expected;
+    public void testCreateTableVerifyName() {
+        DataStore dataStore = new DataStore();
+        dataStore.create(name, header, keys);
+        assertEquals(name, dataStore.getName());
     }
 
-    public void testLine11OfTheRecord() {
-        line = "stb10|the matrix|warner bros|2014-04-02|3.00|1:05".split(DataStore.DELIMITER);
-        String expected = DataStoreTest.convertArrayToString(line);
-        assertEquals(expected, dataStore.getRow(11));
-    }
-
-    public void testOutOfBoundIndexForData() {
-        assertEquals("", dataStore.getRow(-1));
+    public void testNewDataStoreWithArgConstructor() {
+        DataStore dataStore = new DataStore(name, header, keys);
+        assertEquals(name, dataStore.getName());
     }
 
 
+    public void testVerifyHeader() {
+        DataStore dataStore = new DataStore(name, header, keys);
+        assertEquals(header.toString(), dataStore.getHeader().toString());
+    }
+
+    public void testAddData() {
+        DataStore dataStore = new DataStore(name, header, keys);
+        
+    }
 }
