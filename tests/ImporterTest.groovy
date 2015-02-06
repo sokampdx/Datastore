@@ -18,7 +18,7 @@ class ImporterTest extends GroovyTestCase {
 
     public void testHeaderDataIsCorrect() {
         String expected = ImporterTest.convertArrayToString(HEADER);
-        assertEquals(expected, importer.getHeader());
+        assertEquals(expected, importer.getHeaderString());
     }
 
     private static String convertArrayToString(String[] inputStr) {
@@ -32,15 +32,15 @@ class ImporterTest extends GroovyTestCase {
     public void testSpecificLineOfTheRecord() {
         line = "stb10|the matrix|warner bros|2014-04-02|3.00|1:05".split(Importer.DELIMITER);
         String expected = ImporterTest.convertArrayToString(line);
-        assertEquals(expected, importer.getRow(10));
+        assertEquals(expected, importer.getRowString(9));
     }
 
     public void testOutOfBoundIndexForData() {
-        assertEquals("", importer.getRow(-1));
+        assertEquals("", importer.getRowString(-1));
     }
 
     public void testInvalidDataDoesNotAdd() {
-        assertEquals(12, importer.getRow());
+        assertEquals(11, importer.getRow());
     }
 
     public void testGetAllImportData() {

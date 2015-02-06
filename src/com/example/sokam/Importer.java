@@ -19,11 +19,13 @@ public class Importer {
   public static final String FILENAME = "sample.txt";
   private String filename;
   private List<List<String>> data;
+  private ArrayList<String> header;
 
 
   Importer(String filename) {
       this.filename = filename;
       this.data = new ArrayList<List<String>>();
+      this.header = new ArrayList<String>();
       readFromFile();
   }
 
@@ -31,11 +33,22 @@ public class Importer {
       return this.filename;
   }
 
-  public String getHeader() {
-      return getRow(0);
+  public ArrayList<String> getHeader() {
+    return this.header;
   }
 
-  public String getRow(int index) {
+
+  public String getHeaderString() {
+    String result = "";
+
+    for (String str : this.header) {
+      result += str;
+    }
+
+    return result;
+  }
+
+  public String getRowString(int index) {
       String result = "";
 
       if (index < 0 || index >= data.size())
@@ -62,8 +75,8 @@ public class Importer {
               line = in.nextLine();
               strList = line.split(DELIMITER);
               if (isHeader()) {
-                numCol = strList.length;
-                this.data.add(new ArrayList<String>(Arrays.asList(strList)));
+                this.header = new ArrayList<String>(Arrays.asList(strList));
+                numCol = this.header.size();
               } else {
                 addRecord(strList, numCol);
               }
@@ -91,7 +104,7 @@ public class Importer {
   }
 
   private boolean isHeader() {
-    return data.size() == 0;
+    return this.header.size() == 0;
   }
 
   private boolean isValidData(String [] values) {

@@ -40,20 +40,20 @@ class DataStoreTest extends GroovyTestCase {
 
     public void testNoRecordReturnZero() {
         DataStore dataStore = new DataStore(name, header, keys);
-        assertEquals(0, dataStore.getRows());
+        assertEquals(0, dataStore.getNumRows());
     }
 
     public void testAddOneRowDataReturnOneRow() {
         DataStore dataStore = new DataStore(name, header, keys);
         dataStore.insert(data1);
-        assertEquals(1, dataStore.getRows());
+        assertEquals(1, dataStore.getNumRows());
     }
 
     public void testAddTwoRowDataReturnTwoRow() {
         DataStore dataStore = new DataStore(name, header, keys);
         dataStore.insert(data1);
         dataStore.insert(data2);
-        assertEquals(2, dataStore.getRows());
+        assertEquals(2, dataStore.getNumRows());
     }
 
     public void testAddSameKeyDataReturnUniqueRow() {
@@ -61,13 +61,25 @@ class DataStoreTest extends GroovyTestCase {
         dataStore.insert(data3);
         dataStore.insert(data1);
         dataStore.insert(data2);
-        assertEquals(2, dataStore.getRows());
+        assertEquals(2, dataStore.getNumRows());
     }
 
     public void testCreateDataStoreFromImporter() {
         Importer importer = new Importer(name + ".txt");
-        DataStore dataStore = new DataStore(name, importer.getData(), keys);
-        assertEquals(10, dataStore.getRows());
+        DataStore dataStore = new DataStore(name, importer.getHeader(), importer.getData(), keys);
+        assertEquals(10, dataStore.getNumRows());
     }
 
+    public void testWriteToDataStoreFile() {
+        Importer importer = new Importer(name + ".txt");
+        DataStore dataStore = new DataStore(name, importer.getHeader(), importer.getData(), keys);
+        dataStore.write();
+    }
+
+    public void testReadFromDataStoreFile() {
+        Importer importer = new Importer(name + ".txt");
+        DataStore dataStore = new DataStore(name, importer.getHeader(), importer.getData(), keys);
+        dataStore.read();
+        //dataStore.printAll();
+    }
 }
