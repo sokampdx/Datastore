@@ -26,6 +26,20 @@ public class DataStore {
     this.record = new HashMap<String, ArrayList<String>>();
   }
 
+  public DataStore(String name, List<List<String>> data, String[] keys) {
+    this.name = new String(name);
+    this.header = new ArrayList<String>(data.remove(0));
+    this.keys = new ArrayList<String>(Arrays.asList(keys));
+    this.record = new HashMap<String, ArrayList<String>>();
+
+    String [] array = new String[this.header.size()];
+    for (List<String> list : data) {
+      insert(list.toArray(array));
+    }
+  }
+
+
+
   public void create(String name, String[] header, String[] keys) {
     this.name = name;
     for (String column : header) {
@@ -75,4 +89,6 @@ public class DataStore {
       System.out.println("Key: " + entry.getKey() + "; Value: " + entry.getValue());
     }
   }
+
+
 }

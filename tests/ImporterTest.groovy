@@ -40,7 +40,7 @@ class ImporterTest extends GroovyTestCase {
     }
 
     public void testInvalidDataDoesNotAdd() {
-        assertEquals(11, importer.getRow());
+        assertEquals(12, importer.getRow());
     }
 
     public void testGetAllImportData() {

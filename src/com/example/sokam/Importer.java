@@ -55,15 +55,17 @@ public class Importer {
       String line = "";
       String [] strList;
       Scanner in = null;
+      int numCol = 0;
       try {
           in = new Scanner(new File(filename));
           while (in.hasNextLine()) {
               line = in.nextLine();
               strList = line.split(DELIMITER);
               if (isHeader()) {
+                numCol = strList.length;
                 this.data.add(new ArrayList<String>(Arrays.asList(strList)));
               } else {
-                addRecord(strList);
+                addRecord(strList, numCol);
               }
           }
 
@@ -72,7 +74,10 @@ public class Importer {
       }
   }
 
-  private void addRecord(String[] strList) {
+  private void addRecord(String[] strList, int numCol) {
+    if (strList.length != numCol)
+      return;
+
     if (isValidData(strList)) {
       ArrayList<String> record = new ArrayList<String>();
       for (String str : strList) {
