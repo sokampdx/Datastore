@@ -1,5 +1,6 @@
 import dataStore.DateRecord
 import dataStore.DollarAndCentRecord
+import dataStore.HourAndMinuteRecord
 import dataStore.Record
 import dataStore.TextRecord
 
@@ -132,7 +133,49 @@ class RecordTest extends GroovyTestCase {
         assertTrue(record.isValid());
     }
 
-    public void testEmptyDateRecord() {
+    public void testCorrectHourAndMinuteRecord() {
+        String time = "23:30";
+        Record record = new HourAndMinuteRecord(time);
+        assertEquals(time, record.getData());
     }
 
+    public void testIncorrectMinuteDataInHourAndMinuteRecord() {
+        def msg = shouldFail(IllegalArgumentException) {
+            Record record = new HourAndMinuteRecord("00:60");
+        }
+        assertEquals(HourAndMinuteRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
+    }
+
+    public void testIncorrectHourDataInHourAndMinuteRecord() {
+        def msg = shouldFail(IllegalArgumentException) {
+            Record record = new HourAndMinuteRecord("24:30");
+        }
+        assertEquals(HourAndMinuteRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
+    }
+
+    public void testCompareSameHourAndMinuteRecord() {
+        String time = "07:01";
+        Record record1 = new HourAndMinuteRecord(time);
+        Record record2 = new HourAndMinuteRecord(time);
+        assertTrue(record1.compareTo(record2) == 0);
+    }
+
+    public void testCompareLogicalSameHourAndMinuteRecord() {
+        String time = "6:15";
+        Record record1 = new HourAndMinuteRecord(time);
+        Record record2 = new HourAndMinuteRecord("0"+time);
+        assertTrue(record1.compareTo(record2) == 0);
+    }
+
+    public void testCompareDifferentHourDataInHourAndMinuteRecord() {
+        Record record1 = new HourAndMinuteRecord("23:50");
+        Record record2 = new HourAndMinuteRecord("22:51");
+        assertTrue(record1.compareTo(record2) > 0);
+    }
+
+    public void testCompareDifferentMinuteDataInHourAndMinuteRecord() {
+        Record record1 = new HourAndMinuteRecord("15:50");
+        Record record2 = new HourAndMinuteRecord("15:51");
+        assertTrue(record1.compareTo(record2) < 0);
+    }
 }

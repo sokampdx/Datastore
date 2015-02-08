@@ -28,6 +28,7 @@ public abstract class Record implements Comparable<Record>{
     return this.data.compareTo(record.data);
   }
 
+
   public String toString() {
     return this.data;
   }
