@@ -10,16 +10,30 @@ import java.util.*;
  * Created by sokam on 2/8/15.
  */
 public class TextFileDataStore extends DataStore {
+  public static String TEXTS = "TEXT";
+  public static String DATES = "DATE";
+  public static String TIMES = "TIME";
+  public static String MONEY = "MONEY";
+
+  public static String[] TYPES_RECORD = {TEXTS, DATES, TIMES, MONEY};
+  public static ArrayList<String> TYPES = new ArrayList<String>(Arrays.asList(TYPES_RECORD));
+
+  public static final String EXTENTION = ".datastore";
+  public static final String WRITE_DELIMITER = "|";
+  public static final String READ_DELIMITER = "\\|";
+  public static final String LINEFEED = "\n";
 
   public TextFileDataStore() {
     super();
   }
+
 
   public TextFileDataStore(String name) {
     super();
     this.name = name;
     open(name);
   }
+
 
   public TextFileDataStore(String name,
                            List<String> keys,
@@ -29,10 +43,9 @@ public class TextFileDataStore extends DataStore {
     this.create(name, keys, columns, types, records);
   }
 
+
   public void open(String name) {
     this.name = name;
-
-
     Scanner in = null;
 
     try {
@@ -43,6 +56,7 @@ public class TextFileDataStore extends DataStore {
       ioe.printStackTrace();
     }
   }
+
 
   private void importExistingData(Scanner in) {
     boolean hasNotSetColumns = true;
@@ -85,11 +99,17 @@ public class TextFileDataStore extends DataStore {
   }
 
 
- private ArrayList<Record> createRecord(String[] data) {
+  public ArrayList<Record> createRecord(String[] data) {
+    return createRecord(Arrays.asList(data), this.types);
+  }
+
+  public ArrayList<Record> createRecord(List<String> data) {
     return createRecord(data, this.types);
   }
 
-  public static ArrayList<Record> createRecord(String[] data, List<String> types) {
+
+
+  public static ArrayList<Record> createRecord(List<String> data, List<String> types) {
     int len = types.size();
     ArrayList<Record> record = new ArrayList<Record>();
 
@@ -102,24 +122,48 @@ public class TextFileDataStore extends DataStore {
       record.add(newRecord);
     }
     return record;
-
   }
 
 
-  private static Record matchRecordTypeOf(String [] data, int i, List<String> types) {
+  public static ArrayList<Record> createRecord(String[] data, List<String> types) {
+    return createRecord(Arrays.asList(data), types);
+  }
+
+
+  private static Record matchRecordTypeOf(List<String> data, int i, List<String> types) {
     String currentType = types.get(i);
     Record newRecord = null;
 
     if (currentType.equals(TEXTS)) {
-      newRecord = new TextRecord(data[i]);
+      newRecord = new TextRecord(data.get(i));
     } else if (currentType.equals(DATES)) {
-      newRecord = new DateRecord(data[i]);
+      newRecord = new DateRecord(data.get(i));
     } else if (currentType.equals(TIMES)) {
-      newRecord = new TimeRecord(data[i]);
+      newRecord = new TimeRecord(data.get(i));
     } else if (currentType.equals(MONEY)) {
-      newRecord = new MoneyRecord(data[i]);
+      newRecord = new MoneyRecord(data.get(i));
     }
     return newRecord;
+  }
+
+
+  private static Record matchRecordTypeOf(String [] data, int i, List<String> types) {
+    return matchRecordTypeOf(Arrays.asList(data), i, types);
+  }
+
+
+  public static ArrayList<List<Record>> createAllRecords (List<List<String>> data,
+                                                          List<String> types) {
+    ArrayList<List<Record>> records = new ArrayList<List<Record>>();
+
+    for (List<String> line : data) {
+      List<Record> record = createRecord(line, types);
+      if (record.size() == types.size()) {
+        records.add(record);
+      }
+    }
+
+    return records;
   }
 
 
@@ -137,16 +181,19 @@ public class TextFileDataStore extends DataStore {
     }
   }
 
+
   private void writeToFile(BufferedWriter bufferedWriter) throws IOException {
     writeHeadersTo(bufferedWriter);
     writeRecordTo(bufferedWriter);
   }
+
 
   private void writeRecordTo(BufferedWriter bufferedWriter) throws IOException {
     for (Map.Entry<String, List<Record>> pair : this.records.entrySet()) {
       bufferedWriter.write(getDelimitedStringFromArrayListOfRecord(pair.getValue()));
     }
   }
+
 
   private void writeHeadersTo(BufferedWriter bufferedWriter) throws IOException {
     bufferedWriter.write(getDelimitedStringFromArrayListOfString(this.keys));
@@ -155,7 +202,7 @@ public class TextFileDataStore extends DataStore {
   }
 
 
-  private String getDelimitedStringFromArrayListOfString(List<String> strings) {
+  protected String getDelimitedStringFromArrayListOfString(List<String> strings) {
     String line = strings.get(0);
     for (int i = 1; i < strings.size(); ++i) {
       line += WRITE_DELIMITER + strings.get(i);
@@ -164,7 +211,7 @@ public class TextFileDataStore extends DataStore {
   }
 
 
-  private String getDelimitedStringFromArrayListOfRecord(List<Record> records) {
+  protected String getDelimitedStringFromArrayListOfRecord(List<Record> records) {
     String line = records.get(0).getData();
     for (int i = 1; i < records.size(); ++i) {
       line += WRITE_DELIMITER + records.get(i).getData();

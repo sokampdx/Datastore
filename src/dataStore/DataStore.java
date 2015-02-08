@@ -6,18 +6,8 @@ import java.util.*;
  * Created by sokam on 2/7/15.
  */
 public abstract class DataStore {
-  public static final String EXTENTION = ".datastore";
-  public static final String WRITE_DELIMITER = "|";
-  public static final String READ_DELIMITER = "\\|";
-  public static final String LINEFEED = "\n";
 
-  public static String TEXTS = "TEXT";
-  public static String DATES = "DATE";
-  public static String TIMES = "TIME";
-  public static String MONEY = "MONEY";
 
-  public static String[] TYPES_RECORD = {TEXTS, DATES, TIMES, MONEY};
-  public static ArrayList<String> TYPES = new ArrayList<String>(Arrays.asList(TYPES_RECORD));
 
   protected String name;
   protected List<String> keys;
@@ -65,6 +55,7 @@ public abstract class DataStore {
     this.types = new ArrayList<String>(types);
   }
 
+
   public String getName() {
     return this.name;
   }
@@ -88,6 +79,8 @@ public abstract class DataStore {
     }
     return finalString;
   }
+
+  public abstract void insert(String[] data);
 
   public abstract void open(String name);
 

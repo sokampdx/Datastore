@@ -1,4 +1,6 @@
 import dataStore.DataStore
+import dataStore.DelimitedTextImporter
+import dataStore.Importer
 import dataStore.Record
 import dataStore.TextFileDataStore
 
@@ -6,15 +8,16 @@ import dataStore.TextFileDataStore
  * Created by sokam on 2/8/15.
  */
 class DataStoreTest extends GroovyTestCase {
-    private final String[] columns = "STB|TITLE|PROVIDER|DATE|REV|VIEW_TIME".split("\\|");
+    private final String DELIMITER = "\\|";
+    private final String[] columns = "STB|TITLE|PROVIDER|DATE|REV|VIEW_TIME".split(DELIMITER);
     private final String sample = "sample";
     private final String test = "test";
     private final String original = "original";
-    private final String[] keys = "STB|TITLE|DATE".split("\\|");
-    private final String[] types = "TEXT|TEXT|TEXT|DATE|MONEY|TIME".split("\\|");
-    private final String[] data1 = "stb1|the matrix|warner bros|2014-04-01|4.00|1:30".split("\\|");
-    private final String[] data2 = "stb1|unbreakable|buena vista|2014-04-03|6.00|2:05".split("\\|");
-    private final String[] data3 = "stb1|the matrix|buena vista|2014-04-01|6.00|2:05".split("\\|");
+    private final String[] keys = "STB|TITLE|DATE".split(DELIMITER);
+    private final String[] types = "TEXT|TEXT|TEXT|DATE|MONEY|TIME".split(DELIMITER);
+    private final String[] data1 = "stb1|the matrix|warner bros|2014-04-01|4.00|1:30".split(DELIMITER);
+    private final String[] data2 = "stb1|unbreakable|buena vista|2014-04-03|6.00|2:05".split(DELIMITER);
+    private final String[] data3 = "stb1|the matrix|buena vista|2014-04-01|6.00|2:05".split(DELIMITER);
 
     public void testNewDataStore() {
         DataStore dataStore = new TextFileDataStore();
@@ -47,5 +50,17 @@ class DataStoreTest extends GroovyTestCase {
         assertEquals(columns.toString(), dataStore.getListOfColumn());
         assertEquals(types.toString(), dataStore.getListOfType());
     }
+
+    public void testNewDataStoreUsingImporter() {
+        Importer importer = new DelimitedTextImporter(original + ".txt", DELIMITER);
+        List<List<String>> data = importer.getData();
+        DataStore dataStore = new TextFileDataStore(original,
+                Arrays.asList(keys),
+                data.remove(0),
+                Arrays.asList(types),
+                TextFileDataStore.createAllRecords(data, Arrays.asList(types)));
+    }
+
+    
 
 }
