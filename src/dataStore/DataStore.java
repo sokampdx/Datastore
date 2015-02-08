@@ -1,4 +1,4 @@
-package com.example.sokam;
+package dataStore;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -46,7 +46,17 @@ public class DataStore {
     }
   }
 
+  public void create(String name, ArrayList<String> header, List<List<String>> data, String[] keys) {
+    this.name = name;
+    this.header = new ArrayList<String>(header);
+    this.keys = new ArrayList<String>(Arrays.asList(keys));
+    this.record = new HashMap<String, ArrayList<String>>();
 
+    String [] array = new String[this.header.size()];
+    for (List<String> list : data) {
+      insert(list.toArray(array));
+    }
+  }
 
   public void create(String name, String[] header, String[] keys) {
     this.name = name;
@@ -99,7 +109,7 @@ public class DataStore {
   }
 
 
-  public void write() {
+  public void close() {
     try {
       File file = new File(name + EXTENTION);
 
@@ -133,12 +143,12 @@ public class DataStore {
     return line + LINEFEED;
   }
 
-  public void read() {
+  public void open() {
     String line = "";
     String [] strList;
     Scanner in = null;
     boolean isHeader = true;
-    
+
     try {
       in = new Scanner(new File(name + EXTENTION));
       while (in.hasNextLine()) {

@@ -1,5 +1,5 @@
-import com.example.sokam.DataStore
-import com.example.sokam.Importer;
+import dataStore.DataStore
+import dataStore.Importer;
 
 /**
  * Created by sokam on 2/5/15.
@@ -70,16 +70,16 @@ class DataStoreTest extends GroovyTestCase {
         assertEquals(10, dataStore.getNumRows());
     }
 
-    public void testWriteToDataStoreFile() {
+    public void testCloseDataStoreFile() {
         Importer importer = new Importer(name + ".txt");
         DataStore dataStore = new DataStore(name, importer.getHeader(), importer.getData(), keys);
-        dataStore.write();
+        dataStore.close();
     }
 
-    public void testReadFromDataStoreFile() {
+    public void testOpenDataStoreFile() {
         Importer importer = new Importer(name + ".txt");
         DataStore dataStore = new DataStore(name, importer.getHeader(), importer.getData(), keys);
-        dataStore.read();
+        dataStore.open();
         //dataStore.printAll();
     }
 }

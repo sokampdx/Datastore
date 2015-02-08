@@ -1,4 +1,4 @@
-package com.example.sokam;
+package dataStore;
 
 
 import java.util.*;
@@ -112,11 +112,25 @@ public class Importer {
   }
 
   private boolean isValidDollar(String value) {
-    return value.matches("\\d+\\.\\d{2}");
+    boolean isValid = value.matches("\\d+\\.\\d{2}");
+
+    if (!isValid) {
+      printError(this.header.get(REV));
+    }
+
+    return isValid;
+  }
+
+  private void printError(String s) {
+    //System.out.println("Skipping row import due to invalid value for " + s);
   }
 
   private boolean isValidTime(String time) {
-    return time.matches("((2[0-3])|((1|0?)[0-9])):[0-5][0-9]");
+    boolean isValid = time.matches("((2[0-3])|((1|0?)[0-9])):[0-5][0-9]");
+    if (!isValid) {
+      printError(this.header.get(VIEW_TIME));
+    }
+    return isValid;
   }
 
   private boolean isValidDate(String date) {
@@ -125,7 +139,11 @@ public class Importer {
     int month = Integer.parseInt(str[1]);
     int day = Integer.parseInt(str[2]);
 
-    return date.matches("\\d{4}-\\d{2}-\\d{2}") && isValidDate(year, month, day);
+    boolean isValid = date.matches("\\d{4}-\\d{2}-\\d{2}") && isValidDate(year, month, day);
+    if (!isValid) {
+      printError(this.header.get(DATE));
+    }
+    return isValid;
   }
 
   private static boolean isValidDate(int year, int month, int day) {
@@ -200,7 +218,7 @@ public class Importer {
   }
 
   public static void main(String[] args) {
-  // write your code here
+  // close your code here
 
 
   }
