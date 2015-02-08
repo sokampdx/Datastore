@@ -7,7 +7,7 @@ import java.util.List;
  * Created by sokam on 2/7/15.
  */
 public abstract class Importer {
-  private ArrayList<List<String>> data;
+  private List<List<String>> data;
   private String source;
 
   public Importer() {
@@ -20,7 +20,7 @@ public abstract class Importer {
     this.source = source;
   }
 
-  public void addData(ArrayList<String> line) {
+  public void addData(List<String> line) {
     this.data.add(line);
   }
 
@@ -28,7 +28,7 @@ public abstract class Importer {
     return this.source;
   }
 
-  public ArrayList<List<String>> getData() {
+  public List<List<String>> getData() {
     return this.data;
   };
 }

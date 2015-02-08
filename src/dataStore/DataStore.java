@@ -1,170 +1,96 @@
 package dataStore;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by sokam on 2/5/15.
+ * Created by sokam on 2/7/15.
  */
-public class DataStore {
-  private static final String EXTENTION = ".datastore";
-  private static final String WRITEDELIMITER = "|";
-  private static final String READDELIMITER = "\\|";
-  private static final String LINEFEED = "\n";
-  private ArrayList<String> header;
-  private String name;
-  private ArrayList<String> keys;
-  private HashMap<String, ArrayList<String>> record;
+public abstract class DataStore {
+  public static final String EXTENTION = ".datastore";
+  public static final String WRITE_DELIMITER = "|";
+  public static final String READ_DELIMITER = "\\|";
+  public static final String LINEFEED = "\n";
+
+  public static String TEXTS = "TEXT";
+  public static String DATES = "DATE";
+  public static String TIMES = "TIME";
+  public static String MONEY = "MONEY";
+
+  public static String[] TYPES_RECORD = {TEXTS, DATES, TIMES, MONEY};
+  public static ArrayList<String> TYPES = new ArrayList<String>(Arrays.asList(TYPES_RECORD));
+
+  protected String name;
+  protected List<String> keys;
+  protected List<String> columns;
+  protected List<String> types;
+  protected Map<String, List<Record>> records;
 
   public DataStore() {
-    this.header = new ArrayList<String>();
-    this.keys = new ArrayList<String>();
-    this.record = new HashMap<String, ArrayList<String>>();
     this.name = "";
-
+    this.keys = new ArrayList<String>();
+    this.columns = new ArrayList<String>();
+    this.types = new ArrayList<String>();
+    this.records = new HashMap<String, List<Record>>();
   }
 
-  public DataStore(String name, String[] header, String[] keys) {
-    this.name = name;
-    this.header = new ArrayList<String>(Arrays.asList(header));
-    this.keys = new ArrayList<String>(Arrays.asList(keys));
-    this.record = new HashMap<String, ArrayList<String>>();
-  }
+  public void create(String name,
+                     List<String> keys,
+                     List<String> columns,
+                     List<String> types,
+                     List<List<Record>> records) {
+    this.create(name, keys, columns, types);
 
-  public DataStore(String name, ArrayList<String> header, List<List<String>> data, String[] keys) {
-    this.name = name;
-    this.header = new ArrayList<String>(header);
-    this.keys = new ArrayList<String>(Arrays.asList(keys));
-    this.record = new HashMap<String, ArrayList<String>>();
-
-    String [] array = new String[this.header.size()];
-    for (List<String> list : data) {
-      insert(list.toArray(array));
+    for (List<Record> record : records) {
+      String hashKey = createHashKey(record);
+      this.records.put(hashKey, record);
     }
   }
 
-  public void create(String name, ArrayList<String> header, List<List<String>> data, String[] keys) {
-    this.name = name;
-    this.header = new ArrayList<String>(header);
-    this.keys = new ArrayList<String>(Arrays.asList(keys));
-    this.record = new HashMap<String, ArrayList<String>>();
+  public String createHashKey(List<Record> record) {
+    String hashKey = "";
+    int [] index = new int [this.keys.size()];
 
-    String [] array = new String[this.header.size()];
-    for (List<String> list : data) {
-      insert(list.toArray(array));
+    for (int i = 0; i < this.keys.size(); ++i) {
+      index[i] = this.columns.indexOf(this.keys.get(i));
+      hashKey += record.get(index[i]);
     }
+    return hashKey;
   }
 
-  public void create(String name, String[] header, String[] keys) {
+
+  protected void create(String name, List<String> keys, List<String> columns, List<String> types) {
     this.name = name;
-    for (String column : header) {
-      this.header.add(column);
-    }
-    for (String key : keys){
-      this.keys.add(key);
-    }
+    this.keys = new ArrayList<String>(keys);
+    this.columns = new ArrayList<String>(columns);
+    this.types = new ArrayList<String>(types);
   }
 
   public String getName() {
     return this.name;
   }
 
-  public String[] getHeader() {
-    String [] list = new String[this.header.size()];
-    for (int i = 0; i < this.header.size(); ++i) {
-      list[i] = this.header.get(i);
+  public String getListOfKey() {
+    return this.keys.toString();
+  }
+
+  public String getListOfColumn() {
+    return this.columns.toString();
+  }
+
+  public String getListOfType() {
+    return this.types.toString();
+  }
+
+  private String ArrayListToString (List<String> strings) {
+    String finalString = "";
+    for (String string : strings) {
+      finalString += string + " ";
     }
-    return list;
+    return finalString;
   }
 
-  public int getNumRows() {
-    return record.size();
-  }
+  public abstract void open(String name);
 
-  public void insert(String[] data) {
-    if (data.length == this.header.size()) {
-      int [] index = new int [this.keys.size()];
-      String key = "";
-
-      for (int i = 0; i < this.keys.size(); ++i) {
-        index[i] = this.header.indexOf(this.keys.get(i));
-        key += data[index[i]];
-      }
-
-      this.record.put(key, new ArrayList<String>(Arrays.asList(data)));
-
-    }
-  }
-
-  public void printAll() {
-    Set set = record.entrySet();
-    Iterator iterator = set.iterator();
-    while (iterator.hasNext()) {
-      Map.Entry entry = (Map.Entry) iterator.next();
-      System.out.println("Key: " + entry.getKey() + "; Value: " + entry.getValue());
-    }
-  }
-
-
-  public void close() {
-    try {
-      File file = new File(name + EXTENTION);
-
-      if (!file.exists()) {
-        file.createNewFile();
-      }
-
-      FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
-      BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-      bufferedWriter.write(getArrayDelimitedString(this.header));
-
-      Set set = record.entrySet();
-      Iterator iterator = set.iterator();
-      while (iterator.hasNext()) {
-        Map.Entry entry = (Map.Entry) iterator.next();
-        bufferedWriter.write(getArrayDelimitedString((ArrayList<String>) entry.getValue()));
-      }
-
-      bufferedWriter.close();
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private String getArrayDelimitedString(ArrayList<String> strings) {
-    String line = strings.get(0);
-    for (int i = 1; i < strings.size(); ++i) {
-      line += WRITEDELIMITER + strings.get(i);
-    }
-    return line + LINEFEED;
-  }
-
-  public void open() {
-    String line = "";
-    String [] strList;
-    Scanner in = null;
-    boolean isHeader = true;
-
-    try {
-      in = new Scanner(new File(name + EXTENTION));
-      while (in.hasNextLine()) {
-        line = in.nextLine();
-        strList = line.split(READDELIMITER);
-        if (isHeader) {
-          this.header = new ArrayList<String>(Arrays.asList(strList));
-          isHeader = false;
-        } else {
-          insert(strList);
-        }
-      }
-
-    } catch (IOException ioe) {
-      ioe.printStackTrace();
-    }
-  }
+  public abstract void close();
 
 }
