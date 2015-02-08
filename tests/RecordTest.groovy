@@ -1,6 +1,6 @@
 import dataStore.DateRecord
-import dataStore.DollarAndCentRecord
-import dataStore.HourAndMinuteRecord
+import dataStore.MoneyRecord
+import dataStore.TimeRecord
 import dataStore.Record
 import dataStore.TextRecord
 
@@ -43,53 +43,53 @@ class RecordTest extends GroovyTestCase {
 
     public void testCreateDollarAndCentRecordCorrectly() {
         String value = "1.00";
-        Record record = new DollarAndCentRecord(value);
+        Record record = new MoneyRecord(value);
         assertEquals(value, record.getData());
     }
 
     public void testCreateDollarAndCentRecordIncorrectly() {
         def msg = shouldFail(IllegalArgumentException) {
-            Record record = new DollarAndCentRecord("abc");
+            Record record = new MoneyRecord("abc");
         }
-        assertEquals(DollarAndCentRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
+        assertEquals(MoneyRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
     }
 
     public void testCompareTwoEqualAndCorrectDollarAndCent() {
         String value = "6.15";
-        Record record1 = new DollarAndCentRecord(value);
-        Record record2 = new DollarAndCentRecord(value);
+        Record record1 = new MoneyRecord(value);
+        Record record2 = new MoneyRecord(value);
         assertTrue(record1.compareTo(record2) == 0);
     }
 
     public void testCompareTwoDifferentAndCorrectDollarAndCent() {
-        Record record1 = new DollarAndCentRecord("123.78");
-        Record record2 = new DollarAndCentRecord("123.77");
+        Record record1 = new MoneyRecord("123.78");
+        Record record2 = new MoneyRecord("123.77");
         assertTrue(record1.compareTo(record2) > 0);
     }
 
     public void testCompareDollarAndCentRecordToTextRecordShouldFail() {
-        Record record1 = new DollarAndCentRecord("123.78");
+        Record record1 = new MoneyRecord("123.78");
         Record record2 = new TextRecord("one hundred dollar and two cents");
         def msg = shouldFail(IllegalArgumentException) {
             record1.compareTo(record2);
         }
-        assertEquals(DollarAndCentRecord.COMPARED_TO_DIFFERENT_OBJECT, msg);
+        assertEquals(MoneyRecord.COMPARED_TO_DIFFERENT_OBJECT, msg);
     }
 
     public void testCompareTextRecordToDollarAndCentRecordIsOK() {
-        Record record1 = new DollarAndCentRecord("123.78");
+        Record record1 = new MoneyRecord("123.78");
         Record record2 = new TextRecord("one hundred dollar and two cents");
         record2.compareTo(record1);
     }
 
     public void testCorrectDollarAndCentRecordIsValid() {
-        Record record = new DollarAndCentRecord("123.78");
+        Record record = new MoneyRecord("123.78");
         assertTrue(record.isValid());
     }
 
     public void textInCorrectDollarAndCentRecordIsInValid() {
         Record record1 = new TextRecord("one hundred dollar and two cents");
-        Record record2 = (DollarAndCentRecord) record1;
+        Record record2 = (MoneyRecord) record1;
         assertFalse(record2.isValid());
     }
 
@@ -135,47 +135,47 @@ class RecordTest extends GroovyTestCase {
 
     public void testCorrectHourAndMinuteRecord() {
         String time = "23:30";
-        Record record = new HourAndMinuteRecord(time);
+        Record record = new TimeRecord(time);
         assertEquals(time, record.getData());
     }
 
     public void testIncorrectMinuteDataInHourAndMinuteRecord() {
         def msg = shouldFail(IllegalArgumentException) {
-            Record record = new HourAndMinuteRecord("00:60");
+            Record record = new TimeRecord("00:60");
         }
-        assertEquals(HourAndMinuteRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
+        assertEquals(TimeRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
     }
 
     public void testIncorrectHourDataInHourAndMinuteRecord() {
         def msg = shouldFail(IllegalArgumentException) {
-            Record record = new HourAndMinuteRecord("24:30");
+            Record record = new TimeRecord("24:30");
         }
-        assertEquals(HourAndMinuteRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
+        assertEquals(TimeRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
     }
 
     public void testCompareSameHourAndMinuteRecord() {
         String time = "07:01";
-        Record record1 = new HourAndMinuteRecord(time);
-        Record record2 = new HourAndMinuteRecord(time);
+        Record record1 = new TimeRecord(time);
+        Record record2 = new TimeRecord(time);
         assertTrue(record1.compareTo(record2) == 0);
     }
 
     public void testCompareLogicalSameHourAndMinuteRecord() {
         String time = "6:15";
-        Record record1 = new HourAndMinuteRecord(time);
-        Record record2 = new HourAndMinuteRecord("0"+time);
+        Record record1 = new TimeRecord(time);
+        Record record2 = new TimeRecord("0"+time);
         assertTrue(record1.compareTo(record2) == 0);
     }
 
     public void testCompareDifferentHourDataInHourAndMinuteRecord() {
-        Record record1 = new HourAndMinuteRecord("23:50");
-        Record record2 = new HourAndMinuteRecord("22:51");
+        Record record1 = new TimeRecord("23:50");
+        Record record2 = new TimeRecord("22:51");
         assertTrue(record1.compareTo(record2) > 0);
     }
 
     public void testCompareDifferentMinuteDataInHourAndMinuteRecord() {
-        Record record1 = new HourAndMinuteRecord("15:50");
-        Record record2 = new HourAndMinuteRecord("15:51");
+        Record record1 = new TimeRecord("15:50");
+        Record record2 = new TimeRecord("15:51");
         assertTrue(record1.compareTo(record2) < 0);
     }
 }

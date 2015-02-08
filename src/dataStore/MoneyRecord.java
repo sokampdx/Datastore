@@ -1,20 +1,18 @@
 package dataStore;
 
-import java.text.ParseException;
-
 /**
  * Created by sokam on 2/7/15.
  */
-public class DollarAndCentRecord extends Record {
+public class MoneyRecord extends Record {
 
   public static final String DATA_NOT_IN_CORRECT_FORMAT = "Data must be in Dollar and Cents. e.g. 3.25";
   public static final String COMPARED_TO_DIFFERENT_OBJECT = "Must compare to same data Type";
 
-/*  public DollarAndCentRecord() {
+/*  public MoneyRecord() {
     super();
   }*/
 
-  public DollarAndCentRecord(String data) {
+  public MoneyRecord(String data) {
     super();
     setData(data);
   }
@@ -29,7 +27,7 @@ public class DollarAndCentRecord extends Record {
 
 
   public boolean isValid () {
-    return DollarAndCentRecord.isValid(getData());
+    return MoneyRecord.isValid(getData());
   }
 
   public static boolean isValid (String data) {
@@ -38,7 +36,7 @@ public class DollarAndCentRecord extends Record {
 
   @Override
   public int compareTo(Record record) throws IllegalArgumentException {
-    if (record instanceof DollarAndCentRecord) {
+    if (record instanceof MoneyRecord) {
       if (this.isValid() && record.isValid()) {
         Double fst = Double.parseDouble(this.getData());
         Double snd = Double.parseDouble(record.getData());

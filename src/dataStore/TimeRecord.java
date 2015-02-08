@@ -1,24 +1,22 @@
 package dataStore;
 
-import java.util.HashMap;
-
 /**
  * Created by sokam on 2/7/15.
  */
-public class HourAndMinuteRecord extends Record {
+public class TimeRecord extends Record {
   public static final String DATA_NOT_IN_CORRECT_FORMAT = "Data must be Time Format hh:mm. e.g. 20:59";
   public static final String COMPARED_TO_DIFFERENT_OBJECT = "Must compare to same data Type";
   public static final String TIME_DELIMITER = ":";
   public static final int HOUR = 0;
   public static final int MINUTE = 1;
 
-  public HourAndMinuteRecord(String data) {
+  public TimeRecord(String data) {
     super();
     this.setData(data);
   }
 
   public void setData(String data) {
-    if (HourAndMinuteRecord.isValid(data)) {
+    if (TimeRecord.isValid(data)) {
       super.setData(data);
     } else {
       throw new IllegalArgumentException(DATA_NOT_IN_CORRECT_FORMAT);
@@ -26,7 +24,7 @@ public class HourAndMinuteRecord extends Record {
   }
 
   public boolean isValid() {
-    return HourAndMinuteRecord.isValid(this.getData());
+    return TimeRecord.isValid(this.getData());
   }
 
   public static boolean isValid(String data) {
@@ -35,7 +33,7 @@ public class HourAndMinuteRecord extends Record {
 
   @Override
   public int compareTo(Record record) throws IllegalArgumentException {
-    if (record instanceof HourAndMinuteRecord) {
+    if (record instanceof TimeRecord) {
       if (this.isValid() && record.isValid()) {
         String[] fstString = this.getData().split(TIME_DELIMITER);
         String[] sndString = record.getData().split(TIME_DELIMITER);
