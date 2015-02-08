@@ -1,5 +1,5 @@
 import dataStore.DataStore
-import dataStore.Importer;
+import dataStore.ImportFromFileWithRules;
 
 /**
  * Created by sokam on 2/5/15.
@@ -65,19 +65,19 @@ class DataStoreTest extends GroovyTestCase {
     }
 
     public void testCreateDataStoreFromImporter() {
-        Importer importer = new Importer(name + ".txt");
+        ImportFromFileWithRules importer = new ImportFromFileWithRules(name + ".txt");
         DataStore dataStore = new DataStore(name, importer.getHeader(), importer.getData(), keys);
         assertEquals(10, dataStore.getNumRows());
     }
 
     public void testCloseDataStoreFile() {
-        Importer importer = new Importer(name + ".txt");
+        ImportFromFileWithRules importer = new ImportFromFileWithRules(name + ".txt");
         DataStore dataStore = new DataStore(name, importer.getHeader(), importer.getData(), keys);
         dataStore.close();
     }
 
     public void testOpenDataStoreFile() {
-        Importer importer = new Importer(name + ".txt");
+        ImportFromFileWithRules importer = new ImportFromFileWithRules(name + ".txt");
         DataStore dataStore = new DataStore(name, importer.getHeader(), importer.getData(), keys);
         dataStore.open();
         //dataStore.printAll();

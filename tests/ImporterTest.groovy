@@ -1,51 +1,30 @@
-
-
+import dataStore.DelimitedTextImporter
 import dataStore.Importer
+import dataStore.MyUtil
 
 /**
- * Created by sokam on 2/4/15.
+ * Created by sokam on 2/7/15.
  */
 class ImporterTest extends GroovyTestCase {
+    public static final String SAMPLE_TXT_FILE = "sample.txt";
+    public static final String ORIGINAL_TXT_FILE = "original.txt";
+    public static final String DELIMITER = "\\|";
 
-    private final String FILENAME = "sample.txt";
-    private final String[] HEADER = "STB|TITLE|PROVIDER|DATE|REV|VIEW_TIME".split(Importer.DELIMITER);
-    private String[] line;
-    private Importer importer = new Importer(Importer.FILENAME);
+    public static final String ORIGINAL = "STB|TITLE|PROVIDER|DATE|REV|VIEW_TIME\n" +
+            "stb1|the matrix|warner bros|2014-04-01|4.00|1:30\n" +
+            "stb1|unbreakable|buena vista|2014-04-03|6.00|2:05\n" +
+            "stb2|the hobbit|warner bros|2014-04-02|8.00|2:45\n" +
+            "stb3|the matrix|warner bros|2014-04-02|4.00|1:05\n"
 
     public void testImporterReadCorrectFilename() {
-        assertEquals(Importer.FILENAME, importer.getFilename());
+        Importer importer = new DelimitedTextImporter(SAMPLE_TXT_FILE, DELIMITER);
+        assertEquals(SAMPLE_TXT_FILE, importer.getSource());
     }
 
-    public void testHeaderDataIsCorrect() {
-        String expected = ImporterTest.convertArrayToString(HEADER);
-        assertEquals(expected, importer.getHeaderString());
+    public void testImporterReadIncorrectFilename() {
+        Importer importer = new DelimitedTextImporter(ORIGINAL_TXT_FILE, DELIMITER);
+        assertEquals(ORIGINAL, MyUtil.toStringForArrayListOfList(importer.getData()));
     }
 
-    private static String convertArrayToString(String[] inputStr) {
-        String expected = "";
-        for (String str : inputStr) {
-            expected += str;
-        }
-        return expected;
-    }
-
-    public void testSpecificLineOfTheRecord() {
-        line = "stb10|the matrix|warner bros|2014-04-02|3.00|1:05".split(Importer.DELIMITER);
-        String expected = ImporterTest.convertArrayToString(line);
-        assertEquals(expected, importer.getRowString(9));
-    }
-
-    public void testOutOfBoundIndexForData() {
-        assertEquals("", importer.getRowString(-1));
-    }
-
-    public void testInvalidDataDoesNotAdd() {
-        assertEquals(11, importer.getRow());
-    }
-
-    public void testGetAllImportData() {
-        //System.out.println(importer.toString());
-        assertEquals(importer.toString(), Importer.convertToText(importer.getData()));
-    }
 
 }
