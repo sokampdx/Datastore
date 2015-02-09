@@ -51,7 +51,7 @@ class DataStoreTest extends GroovyTestCase {
         assertEquals(types.toString(), dataStore.getListOfType());
     }
 
-    public void testNewDataStoreUsingImporter() {
+    public void testNewDataStoreUsingImporterWithOutInvalidRow() {
         Importer importer = new DelimitedTextImporter(original + ".txt", DELIMITER);
         List<List<String>> data = importer.getData();
         DataStore dataStore = new TextFileDataStore(original,
@@ -59,8 +59,25 @@ class DataStoreTest extends GroovyTestCase {
                 data.remove(0),
                 Arrays.asList(types),
                 TextFileDataStore.createAllRecords(data, Arrays.asList(types)));
+        dataStore.close();
     }
 
-    
+    public void testNewDataStoreUsingImporterWithInvalidRow() {
+        Importer importer = new DelimitedTextImporter(sample + ".txt", DELIMITER);
+        List<List<String>> data = importer.getData();
+        DataStore dataStore = new TextFileDataStore(sample,
+                Arrays.asList(keys),
+                data.remove(0),
+                Arrays.asList(types),
+                TextFileDataStore.createAllRecords(data, Arrays.asList(types)));
+        dataStore.close();
+    }
 
+    public void testReadFromDataStoreFile() {
+        DataStore dataStore = new TextFileDataStore(sample);
+        assertEquals(sample, dataStore.getName());
+        assertEquals(keys.toString(), dataStore.getListOfKey());
+        assertEquals(columns.toString(), dataStore.getListOfColumn());
+        assertEquals(types.toString(), dataStore.getListOfType());
+    }
 }

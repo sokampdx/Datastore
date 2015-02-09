@@ -87,12 +87,6 @@ class RecordTest extends GroovyTestCase {
         assertTrue(record.isValid());
     }
 
-    public void textInCorrectDollarAndCentRecordIsInValid() {
-        Record record1 = new TextRecord("one hundred dollar and two cents");
-        Record record2 = (MoneyRecord) record1;
-        assertFalse(record2.isValid());
-    }
-
     public void testCreateDateRecordCorrectly() {
         String date = "2014-02-24";
         Record record = new DateRecord(date);

@@ -114,7 +114,7 @@ public class TextFileDataStore extends DataStore {
     ArrayList<Record> record = new ArrayList<Record>();
 
     for (int i = 0; i < len; ++i) {
-      Record newRecord = matchRecordTypeOf(data, i, types);
+      Record newRecord = matchRecordTypeOf(data.get(i), types.get(i));
 
       if (newRecord == null) {
         break;
@@ -130,27 +130,21 @@ public class TextFileDataStore extends DataStore {
   }
 
 
-  private static Record matchRecordTypeOf(List<String> data, int i, List<String> types) {
-    String currentType = types.get(i);
+  private static Record matchRecordTypeOf(String data, String type) {
     Record newRecord = null;
 
-    if (currentType.equals(TEXTS)) {
-      newRecord = new TextRecord(data.get(i));
-    } else if (currentType.equals(DATES)) {
-      newRecord = new DateRecord(data.get(i));
-    } else if (currentType.equals(TIMES)) {
-      newRecord = new TimeRecord(data.get(i));
-    } else if (currentType.equals(MONEY)) {
-      newRecord = new MoneyRecord(data.get(i));
+
+    if (type.equals(TEXTS)) {
+      newRecord = new TextRecord(data);
+    } else if (type.equals(DATES) && DateRecord.isValid(data)) {
+      newRecord = new DateRecord(data);
+    } else if (type.equals(TIMES) && TimeRecord.isValid(data)) {
+      newRecord = new TimeRecord(data);
+    } else if (type.equals(MONEY) && MoneyRecord.isValid(data)) {
+      newRecord = new MoneyRecord(data);
     }
     return newRecord;
   }
-
-
-  private static Record matchRecordTypeOf(String [] data, int i, List<String> types) {
-    return matchRecordTypeOf(Arrays.asList(data), i, types);
-  }
-
 
   public static ArrayList<List<Record>> createAllRecords (List<List<String>> data,
                                                           List<String> types) {
@@ -173,7 +167,7 @@ public class TextFileDataStore extends DataStore {
 
       FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
       BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-      writeToFile(bufferedWriter);
+      writeDataTo(bufferedWriter);
       bufferedWriter.close();
 
     } catch (IOException e) {
@@ -182,7 +176,7 @@ public class TextFileDataStore extends DataStore {
   }
 
 
-  private void writeToFile(BufferedWriter bufferedWriter) throws IOException {
+  private void writeDataTo(BufferedWriter bufferedWriter) throws IOException {
     writeHeadersTo(bufferedWriter);
     writeRecordTo(bufferedWriter);
   }
