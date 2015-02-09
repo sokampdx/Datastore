@@ -25,6 +25,10 @@ public class MoneyRecord extends Record {
     }
   }
 
+  @Override
+  public boolean isSummable() {
+    return true;
+  }
 
   public boolean isValid () {
     return MoneyRecord.isValid(getData());

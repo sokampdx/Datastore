@@ -24,6 +24,10 @@ public abstract class Record implements Comparable<Record> {
 
   public abstract boolean isValid();
 
+  public boolean isSummable() {
+    return false;
+  }
+
   public int compareTo(Record record) {
     return this.data.compareTo(record.data);
   }

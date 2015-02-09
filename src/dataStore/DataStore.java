@@ -79,7 +79,6 @@ public abstract class DataStore {
     }
     return finalString;
   }
-
   public abstract void insert(String[] data);
 
   public abstract void open(String name);
