@@ -7,42 +7,35 @@ import java.util.List;
  * Created by sokam on 2/8/15.
  */
 public class Scanner {
-  private static final String USAGE = "USAGE: ./query " +
+  public static final String USAGE = "USAGE: ./query " +
       "-s column[:aggregate]{,column[:aggregate]} " +
       "[-o column{,column}] " +
       "[-g column] " +
       "[-f [(]column=data {[(] (AND|OR) column=data} [)]]";
-  private static final String EXPECTED_QUOTE = "Expect a matching quote.";
+  public static final String EXPECTED_QUOTE = "Expect a matching quote." + "\n" + USAGE;
   public final String EOL = "|";
   public final String BLANK = " ";
   public final String COMMA = ",";
   public final String COLON = ":";
   public final String EQUAL = "=";
-  public final String DASH = "-";
-  public final String SELECT = "s";
-  public final String ORDER = "o";
-  public final String FILTER = "f";
-  public final String GROUP = "g";
-  public final String AND = "AND";
-  public final String OR = "OR";
   public final String OPEN = "(";
   public final String CLOSE = ")";
-  public final String QUOTE = "\"";
-  public final String SINGLE = "'";
-  
-  public final String MAX = "MAX";
-  public final String MIN = "MIN";
-  public final String SUM = "SUM";
-  public final String COUNT = "COUNT";
-  public final String COLLECT = "COLLECT";
-  
+  public final String DOUBLE_QUOTE = "\"";
+  public final String SINGLE_QUOTE = "'";
+
   private String stream;
   private String nextChar;
   private int nextIndex;
   private List<String> tokens;
 
+  public Scanner()  {
+    this.stream = "";
+    this.tokens = new ArrayList<String>();
+    this.nextChar = "";
+    this.nextIndex = 0;
+  }
 
-  public Scanner(String stream) throws InterruptedException {
+  public Scanner(String stream){
     this.stream = stream;
     this.tokens = new ArrayList<String>();
     this.nextChar = "";
@@ -54,7 +47,7 @@ public class Scanner {
     return this.tokens;
   }
 
-  private void tokenizer() throws InterruptedException {
+  private void tokenizer() {
     getChar();
 
     while (!isEOL()) {
@@ -67,8 +60,8 @@ public class Scanner {
   private String getNextToken() {
     String currentToken = "";
 
-    if (isQuote()) {
-      currentToken += getQuotedToken();
+    if (isDoubleQuote()) {
+      currentToken += getDoubleQuotedToken();
     } else if (isOPEN()) {
       currentToken += OPEN;
       getChar();
@@ -127,14 +120,22 @@ public class Scanner {
   }
 
   private boolean isWhiteSpace() {
-    return this.nextChar.equals(BLANK) || this.nextChar.equals(SINGLE);
+    return isBLANK() || isSingleQuote();
   }
 
-  private String getQuotedToken() {
+  private boolean isSingleQuote() {
+    return this.nextChar.equals(SINGLE_QUOTE);
+  }
+
+  private boolean isBLANK() {
+    return this.nextChar.equals(BLANK);
+  }
+
+  private String getDoubleQuotedToken() {
     String currentToken = nextChar;
     getChar();
 
-    while (!isQuote() && !isEOL()) {
+    while (!isDoubleQuote() && !isEOL()) {
       currentToken += nextChar;
       getChar();
     }
@@ -148,8 +149,8 @@ public class Scanner {
     return currentToken;
   }
 
-  private boolean isQuote() {
-    return this.nextChar.equals(QUOTE);
+  private boolean isDoubleQuote() {
+    return this.nextChar.equals(DOUBLE_QUOTE);
   }
 
   private boolean isEOL() {
