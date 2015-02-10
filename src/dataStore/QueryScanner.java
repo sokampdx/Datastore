@@ -134,7 +134,7 @@ public class QueryScanner {
   }
 
   private String getDoubleQuotedToken() {
-    String currentToken = nextChar;
+    String currentToken = "";
     getChar();
 
     while (!isDoubleQuote() && !isEOL()) {
@@ -145,7 +145,6 @@ public class QueryScanner {
     if(isEOL()) {
       throw new IllegalArgumentException(EXPECTED_QUOTE);
     } else {
-      currentToken += nextChar;
       getChar();
     }
     return currentToken;

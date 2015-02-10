@@ -21,4 +21,10 @@ public abstract class MyUtil {
 
     return str;
   }
+
+  public static void print(String... msgs) {
+    for (String msg : msgs)
+      System.out.print(msg + " | ");
+    System.out.println();
+  }
 }

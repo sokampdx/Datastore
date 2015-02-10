@@ -7,6 +7,9 @@ import java.util.Map;
  * Created by sokam on 2/9/15.
  */
 public class Expression {
+  private final String COLON = ":";
+  private final String EOL = "\n";
+
   private Map<String, QueryArgument> expression;
 
   public Expression() {
@@ -33,5 +36,14 @@ public class Expression {
 
   private boolean hasKey(Expression match, Map.Entry<String, QueryArgument> pair) {
     return match.expression.containsKey(pair.getKey());
+  }
+
+  @Override
+  public String toString() {
+    String string = "";
+    for (Map.Entry<String, QueryArgument> pair : this.expression.entrySet()) {
+      string += pair.getKey() + COLON + pair.getValue().toString() + EOL;
+    }
+    return string.substring(0, string.length()-1);
   }
 }

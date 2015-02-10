@@ -7,6 +7,8 @@ import java.util.List;
  * Created by sokam on 2/9/15.
  */
 public class QueryArgument {
+  private final String COMMA = ",";
+
   private List<Criteria> arguments;
 
   public QueryArgument () {
@@ -31,5 +33,15 @@ public class QueryArgument {
     }
 
     return isEqual;
+  }
+
+  @Override
+  public String toString() {
+    String string = "";
+    for (Criteria criteria : arguments) {
+      string += criteria.toString() + COMMA;
+    }
+
+    return string.substring(0, string.length()-1);
   }
 }

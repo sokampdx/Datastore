@@ -36,7 +36,7 @@ class QueryToolTest extends GroovyTestCase {
     public final String query4Scan = "[-s, TITLE, ,, REV, :, sum, ,, STB, :, collect, -g, TITLE]"
 
     public final String query5 = "-s TITLE,REV -f 'TITLE=\"the hobbit\" OR TITLE=\"the matrix\"'";
-    public final String query5Scan = "[-s, TITLE, ,, REV, -f, TITLE, =, \"the hobbit\", OR, TITLE, =, \"the matrix\"]";
+    public final String query5Scan = "[-s, TITLE, ,, REV, -f, TITLE, =, the hobbit, OR, TITLE, =, the matrix]";
     
     public final String query6 = "-s TITLE,REV -f 'TITLE=\"the hobbit\" OR TITLE=\"the matrix' -o TITLE";
     
@@ -111,20 +111,21 @@ class QueryToolTest extends GroovyTestCase {
         expression.add(QueryTool.ORDER, arguments);
         return expression;
     }
-/*
+
     public void testQueryForSelectFilter() {
-        Expression expression = select_TITLE_REV_DATE_order_DATE_TITLE();
-        queryTool.query(query2);
+        Expression expression = select_TITLE_REV_DATE_filter_DATE_2014_04_01();
+        queryTool.query(query3);
         assertTrue(expression.equals(queryTool.getQuery()));
+        assertEquals(expression.toString(), queryTool.getQuery().toString());
     }
 
     private Expression select_TITLE_REV_DATE_filter_DATE_2014_04_01() {
         Expression expression = select_TITLE_REV_DATE();
         QueryArgument arguments = new QueryArgument();
-        Criteria criteria = new FilterCriteria("DATE", "2014_04_01");
+        Criteria criteria = new FilterCriteria("DATE", "2014-04-01");
         arguments.add(criteria);
         expression.add(QueryTool.FILTER, arguments);
         return expression;
-    }*/
+    }
 
 }

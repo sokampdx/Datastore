@@ -13,4 +13,9 @@ public abstract class Criteria {
   public boolean equals(Criteria match) {
     return this.column.equals(match.column);
   }
+
+  @Override
+  public String toString() {
+    return this.column;
+  }
 }
