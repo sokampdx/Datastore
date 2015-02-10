@@ -2,6 +2,7 @@ import dataStore.Criteria
 import dataStore.DataStore
 import dataStore.Expression
 import dataStore.FilterCriteria
+import dataStore.GroupCriteria
 import dataStore.OrderCriteria
 import dataStore.QueryArgument
 import dataStore.QueryTool
@@ -39,7 +40,7 @@ class QueryToolTest extends GroovyTestCase {
     public final String query5Scan = "[-s, TITLE, ,, REV, -f, TITLE, =, the hobbit, OR, TITLE, =, the matrix]";
     
     public final String query6 = "-s TITLE,REV -f 'TITLE=\"the hobbit\" OR TITLE=\"the matrix' -o TITLE";
-    
+    public final String query7 = "-s TITLE,REV,STB -g TITLE";
     
     private DataStore dataStore = new TextFileDataStore(ORIGINAL);
     private QueryTool queryTool = new QueryTool(dataStore);
@@ -125,6 +126,31 @@ class QueryToolTest extends GroovyTestCase {
         Criteria criteria = new FilterCriteria("DATE", "2014-04-01");
         arguments.add(criteria);
         expression.add(QueryTool.FILTER, arguments);
+        return expression;
+    }
+
+    public void testQueryForSelectGroup() {
+        Expression expression = select_TITLE_REV_STB_group_TITLE();
+        queryTool.query(query7);
+        assertTrue(expression.equals(queryTool.getQuery()));
+        assertEquals(expression.toString(), queryTool.getQuery().toString());
+    }
+
+    private Expression select_TITLE_REV_STB_group_TITLE() {
+        Expression expression = new Expression();
+        QueryArgument arguments = new QueryArgument();
+        Criteria criteria = new SelectCriteria("TITLE");
+        arguments.add(criteria);
+        criteria = new SelectCriteria("REV");
+        arguments.add(criteria);
+        criteria = new SelectCriteria("STB");
+        arguments.add(criteria);
+        expression.add(QueryTool.SELECT, arguments);
+
+        QueryArgument argument2 = new QueryArgument();
+        criteria = new GroupCriteria("TITLE");
+        argument2.add(criteria);
+        expression.add(QueryTool.GROUP, argument2);
         return expression;
     }
 

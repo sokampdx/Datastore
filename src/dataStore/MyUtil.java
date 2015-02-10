@@ -6,6 +6,8 @@ import java.util.List;
  * Created by sokam on 2/7/15.
  */
 public abstract class MyUtil {
+  public static final String DIVIDER = "---------------";
+
   public static String toStringForArrayListOfList(List<List<Object>> collection) {
     String str = "";
 
