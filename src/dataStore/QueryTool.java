@@ -1,5 +1,6 @@
 package dataStore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,11 +29,12 @@ public class QueryTool {
   public static final String ORDER = "o";
   public static final String FILTER = "f";
   public static final String GROUP = "g";
-  public static final String AND = "AND";
-  public static final String OR = "OR";
   public static final String OPEN = "(";
   public static final String CLOSE = ")";
 
+  public final String[] BINOP = {AND, OR};
+  public static final String AND = "AND";
+  public static final String OR = "OR";
 
   public final String[] AGGREGATES = {MAX, MIN, SUM, COUNT, COLLECT};
   public static final String MAX = "max";
@@ -128,10 +130,11 @@ public class QueryTool {
     }
   }
 
-/*  private QueryArgument getLogicalArguments(String command) {
+  private QueryArgument getLogicalArguments(String command) {
     MyUtil.print(MyUtil.DIVIDER + "In LogicalArguments");
     return getSingleArgument(command);
-  }*/
+  }
+/*
 
   private QueryArgument getLogicalArguments(String command) {
     MyUtil.print(MyUtil.DIVIDER + "In LogicalArguments");
@@ -140,6 +143,7 @@ public class QueryTool {
     arguments.addAll(getMoreArguments(command));
 
     while (this.nextToken.equals(OR)) {
+      arguments.addBinOp(getCriteria(command));
       getToken();
       arguments.addAll(getLogicalArguments(command));
     }
@@ -154,6 +158,7 @@ public class QueryTool {
     arguments.addAll(getParenArguments(command));
 
     while (this.nextToken.equals(AND)) {
+      arguments.addBinOp(getCriteria(command));
       getToken();
       arguments.addAll(getMoreArguments(command));
     }
@@ -180,6 +185,7 @@ public class QueryTool {
     return arguments;
   }
 
+*/
 
   private QueryArgument getSingleArgument(String command) {
     MyUtil.print(MyUtil.DIVIDER + "In SingleArguments");
@@ -224,18 +230,25 @@ public class QueryTool {
 
   private Criteria getFilterCriteria() {
     MyUtil.print(MyUtil.DIVIDER + "In getFilterCriteria");
-    String match = "";
-    String column = getColumn();
 
-    if (this.nextToken.equals(EQUAL)) {
+    if (Arrays.asList(BINOP).contains(this.nextToken)) {
+      String binOp = this.nextToken;
       getToken();
-      match += this.nextToken;
-      getToken();
+      return new FilterCriteria(binOp);
+
     } else {
-      throw new IllegalArgumentException(INCORRECT_FILTER_ERR);
-    }
+      String match = "";
+      String column = getColumn();
 
-    return new FilterCriteria(column, match);
+      if (this.nextToken.equals(EQUAL)) {
+        getToken();
+        match = this.nextToken;
+        getToken();
+      } else {
+        throw new IllegalArgumentException(INCORRECT_FILTER_ERR);
+      }
+      return new FilterCriteria(column, match);
+    }
   }
 
   private Criteria getOrderCriteria() {

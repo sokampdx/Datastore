@@ -19,8 +19,14 @@ public class QueryArgument {
     this.arguments.add(criteria);
   }
 
+  public void addBinOp(Criteria criteria) { this.arguments.add(0, criteria); }
+
   public void addAll(QueryArgument anotherlist) {
     this.arguments.addAll(anotherlist.arguments);
+  }
+
+  public void addAll(int index, QueryArgument anotherlist) {
+    this.arguments.addAll(index, anotherlist.arguments);
   }
 
   public boolean equals (QueryArgument match) {

@@ -42,8 +42,8 @@ class QueryToolTest extends GroovyTestCase {
     public final String query6 = "-s TITLE,REV -f 'TITLE=\"the hobbit\" OR TITLE=\"the matrix' -o TITLE";
     public final String query7 = "-s TITLE,REV,STB -g TITLE";
 
-    public final String query8 = "-s TITLE,REV -f STB=\"stb1\" AND (TITLE=\"the hobbit\" OR TITLE=\"unbreakable\")";
-    public final String query8Scan = "[-s, TITLE, ,, REV, -f, STB, =, stb1, AND, (, TITLE, =, the hobbit, OR, TITLE, =, unbreakable, )]";
+    public final String query8 = "-s TITLE,REV -f STB=\"stb1\" OR (TITLE=\"the hobbit\" OR TITLE=\"unbreakable\") AND DATE=2014-04-01";
+    public final String query8Scan = "[-s, TITLE, ,, REV, -f, STB, =, stb1, OR, (, TITLE, =, the hobbit, OR, TITLE, =, unbreakable, ), AND, DATE, =, 2014-04-01]";
 
     public final String queryErr1 = "-s -o DATE,TITLE";
     public final String queryErr2 = "-s TITLE,REV:,STB:collect -g TITLE";
@@ -194,13 +194,13 @@ class QueryToolTest extends GroovyTestCase {
         return expression;
     }
 
-    public void testQueryForSelectAdvanceFilterWithParen() {
-        Expression expression = select_TITLE_REVsum_STBcollect_group_TITLE();
+ /*   public void testQueryForSelectAdvanceFilterWithParen() {
+        Expression expression = select_TITLE_REV_filter_With_Paren();
         queryTool.query(query8);
 //        assertTrue(expression.equals(queryTool.getQuery()));
         assertEquals(expression.toString(), queryTool.getQuery().toString());
     }
-
+*/
     private Expression select_TITLE_REV_filter_With_Paren() {
         Expression expression = new Expression();
         QueryArgument arguments = new QueryArgument();
@@ -211,9 +211,13 @@ class QueryToolTest extends GroovyTestCase {
         expression.add(QueryTool.SELECT, arguments);
 
         QueryArgument argument2 = new QueryArgument();
-        criteria = new GroupCriteria("TITLE");
+        criteria = new FilterCriteria("TITLE", "the hobbit");
         argument2.add(criteria);
-        expression.add(QueryTool.GROUP, argument2);
+        criteria = new FilterCriteria("TITLE", "unbreakable");
+        argument2.add(criteria);
+        criteria = new FilterCriteria("STB", "stb1");
+        argument2.add(criteria);
+        expression.add(QueryTool.FILTER, argument2);
         return expression;
     }
 
