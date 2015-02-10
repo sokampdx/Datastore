@@ -55,7 +55,6 @@ public abstract class DataStore {
     this.types = new ArrayList<String>(types);
   }
 
-
   public String getName() {
     return this.name;
   }
@@ -71,6 +70,14 @@ public abstract class DataStore {
   public String getListOfType() {
     return this.types.toString();
   }
+
+  public List<List<Record>> getRecords() {
+    List<List<Record>> records = new ArrayList<List<Record>>();
+    for (Map.Entry<String, List<Record>> pair : this.records.entrySet()) {
+      records.add(pair.getValue());
+    }
+    return records;
+  };
 
   private String ArrayListToString (List<String> strings) {
     String finalString = "";

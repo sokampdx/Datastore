@@ -6,36 +6,38 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class Scanner {
+public class QueryScanner {
+  public static final String EOL = "\n";
+  public static final String BLANK = " ";
+  public static final String COMMA = ",";
+  public static final String COLON = ":";
+  public static final String EQUAL = "=";
+  public static final String OPEN = "(";
+  public static final String CLOSE = ")";
+  public static final String DOUBLE_QUOTE = "\"";
+  public static final String SINGLE_QUOTE = "'";
+
   public static final String USAGE = "USAGE: ./query " +
       "-s column[:aggregate]{,column[:aggregate]} " +
       "[-o column{,column}] " +
       "[-g column] " +
       "[-f [(]column=data {[(] (AND|OR) column=data} [)]]";
-  public static final String EXPECTED_QUOTE = "Expect a matching quote." + "\n" + USAGE;
-  public final String EOL = "|";
-  public final String BLANK = " ";
-  public final String COMMA = ",";
-  public final String COLON = ":";
-  public final String EQUAL = "=";
-  public final String OPEN = "(";
-  public final String CLOSE = ")";
-  public final String DOUBLE_QUOTE = "\"";
-  public final String SINGLE_QUOTE = "'";
+  public static final String EXPECTED_QUOTE = "Expect a matching quote." + EOL + USAGE;
+
 
   private String stream;
   private String nextChar;
   private int nextIndex;
   private List<String> tokens;
 
-  public Scanner()  {
+  public QueryScanner()  {
     this.stream = "";
     this.tokens = new ArrayList<String>();
     this.nextChar = "";
     this.nextIndex = 0;
   }
 
-  public Scanner(String stream){
+  public QueryScanner(String stream){
     this.stream = stream;
     this.tokens = new ArrayList<String>();
     this.nextChar = "";

@@ -18,7 +18,7 @@ public class TextFileDataStore extends DataStore {
   public static String[] TYPES_RECORD = {TEXTS, DATES, TIMES, MONEY};
   public static ArrayList<String> TYPES = new ArrayList<String>(Arrays.asList(TYPES_RECORD));
 
-  public static final String EXTENTION = ".datastore";
+  public static final String EXTENSION = ".datastore";
   public static final String WRITE_DELIMITER = "|";
   public static final String READ_DELIMITER = "\\|";
   public static final String LINEFEED = "\n";
@@ -49,7 +49,7 @@ public class TextFileDataStore extends DataStore {
     Scanner in = null;
 
     try {
-      in = new Scanner(new File(name + EXTENTION));
+      in = new Scanner(new File(name + EXTENSION));
       importExistingData(in);
 
     } catch (IOException ioe) {
@@ -163,7 +163,7 @@ public class TextFileDataStore extends DataStore {
 
   public void close() {
     try {
-      File file = new File(name + EXTENTION);
+      File file = new File(name + EXTENSION);
 
       FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
       BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
