@@ -28,26 +28,15 @@
       <file leaf-file-name="QueryTool.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2167" max-vertical-offset="3315">
-              <caret line="167" column="42" selection-start-line="167" selection-start-column="42" selection-end-line="167" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="3630">
+              <caret line="72" column="46" selection-start-line="72" selection-start-column="41" selection-end-line="72" selection-end-column="46" />
               <folding>
-                <element signature="e#2733#2734#0" expanded="true" />
-                <element signature="e#2816#2817#0" expanded="true" />
-                <element signature="e#2998#2999#0" expanded="true" />
-                <element signature="e#3050#3051#0" expanded="true" />
-                <element signature="e#3092#3093#0" expanded="true" />
-                <element signature="e#3145#3146#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#3256#3257#0" expanded="true" />
+                <element signature="e#3301#3302#0" expanded="true" />
+                <element signature="e#3357#3358#0" expanded="true" />
+                <element signature="e#3403#3404#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GroupCriteria.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dataStore/GroupCriteria.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -55,22 +44,9 @@
       <file leaf-file-name="SelectCriteria.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dataStore/SelectCriteria.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FilterCriteria.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dataStore/FilterCriteria.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
-              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-              <folding>
-                <element signature="e#623#624#0" expanded="true" />
-                <element signature="e#677#678#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -78,11 +54,21 @@
       <file leaf-file-name="QueryToolTest.groovy" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/QueryToolTest.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62108016" vertical-offset="1297" max-vertical-offset="2445">
-              <caret line="134" column="8" selection-start-line="134" selection-start-column="8" selection-end-line="134" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.9216028" vertical-offset="2092" max-vertical-offset="3330">
+              <caret line="210" column="56" selection-start-line="210" selection-start-column="56" selection-end-line="210" selection-end-column="56" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="String.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/src.zip!/java/lang/String.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="27848" max-vertical-offset="45810">
+              <caret line="1953" column="0" selection-start-line="1953" selection-start-column="0" selection-end-line="1953" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -91,19 +77,7 @@
         <entry file="file://$PROJECT_DIR$/src/dataStore/Expression.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="795">
-              <caret line="46" column="50" selection-start-line="46" selection-start-column="50" selection-end-line="46" selection-end-column="50" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QueryArgument.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dataStore/QueryArgument.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
-              <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -151,24 +125,24 @@
         <option value="$PROJECT_DIR$/src/dataStore/MoneyRecord.java" />
         <option value="$PROJECT_DIR$/tests/QueryParserTest.groovy" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryParser.java" />
-        <option value="$PROJECT_DIR$/src/dataStore/DataStore.java" />
         <option value="$PROJECT_DIR$/src/dataStore/Scanner.java" />
-        <option value="$PROJECT_DIR$/src/dataStore/TextFileDataStore.java" />
         <option value="$PROJECT_DIR$/tests/QueryTest.groovy" />
         <option value="$PROJECT_DIR$/src/dataStore/Query.java" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryArguments.java" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryCommands.java" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryCommand.java" />
-        <option value="$PROJECT_DIR$/src/dataStore/SelectCriteria.java" />
         <option value="$PROJECT_DIR$/src/dataStore/OrderCriteria.java" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryScanner.java" />
-        <option value="$PROJECT_DIR$/src/dataStore/MyUtil.java" />
         <option value="$PROJECT_DIR$/src/dataStore/Criteria.java" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryArgument.java" />
-        <option value="$PROJECT_DIR$/src/dataStore/Expression.java" />
         <option value="$PROJECT_DIR$/src/dataStore/FilterCriteria.java" />
-        <option value="$PROJECT_DIR$/src/dataStore/QueryTool.java" />
         <option value="$PROJECT_DIR$/src/dataStore/GroupCriteria.java" />
+        <option value="$PROJECT_DIR$/src/dataStore/MyUtil.java" />
+        <option value="$PROJECT_DIR$/src/dataStore/TextFileDataStore.java" />
+        <option value="$PROJECT_DIR$/src/dataStore/SelectCriteria.java" />
+        <option value="$PROJECT_DIR$/src/dataStore/DataStore.java" />
+        <option value="$PROJECT_DIR$/src/dataStore/Expression.java" />
+        <option value="$PROJECT_DIR$/src/dataStore/QueryTool.java" />
         <option value="$PROJECT_DIR$/tests/QueryToolTest.groovy" />
       </list>
     </option>
@@ -640,12 +614,11 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2700">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2733#2734#0" expanded="true" />
-            <element signature="e#2816#2817#0" expanded="true" />
-            <element signature="e#2998#2999#0" expanded="true" />
-            <element signature="e#3050#3051#0" expanded="true" />
-            <element signature="e#3092#3093#0" expanded="true" />
-            <element signature="e#3145#3146#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3256#3257#0" expanded="true" />
+            <element signature="e#3301#3302#0" expanded="true" />
+            <element signature="e#3357#3358#0" expanded="true" />
+            <element signature="e#3403#3404#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -760,13 +733,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStore/MoneyRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3166784" vertical-offset="0" max-vertical-offset="1421">
-          <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/ImporterTest.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27196652" vertical-offset="0" max-vertical-offset="1434">
@@ -781,14 +747,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.84447575" vertical-offset="0" max-vertical-offset="1421">
           <caret line="80" column="28" selection-start-line="80" selection-start-column="28" selection-end-line="80" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/src.zip!/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33286417" vertical-offset="27697" max-vertical-offset="45810">
-          <caret line="1949" column="57" selection-start-line="1949" selection-start-column="57" selection-end-line="1949" selection-end-column="57" />
-          <folding />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -820,26 +781,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStore/TextFileDataStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3240">
-          <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#521#529#0" expanded="true" />
-            <element signature="e#2906#2914#0" expanded="true" />
-            <element signature="e#4019#4033#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStore/DataStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1395">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStore/QueryScanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1125" max-vertical-offset="2310">
@@ -858,11 +799,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStore/MyUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/dataStore/QueryArgument.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33591732" vertical-offset="0" max-vertical-offset="1161">
-          <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
+          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStore/TextFileDataStore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3210">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#521#529#0" expanded="true" />
+            <element signature="e#2906#2914#0" expanded="true" />
+            <element signature="e#4017#4031#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStore/GroupCriteria.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10335917" vertical-offset="0" max-vertical-offset="1161">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStore/MoneyRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36585367" vertical-offset="0" max-vertical-offset="1148">
+          <caret line="28" column="31" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
+          <folding>
+            <element signature="e#684#685#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -877,72 +851,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStore/QueryArgument.java">
+    <entry file="file://$PROJECT_DIR$/src/dataStore/MyUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
-          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="690">
+          <caret line="38" column="3" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStore/FilterCriteria.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStore/DataStore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="382" max-vertical-offset="1575">
+          <caret line="87" column="22" selection-start-line="87" selection-start-column="22" selection-end-line="87" selection-end-column="22" />
           <folding>
-            <element signature="e#623#624#0" expanded="true" />
-            <element signature="e#677#678#0" expanded="true" />
+            <element signature="e#1910#1911#0" expanded="true" />
+            <element signature="e#1948#1949#0" expanded="true" />
+            <element signature="e#1986#1987#0" expanded="true" />
+            <element signature="e#2015#2016#0" expanded="true" />
+            <element signature="e#2050#2051#0" expanded="true" />
+            <element signature="e#2076#2077#0" expanded="true" />
+            <element signature="e#2112#2113#0" expanded="true" />
+            <element signature="e#2139#2140#0" expanded="true" />
+            <element signature="e#2231#2245#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="27848" max-vertical-offset="45810">
+          <caret line="1953" column="0" selection-start-line="1953" selection-start-column="0" selection-end-line="1953" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStore/Expression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="795">
-          <caret line="46" column="50" selection-start-line="46" selection-start-column="50" selection-end-line="46" selection-end-column="50" />
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStore/GroupCriteria.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStore/SelectCriteria.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2167" max-vertical-offset="3315">
-          <caret line="167" column="42" selection-start-line="167" selection-start-column="42" selection-end-line="167" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="3630">
+          <caret line="72" column="46" selection-start-line="72" selection-start-column="41" selection-end-line="72" selection-end-column="46" />
           <folding>
-            <element signature="e#2733#2734#0" expanded="true" />
-            <element signature="e#2816#2817#0" expanded="true" />
-            <element signature="e#2998#2999#0" expanded="true" />
-            <element signature="e#3050#3051#0" expanded="true" />
-            <element signature="e#3092#3093#0" expanded="true" />
-            <element signature="e#3145#3146#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3256#3257#0" expanded="true" />
+            <element signature="e#3301#3302#0" expanded="true" />
+            <element signature="e#3357#3358#0" expanded="true" />
+            <element signature="e#3403#3404#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/QueryToolTest.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62108016" vertical-offset="1297" max-vertical-offset="2445">
-          <caret line="134" column="8" selection-start-line="134" selection-start-column="8" selection-end-line="134" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.9216028" vertical-offset="2092" max-vertical-offset="3330">
+          <caret line="210" column="56" selection-start-line="210" selection-start-column="56" selection-end-line="210" selection-end-column="56" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>

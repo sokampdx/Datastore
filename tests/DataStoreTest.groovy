@@ -37,18 +37,18 @@ class DataStoreTest extends GroovyTestCase {
                 records);
 
         assertEquals(test, dataStore.getName());
-        assertEquals(keys.toString(), dataStore.getListOfKey());
-        assertEquals(columns.toString(), dataStore.getListOfColumn());
-        assertEquals(types.toString(), dataStore.getListOfType());
+        assertEquals(keys.toString(), dataStore.getKeyToString());
+        assertEquals(columns.toString(), dataStore.getColumnToString());
+        assertEquals(types.toString(), dataStore.getTypeToString());
         dataStore.close();
     }
 
     public void testNewDataStoreWithFileArg() {
         DataStore dataStore = new TextFileDataStore(test);
         assertEquals(test, dataStore.getName());
-        assertEquals(keys.toString(), dataStore.getListOfKey());
-        assertEquals(columns.toString(), dataStore.getListOfColumn());
-        assertEquals(types.toString(), dataStore.getListOfType());
+        assertEquals(keys.toString(), dataStore.getKeyToString());
+        assertEquals(columns.toString(), dataStore.getColumnToString());
+        assertEquals(types.toString(), dataStore.getTypeToString());
     }
 
     public void testNewDataStoreUsingImporterWithOutInvalidRow() {
@@ -76,8 +76,8 @@ class DataStoreTest extends GroovyTestCase {
     public void testReadFromDataStoreFile() {
         DataStore dataStore = new TextFileDataStore(sample);
         assertEquals(sample, dataStore.getName());
-        assertEquals(keys.toString(), dataStore.getListOfKey());
-        assertEquals(columns.toString(), dataStore.getListOfColumn());
-        assertEquals(types.toString(), dataStore.getListOfType());
+        assertEquals(keys.toString(), dataStore.getKeyToString());
+        assertEquals(columns.toString(), dataStore.getColumnToString());
+        assertEquals(types.toString(), dataStore.getTypeToString());
     }
 }

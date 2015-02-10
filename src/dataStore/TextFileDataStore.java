@@ -129,10 +129,8 @@ public class TextFileDataStore extends DataStore {
     return createRecord(Arrays.asList(data), types);
   }
 
-
   private static Record matchRecordTypeOf(String data, String type) {
     Record newRecord = null;
-
 
     if (type.equals(TEXTS)) {
       newRecord = new TextRecord(data);

@@ -6,9 +6,6 @@ import java.util.*;
  * Created by sokam on 2/7/15.
  */
 public abstract class DataStore {
-
-
-
   protected String name;
   protected List<String> keys;
   protected List<String> columns;
@@ -55,20 +52,40 @@ public abstract class DataStore {
     this.types = new ArrayList<String>(types);
   }
 
+  public String getTypeOf(String column) {
+    if (this.columns.contains(column)) {
+      return this.types.get(this.columns.indexOf(column));
+    } else {
+      return null;
+    }
+  }
+
   public String getName() {
     return this.name;
   }
 
-  public String getListOfKey() {
+  public String getKeyToString() {
     return this.keys.toString();
   }
 
-  public String getListOfColumn() {
+  public String getColumnToString() {
     return this.columns.toString();
   }
 
-  public String getListOfType() {
+  public String getTypeToString() {
     return this.types.toString();
+  }
+
+  public List<String> getColumns() {
+    return this.columns;
+  }
+
+  public List<String> getKeys() {
+    return this.keys;
+  }
+
+  public List<String> getTypes() {
+    return this.types;
   }
 
   public List<List<Record>> getRecords() {
@@ -79,13 +96,6 @@ public abstract class DataStore {
     return records;
   };
 
-  private String ArrayListToString (List<String> strings) {
-    String finalString = "";
-    for (String string : strings) {
-      finalString += string + " ";
-    }
-    return finalString;
-  }
   public abstract void insert(String[] data);
 
   public abstract void open(String name);

@@ -41,7 +41,12 @@ class QueryToolTest extends GroovyTestCase {
     
     public final String query6 = "-s TITLE,REV -f 'TITLE=\"the hobbit\" OR TITLE=\"the matrix' -o TITLE";
     public final String query7 = "-s TITLE,REV,STB -g TITLE";
-    
+
+    public final String queryErr1 = "-s -o DATE,TITLE";
+    public final String queryErr2 = "-s TITLE,REV:,STB:collect -g TITLE";
+    public final String queryErr3 = "-s TITLE,REV,DATE -f DATE";
+    public final String queryErr4 = "-s TITLE,REV,DATE -w DATE,TITLE";
+
     private DataStore dataStore = new TextFileDataStore(ORIGINAL);
     private QueryTool queryTool = new QueryTool(dataStore);
 
@@ -80,7 +85,8 @@ class QueryToolTest extends GroovyTestCase {
     public void testQueryForSelect() {
         Expression expression = select_TITLE_REV_DATE()
         queryTool.query(query1);
-        assertTrue(expression.equals(queryTool.getQuery()));
+//        assertTrue(expression.equals(queryTool.getQuery()));
+        assertEquals(expression.toString(), queryTool.getQuery().toString());
     }
 
     private Expression select_TITLE_REV_DATE() {
@@ -99,7 +105,8 @@ class QueryToolTest extends GroovyTestCase {
     public void testQueryForSelectOrder() {
         Expression expression = select_TITLE_REV_DATE_order_DATE_TITLE();
         queryTool.query(query2);
-        assertTrue(expression.equals(queryTool.getQuery()));
+//        assertTrue(expression.equals(queryTool.getQuery()));
+        assertEquals(expression.toString(), queryTool.getQuery().toString());
     }
 
     private Expression select_TITLE_REV_DATE_order_DATE_TITLE() {
@@ -116,7 +123,7 @@ class QueryToolTest extends GroovyTestCase {
     public void testQueryForSelectFilter() {
         Expression expression = select_TITLE_REV_DATE_filter_DATE_2014_04_01();
         queryTool.query(query3);
-        assertTrue(expression.equals(queryTool.getQuery()));
+//        assertTrue(expression.equals(queryTool.getQuery()));
         assertEquals(expression.toString(), queryTool.getQuery().toString());
     }
 
@@ -132,7 +139,7 @@ class QueryToolTest extends GroovyTestCase {
     public void testQueryForSelectGroup() {
         Expression expression = select_TITLE_REV_STB_group_TITLE();
         queryTool.query(query7);
-        assertTrue(expression.equals(queryTool.getQuery()));
+//        assertTrue(expression.equals(queryTool.getQuery()));
         assertEquals(expression.toString(), queryTool.getQuery().toString());
     }
 
@@ -154,4 +161,56 @@ class QueryToolTest extends GroovyTestCase {
         return expression;
     }
 
+    public void testQueryForSelectAggregateGroup() {
+        Expression expression = select_TITLE_REVsum_STBcollect_group_TITLE();
+        queryTool.query(query4);
+//        assertTrue(expression.equals(queryTool.getQuery()));
+        assertEquals(expression.toString(), queryTool.getQuery().toString());
+    }
+
+    private Expression select_TITLE_REVsum_STBcollect_group_TITLE() {
+        Expression expression = new Expression();
+        QueryArgument arguments = new QueryArgument();
+        Criteria criteria = new SelectCriteria("TITLE");
+        arguments.add(criteria);
+        criteria = new SelectCriteria("REV", "sum");
+        arguments.add(criteria);
+        criteria = new SelectCriteria("STB", "collect");
+        arguments.add(criteria);
+        expression.add(QueryTool.SELECT, arguments);
+
+        QueryArgument argument2 = new QueryArgument();
+        criteria = new GroupCriteria("TITLE");
+        argument2.add(criteria);
+        expression.add(QueryTool.GROUP, argument2);
+        return expression;
+    }
+
+    public void testQueryNoSelectColumn() {
+        def msg = shouldFail(IllegalArgumentException) {
+            queryTool.query(queryErr1);
+        }
+        assertEquals(QueryTool.COLUMN_ERR, msg);
+    }
+
+    public void testQueryNoAggregateAfterColon() {
+        def msg = shouldFail(IllegalArgumentException) {
+            queryTool.query(queryErr2);
+        }
+        assertEquals(QueryTool.UNKNOWN_AGGREGATE_ERR, msg);
+    }
+
+    public void testQueryNoEqualInFilter() {
+        def msg = shouldFail(IllegalArgumentException) {
+            queryTool.query(queryErr3);
+        }
+        assertEquals(QueryTool.INCORRECT_FILTER_ERR, msg);
+    }
+
+    public void testQueryUnknownCommand() {
+        def msg = shouldFail(IllegalArgumentException) {
+            queryTool.query(queryErr4);
+        }
+        assertEquals(QueryTool.USAGE, msg);
+    }
 }

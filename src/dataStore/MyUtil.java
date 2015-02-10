@@ -29,4 +29,13 @@ public abstract class MyUtil {
       System.out.print(msg + " | ");
     System.out.println();
   }
+
+  public static String ArrayListToString (List<String> strings) {
+    String finalString = "";
+    for (String string : strings) {
+      finalString += string + " ";
+    }
+    return finalString;
+  }
+
 }

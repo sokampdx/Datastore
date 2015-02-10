@@ -1,5 +1,6 @@
 package dataStore;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class QueryTool {
   public static final String COLUMN_ERR = "Column Name is not in the Database.";
   public static final String UNKNOWN_COMMAND_ERR = "Unknown command.";
   public static final String INCORRECT_FILTER_ERR = "Must specified Filter criteria for the column";
+  public static final String UNKNOWN_AGGREGATE_ERR = "Unrecognized aggregate function.";
   public static final String EOL = "\n";
   public static final String BLANK = " ";
   public static final String COMMA = ",";
@@ -30,6 +32,8 @@ public class QueryTool {
   public static final String OPEN = "(";
   public static final String CLOSE = ")";
 
+
+  public final String[] AGGREGATES = {MAX, MIN, SUM, COUNT, COLLECT};
   public static final String MAX = "max";
   public static final String MIN = "min";
   public static final String SUM = "sum";
@@ -58,21 +62,26 @@ public class QueryTool {
 
   public String query(List<String> tokens) {
     MyUtil.print(MyUtil.DIVIDER + "Start query" + MyUtil.DIVIDER);
+    reset();
     this.tokens = tokens;
     String output = "";
 
-    try {
-      getToken();
-      buildDataStoreQuery();
+    getToken();
+    buildDataStoreQuery();
 
-      if (!nextToken.equals(EOL)) {
-        throw new IllegalArgumentException(USAGE);
-      }
-    } catch (IllegalArgumentException msg) {
-      System.out.println(SYNTAX_ERR + EOL + msg);
+    if (!this.nextToken.equals(EOL)) {
+      throw new IllegalArgumentException(USAGE);
     }
+
     MyUtil.print(MyUtil.DIVIDER + "End query" + MyUtil.DIVIDER + EOL + EOL);
+
     return output;
+  }
+
+  private void reset() {
+    this.expression = new Expression();
+    this.nextToken = "";
+    this.nextIndex = 0;
   }
 
   public Expression getQuery() {
@@ -80,42 +89,40 @@ public class QueryTool {
   }
 
   private void buildDataStoreQuery() {
-    while (isValidCommand()) {
+    while (isValidCommand(this.nextToken)) {
       MyUtil.print("In buildDataStoreQuery while");
       getCommandArgument();
     }
   }
 
-  private boolean isValidCommand() {
-    return hasListOfArgument() || hasSingleArgument() || hasLogicalArgument();
+  private boolean isValidCommand(String command) {
+    return hasListOfArgument(command) || hasSingleArgument(command) || hasLogicalArgument(command);
   }
 
-  private boolean hasListOfArgument() {
-    return this.nextToken.equals(DASH + SELECT) ||
-        this.nextToken.equals(DASH + ORDER);
+  private boolean hasListOfArgument(String command) {
+    return command.equals(DASH + SELECT) || command.equals(DASH + ORDER);
   }
 
-  private boolean hasSingleArgument() {
-    return this.nextToken.equals(DASH + GROUP);
+  private boolean hasSingleArgument(String command) {
+    return command.equals(DASH + GROUP);
   }
 
-  private boolean hasLogicalArgument() {
-    return this.nextToken.equals(DASH + FILTER);
+  private boolean hasLogicalArgument(String command) {
+    return command.equals(DASH + FILTER);
   }
 
   private void getCommandArgument() {
     MyUtil.print(MyUtil.DIVIDER + "In getCommandArgument");
 
-    String command = this.nextToken.substring(1,2);
+    String token = this.nextToken;
+    String command = token.substring(1,2);
+    getToken();
 
-    if (hasListOfArgument()) {
-      getToken();
+    if (hasListOfArgument(token)) {
       this.expression.add(command, getListOfArguments(command));
-    } else if (hasSingleArgument()) {
-      getToken();
+    } else if (hasSingleArgument(token)) {
       this.expression.add(command, getSingleArgument(command));
-    } else if (hasLogicalArgument()) {
-      getToken();
+    } else if (hasLogicalArgument(token)) {
       this.expression.add(command, getLogicalArguments(command));
     }
   }
@@ -129,7 +136,6 @@ public class QueryTool {
     MyUtil.print(MyUtil.DIVIDER + "In SingleArguments");
     QueryArgument arguments = new QueryArgument();
     arguments.add(getCriteria(command));
-    getToken();
     return arguments;
   }
 
@@ -141,7 +147,6 @@ public class QueryTool {
       MyUtil.print(MyUtil.DIVIDER + "In ListArgument While");
       getToken();
       arguments.add(getCriteria(command));
-      getToken();
     }
     return arguments;
   }
@@ -172,11 +177,11 @@ public class QueryTool {
     MyUtil.print(MyUtil.DIVIDER + "In getFilterCriteria");
     String match = "";
     String column = getColumn();
-    getToken();;
 
     if (this.nextToken.equals(EQUAL)) {
       getToken();
       match += this.nextToken;
+      getToken();
     } else {
       throw new IllegalArgumentException(INCORRECT_FILTER_ERR);
     }
@@ -191,17 +196,33 @@ public class QueryTool {
 
   private Criteria getSelectCriteria() {
     MyUtil.print(MyUtil.DIVIDER + "In getSelectCriteria");
-    return new SelectCriteria(getColumn());
+    String aggregate = "";
+    String column = getColumn();
+
+    if (this.nextToken.equals(COLON)) {
+      getToken();
+      if (Arrays.asList(AGGREGATES).contains(this.nextToken)) {
+        aggregate = this.nextToken;
+        getToken();
+        return new SelectCriteria(column, aggregate);
+      } else {
+        throw new IllegalArgumentException(UNKNOWN_AGGREGATE_ERR);
+      }
+    } else {
+      return new SelectCriteria(column);
+    }
   }
 
   private String getColumn() {
     MyUtil.print(MyUtil.DIVIDER + "In getColumn");
-    if (dataStore.getListOfColumn().contains(this.nextToken))
-      return this.nextToken;
-    else
+    if (dataStore.getColumns().contains(this.nextToken)) {
+      String column = this.nextToken;
+      getToken();
+      return column;
+    } else {
       throw new IllegalArgumentException(COLUMN_ERR);
+    }
   }
-
 
   private void getToken() {
     int len = tokens.size();
