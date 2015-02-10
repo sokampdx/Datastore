@@ -17,6 +17,7 @@ public class QueryTool {
   public static final String UNKNOWN_COMMAND_ERR = "Unknown command.";
   public static final String INCORRECT_FILTER_ERR = "Must specified Filter criteria for the column";
   public static final String UNKNOWN_AGGREGATE_ERR = "Unrecognized aggregate function.";
+  private static final String EXPECT_CLOSE_PARENT = "Expecting a close parenthesis.";
   public static final String EOL = "\n";
   public static final String BLANK = " ";
   public static final String COMMA = ",";
@@ -127,10 +128,58 @@ public class QueryTool {
     }
   }
 
-  private QueryArgument getLogicalArguments(String command) {
+/*  private QueryArgument getLogicalArguments(String command) {
     MyUtil.print(MyUtil.DIVIDER + "In LogicalArguments");
     return getSingleArgument(command);
+  }*/
+
+  private QueryArgument getLogicalArguments(String command) {
+    MyUtil.print(MyUtil.DIVIDER + "In LogicalArguments");
+
+    QueryArgument arguments = new QueryArgument();
+    arguments.addAll(getMoreArguments(command));
+
+    while (this.nextToken.equals(OR)) {
+      getToken();
+      arguments.addAll(getLogicalArguments(command));
+    }
+
+    return arguments;
   }
+
+  private QueryArgument getMoreArguments(String command) {
+    MyUtil.print(MyUtil.DIVIDER + "In MoreArguments");
+
+    QueryArgument arguments = new QueryArgument();
+    arguments.addAll(getParenArguments(command));
+
+    while (this.nextToken.equals(AND)) {
+      getToken();
+      arguments.addAll(getMoreArguments(command));
+    }
+
+    return arguments;
+  }
+
+  private QueryArgument getParenArguments(String command) {
+    MyUtil.print(MyUtil.DIVIDER + "In ParenArguments");
+    QueryArgument arguments = new QueryArgument();
+
+    if (this.nextToken.equals(OPEN)) {
+      getToken();
+      arguments.addAll(getLogicalArguments(command));
+      if (this.nextToken.equals(CLOSE)) {
+        getToken();
+      } else {
+        throw new IllegalArgumentException(EXPECT_CLOSE_PARENT);
+      }
+    } else {
+      arguments.add(getCriteria(command));
+    }
+
+    return arguments;
+  }
+
 
   private QueryArgument getSingleArgument(String command) {
     MyUtil.print(MyUtil.DIVIDER + "In SingleArguments");

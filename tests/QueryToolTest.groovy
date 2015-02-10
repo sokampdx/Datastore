@@ -42,6 +42,9 @@ class QueryToolTest extends GroovyTestCase {
     public final String query6 = "-s TITLE,REV -f 'TITLE=\"the hobbit\" OR TITLE=\"the matrix' -o TITLE";
     public final String query7 = "-s TITLE,REV,STB -g TITLE";
 
+    public final String query8 = "-s TITLE,REV -f STB=\"stb1\" AND (TITLE=\"the hobbit\" OR TITLE=\"unbreakable\")";
+    public final String query8Scan = "[-s, TITLE, ,, REV, -f, STB, =, stb1, AND, (, TITLE, =, the hobbit, OR, TITLE, =, unbreakable, )]";
+
     public final String queryErr1 = "-s -o DATE,TITLE";
     public final String queryErr2 = "-s TITLE,REV:,STB:collect -g TITLE";
     public final String queryErr3 = "-s TITLE,REV,DATE -f DATE";
@@ -73,6 +76,11 @@ class QueryToolTest extends GroovyTestCase {
     public void testScannerForSelectAdvanceFilter() {
         QueryScanner scanner = new QueryScanner(query5);
         assertEquals(query5Scan, scanner.getTokens().toString());
+    }
+
+    public void testScannerForSelectAdvanceFilterWithParen() {
+        QueryScanner scanner = new QueryScanner(query8);
+        assertEquals(query8Scan, scanner.getTokens().toString());
     }
 
     public void testScannerForIncorrectAdvanceFilter() {
@@ -176,6 +184,29 @@ class QueryToolTest extends GroovyTestCase {
         criteria = new SelectCriteria("REV", "sum");
         arguments.add(criteria);
         criteria = new SelectCriteria("STB", "collect");
+        arguments.add(criteria);
+        expression.add(QueryTool.SELECT, arguments);
+
+        QueryArgument argument2 = new QueryArgument();
+        criteria = new GroupCriteria("TITLE");
+        argument2.add(criteria);
+        expression.add(QueryTool.GROUP, argument2);
+        return expression;
+    }
+
+    public void testQueryForSelectAdvanceFilterWithParen() {
+        Expression expression = select_TITLE_REVsum_STBcollect_group_TITLE();
+        queryTool.query(query8);
+//        assertTrue(expression.equals(queryTool.getQuery()));
+        assertEquals(expression.toString(), queryTool.getQuery().toString());
+    }
+
+    private Expression select_TITLE_REV_filter_With_Paren() {
+        Expression expression = new Expression();
+        QueryArgument arguments = new QueryArgument();
+        Criteria criteria = new SelectCriteria("TITLE");
+        arguments.add(criteria);
+        criteria = new SelectCriteria("REV");
         arguments.add(criteria);
         expression.add(QueryTool.SELECT, arguments);
 
