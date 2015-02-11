@@ -21,6 +21,7 @@ public class FilterCriteria extends Criteria {
     this.binOp = binOp;
   }
 
+  @Override
   public boolean isBinOp () {
     return this.binOp.length() > 0;
   }

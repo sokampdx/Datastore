@@ -39,9 +39,18 @@ public abstract class QueryMain {
     Expression expression = queryParser.getQuery();
     Map<String, QueryArgument> commandList = expression.getExpression();
 
+    if (commandList.containsKey(FILTER)) {
+      current = dataStore.filter(commandList.get(FILTER).getArguments(), current);
+    }
+
+    if (commandList.containsKey(ORDER)) {
+      current = dataStore.order(commandList.get(ORDER).getArguments(), current);
+    }
+
     if (commandList.containsKey(SELECT)) {
       current = dataStore.select(commandList.get(SELECT).getArguments(), current);
     }
+
 
     result = MyUtil.ListOfListOfRecordToString(current, COMMA);
 

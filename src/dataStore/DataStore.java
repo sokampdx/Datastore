@@ -110,6 +110,37 @@ public abstract class DataStore {
     return result;
   }
 
+  public List<List<Record>> filter(List<Criteria> criteria, List<List<Record>> records) {
+    List<List<Record>> result = new ArrayList<List<Record>>();
+    int index = 0;
+    String match = "";
+//  List<String> aggregate = new ArrayList<String>();
+
+    int criteriaIndex = 0;
+    Criteria c = criteria.get(criteriaIndex);
+    while (c.isBinOp()) {
+      ++criteriaIndex;
+      c = criteria.get(criteriaIndex);
+    }
+
+    index = this.columns.indexOf(c.getColumn());
+    match = ((FilterCriteria) c).getMatch();
+
+    for (List<Record> record : records) {
+      if (record.get(index).getData().equals(match)) {
+        result.add(new ArrayList<Record>(record));
+      }
+    }
+
+    return result;
+  }
+
+  public List<List<Record>> order(List<Criteria> criteria, List<List<Record>> records) {
+    List<List<Record>> result = new ArrayList<List<Record>>();
+
+    return result;
+  }
+
 
   public List<List<Record>> getRecords() {
     List<List<Record>> records = new ArrayList<List<Record>>();

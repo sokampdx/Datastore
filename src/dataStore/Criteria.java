@@ -18,6 +18,10 @@ public abstract class Criteria {
     return this.column;
   }
 
+  public boolean isBinOp () {
+    return false;
+  };
+
   @Override
   public String toString() {
     return this.column;
