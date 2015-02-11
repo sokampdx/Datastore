@@ -15,7 +15,7 @@ public abstract class MyUtil {
 
       str += row.get(0);
       for (int j = 1; j < len; ++j) {
-        str += QueryMain.COMMA + row.get(j).toString();
+        str += Main.COMMA + row.get(j).toString();
       }
       str += '\n';
     }

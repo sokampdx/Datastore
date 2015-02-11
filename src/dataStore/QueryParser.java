@@ -59,7 +59,7 @@ public class QueryParser {
   }
 
   public String query(List<String> tokens) {
-    // MyUtil.print(MyUtil.DIVIDER + "Start query" + MyUtil.DIVIDER);
+//    MyUtil.print(MyUtil.DIVIDER + "Start query" + MyUtil.DIVIDER);
     reset();
     this.tokens = tokens;
     String output = "";
@@ -70,7 +70,7 @@ public class QueryParser {
     if (!this.nextToken.equals(EOL)) {
       throw new IllegalArgumentException(USAGE);
     }
-    // MyUtil.print(MyUtil.DIVIDER + "End query" + MyUtil.DIVIDER + EOL + EOL);
+//    MyUtil.print(MyUtil.DIVIDER + "End query" + MyUtil.DIVIDER + EOL + EOL);
     return output;
   }
 
@@ -86,7 +86,7 @@ public class QueryParser {
 
   private void buildDataStoreQuery() {
     while (isValidCommand(this.nextToken)) {
-      // MyUtil.print(this.nextToken + "In buildDataStoreQuery while");
+//      MyUtil.print(this.nextToken + "In buildDataStoreQuery while");
       getCommandArgument();
     }
   }
@@ -271,7 +271,7 @@ public class QueryParser {
   }
 
   private String getColumn() {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getColumn");
+//    MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getColumn");
     if (dataStore.getColumns().contains(this.nextToken)) {
       String column = this.nextToken;
       getToken();
@@ -288,7 +288,7 @@ public class QueryParser {
     } else {
       this.nextToken = EOL;
     }
-    // MyUtil.print(this.nextToken, this.nextIndex + "", tokens.toString());
+//    MyUtil.print(this.nextToken, this.nextIndex + "", tokens.toString());
   }
 
 

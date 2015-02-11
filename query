@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#javac src/dataStore/*.java
+java -cp src/ dataStore.Main "$@"

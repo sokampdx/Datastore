@@ -131,12 +131,12 @@ public abstract class DataStore {
       createAggregateResult(records, index, aggregate, aggregateValue);
       result.add(aggregateValue);
     } else {
-      createNonAggregateResult(records, result, index);
+      createSimpleSelectResult(records, result, index);
     }
     return result;
   }
 
-  private void createNonAggregateResult(List<List<Record>> records,
+  private void createSimpleSelectResult(List<List<Record>> records,
                                         List<List<Record>> result,
                                         List<Integer> index) {
     for (List<Record> record : records) {

@@ -1,6 +1,5 @@
 import dataStore.DataStore
-import dataStore.MyUtil
-import dataStore.QueryMain
+import dataStore.Main
 import dataStore.Record
 import dataStore.RecordListComparator
 import dataStore.TextFileDataStore
@@ -9,7 +8,7 @@ import dataStore.TextFileDataStore
  * Created by sokam on 2/10/15.
  */
 class RecordListComparatorTest extends GroovyTestCase {
-    DataStore dataStore = new TextFileDataStore(QueryMain.FILENAME);
+    DataStore dataStore = new TextFileDataStore(Main.FILENAME);
     List<List<Record>> current = dataStore.getRecords();
 
     public void testCompareTwoRowAtIndex1And3IsGreater() {

@@ -1,10 +1,9 @@
-import dataStore.MyUtil
-import dataStore.QueryMain
+import dataStore.Main
 
 /**
  * Created by sokam on 2/10/15.
  */
-class QueryMainTest extends GroovyTestCase  {
+class MainTest extends GroovyTestCase  {
     public final String COMMA = ",";
     public final String EOL = "\n";
 
@@ -56,7 +55,7 @@ class QueryMainTest extends GroovyTestCase  {
     public final String query11Answer = "the matrix,warner bros,2:45\n"
 
     public void testSimpleSelect () {
-        String result = QueryMain.run(query1);
+        String result = Main.run(query1);
         String[] expected = query1Answer.split(EOL);
         String[] actual = result.split(EOL);
         Arrays.sort(expected);
@@ -65,7 +64,7 @@ class QueryMainTest extends GroovyTestCase  {
     }
 
     public void testSimpleFilter () {
-        String result = QueryMain.run(query3);
+        String result = Main.run(query3);
         String[] expected = query3Answer.split(EOL);
         String[] actual = result.split(EOL);
         Arrays.sort(expected);
@@ -74,7 +73,7 @@ class QueryMainTest extends GroovyTestCase  {
     }
 
     public void testSimpleSelectWithFilter () {
-        String result = QueryMain.run(query4);
+        String result = Main.run(query4);
         String[] expected = query4Answer.split(EOL);
         String[] actual = result.split(EOL);
         Arrays.sort(expected);
@@ -83,42 +82,42 @@ class QueryMainTest extends GroovyTestCase  {
     }
 
     public void testOrder () {
-        String result = QueryMain.run(query5);
+        String result = Main.run(query5);
         assertEquals(query5Answer.toString(), result.toString());
     }
 
     public void testSimpleSelectWithOrder () {
-        String result = QueryMain.run(query2);
+        String result = Main.run(query2);
         assertEquals(query2Answer.toString(), result.toString());
     }
 
     public void testSimpleSelectWithOrderWithSimpleFilter () {
-        String result = QueryMain.run(query6);
+        String result = Main.run(query6);
         assertEquals(query6Answer.toString(), result.toString());
     }
 
     public void testMinRev () {
-        String result = QueryMain.run(query7);
+        String result = Main.run(query7);
         assertEquals(query7Answer.toString(), result.toString());
     }
 
     public void testMinTIME () {
-        String result = QueryMain.run(query8);
+        String result = Main.run(query8);
         assertEquals(query8Answer.toString(), result.toString());
     }
 
     public void testMaxDATE () {
-        String result = QueryMain.run(query9);
+        String result = Main.run(query9);
         assertEquals(query9Answer.toString(), result.toString());
     }
 
     public void testMaxTIME () {
-        String result = QueryMain.run(query10);
+        String result = Main.run(query10);
         assertEquals(query10Answer.toString(), result.toString());
     }
 
     public void testMaxPROVIDERSelectTITLE () {
-        String result = QueryMain.run(query11);
+        String result = Main.run(query11);
         assertEquals(query11Answer.toString(), result.toString());
     }
 

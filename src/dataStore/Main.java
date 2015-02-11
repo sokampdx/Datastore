@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by sokam on 2/10/15.
  */
-public abstract class QueryMain {
+public abstract class Main {
   public static final String SELECT = "s";
   public static final String ORDER = "o";
   public static final String FILTER = "f";
@@ -17,16 +17,16 @@ public abstract class QueryMain {
   public static String createInput(String[] args) {
     String result = "";
     for (String arg : args) {
-      result += arg;
+      result += arg + " ";
     }
     return result;
   }
 
   public static String run(String[] args) {
-    DataStore dataStore = new TextFileDataStore(QueryMain.FILENAME);
+    DataStore dataStore = new TextFileDataStore(Main.FILENAME);
     List<List<Record>> current = dataStore.getRecords();
 
-    String input = QueryMain.createInput(args);
+    String input = Main.createInput(args);
     QueryScanner scanner = new QueryScanner(input);
 
     QueryParser queryParser = new QueryParser(dataStore);
@@ -46,7 +46,6 @@ public abstract class QueryMain {
     if (commandList.containsKey(SELECT)) {
         current = dataStore.select(commandList.get(SELECT).getArguments(), current);
 
-
     }
 
     return MyUtil.ListOfListOfRecordToString(current);
@@ -57,8 +56,8 @@ public abstract class QueryMain {
   }
 
   public static void main(String[] args) {
-    String result = QueryMain.run(args);
-    QueryMain.printResult(result);
+    String result = Main.run(args);
+    Main.printResult(result);
   }
 
 
