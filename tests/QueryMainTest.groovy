@@ -27,6 +27,14 @@ class QueryMainTest extends GroovyTestCase  {
     public final String query4 = "-s TITLE,REV,DATE -f DATE=2014-04-01";
     public final String query4Answer = "the matrix,4.00,2014-04-01";
 
+    public final String query5 = "-o DATE, TITLE";
+    public final String query5Answer =
+            "stb1,the matrix,warner bros,2014-04-01,4.00,1:30\n" +
+            "stb2,the hobbit,warner bros,2014-04-02,8.00,2:45\n" +
+            "stb3,the matrix,warner bros,2014-04-02,4.00,1:05\n" +
+            "stb1,unbreakable,buena vista,2014-04-03,6.00,2:05\n";
+
+
 
     public void testSimpleSelect () {
         String result = QueryMain.run(query1);
@@ -35,7 +43,6 @@ class QueryMainTest extends GroovyTestCase  {
         Arrays.sort(expected);
         Arrays.sort(actual);
         assertEquals(expected.toString(), actual.toString());
-        MyUtil.print(actual.toString());
     }
 
     public void testSimpleFilter () {
@@ -45,7 +52,6 @@ class QueryMainTest extends GroovyTestCase  {
         Arrays.sort(expected);
         Arrays.sort(actual);
         assertEquals(expected.toString(), actual.toString());
-        MyUtil.print(actual.toString());
     }
 
     public void testSimpleSelectWithFilter () {
@@ -55,6 +61,24 @@ class QueryMainTest extends GroovyTestCase  {
         Arrays.sort(expected);
         Arrays.sort(actual);
         assertEquals(expected.toString(), actual.toString());
-        MyUtil.print(actual.toString());
+    }
+
+    public void testOrder () {
+        String result = QueryMain.run(query5);
+        String[] expected = query5Answer.split(EOL);
+        String[] actual = result.split(EOL);
+        Arrays.sort(expected);
+        Arrays.sort(actual);
+        assertEquals(expected.toString(), actual.toString());
+    }
+
+    public void testSimpleSelectWithOrder () {
+        String result = QueryMain.run(query2);
+        String[] expected = query2Answer.split(EOL);
+        String[] actual = result.split(EOL);
+        Arrays.sort(expected);
+        Arrays.sort(actual);
+        assertEquals(expected.toString(), actual.toString());
+//        MyUtil.print(actual.toString());
     }
 }

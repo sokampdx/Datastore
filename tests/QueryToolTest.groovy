@@ -200,7 +200,7 @@ class QueryToolTest extends GroovyTestCase {
         queryTool.query(query8);
 //        assertTrue(expression.equals(queryTool.getQuery()));
         assertEquals(expression.toString(), queryTool.getQuery().toString());
-        MyUtil.print(queryTool.getQuery().toString());
+//        MyUtil.print(queryTool.getQuery().toString());
     }
 
     private Expression select_TITLE_REV_filter_With_Paren() {

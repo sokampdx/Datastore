@@ -88,61 +88,7 @@ public abstract class DataStore {
     return this.types;
   }
 
-  public List<List<Record>> select(List<Criteria> criteria, List<List<Record>> records) {
-    List<List<Record>> result = new ArrayList<List<Record>>();
-    List<Integer> index = new ArrayList<Integer>();
-//    List<String> aggregate = new ArrayList<String>();
-
-    for (Criteria c : criteria) {
-      if (this.columns.contains(c.getColumn())) {
-        index.add(this.columns.indexOf(c.getColumn()));
-      }
-    }
-
-    for (List<Record> record : records) {
-      List<Record> current = new ArrayList<Record>();
-      for (Integer i : index) {
-        current.add(record.get(i));
-      }
-      result.add(current);
-    }
-
-    return result;
-  }
-
-  public List<List<Record>> filter(List<Criteria> criteria, List<List<Record>> records) {
-    List<List<Record>> result = new ArrayList<List<Record>>();
-    int index = 0;
-    String match = "";
-//  List<String> aggregate = new ArrayList<String>();
-
-    int criteriaIndex = 0;
-    Criteria c = criteria.get(criteriaIndex);
-    while (c.isBinOp()) {
-      ++criteriaIndex;
-      c = criteria.get(criteriaIndex);
-    }
-
-    index = this.columns.indexOf(c.getColumn());
-    match = ((FilterCriteria) c).getMatch();
-
-    for (List<Record> record : records) {
-      if (record.get(index).getData().equals(match)) {
-        result.add(new ArrayList<Record>(record));
-      }
-    }
-
-    return result;
-  }
-
-  public List<List<Record>> order(List<Criteria> criteria, List<List<Record>> records) {
-    List<List<Record>> result = new ArrayList<List<Record>>();
-
-    return result;
-  }
-
-
-  public List<List<Record>> getRecords() {
+    public List<List<Record>> getRecords() {
     List<List<Record>> records = new ArrayList<List<Record>>();
     for (Map.Entry<String, List<Record>> pair : this.records.entrySet()) {
       records.add(pair.getValue());
@@ -163,6 +109,68 @@ public abstract class DataStore {
       records.add(stringList);
     }
     return records;
+  }
+
+  public List<List<Record>> select(List<Criteria> criteria, List<List<Record>> records) {
+    List<List<Record>> result = new ArrayList<List<Record>>();
+    List<Integer> index = new ArrayList<Integer>();
+//    List<String> aggregate = new ArrayList<String>();
+
+    for (Criteria c : criteria) { // simple select only ... no aggregate function
+      if (this.columns.contains(c.getColumn())) {
+        index.add(this.columns.indexOf(c.getColumn()));
+      }
+    }
+
+    for (List<Record> record : records) {
+      List<Record> current = new ArrayList<Record>();
+      for (Integer i : index) {
+        current.add(record.get(i));
+      }
+      result.add(current);
+    }
+
+    return result;
+  }
+
+  public List<List<Record>> filter(List<Criteria> criteria, List<List<Record>> records) {
+    List<List<Record>> result = new ArrayList<List<Record>>();
+    int index = 0;
+    String match = "";
+
+    int criteriaIndex = 0;
+    Criteria c = criteria.get(criteriaIndex);
+    while (c.isBinOp()) { // simple filter only... take first non-BinOp criteria
+      ++criteriaIndex;
+      c = criteria.get(criteriaIndex);
+    }
+
+    index = this.columns.indexOf(c.getColumn());
+    match = ((FilterCriteria) c).getMatch();
+
+    for (List<Record> record : records) {
+      if (record.get(index).getData().equals(match)) {
+        result.add(new ArrayList<Record>(record));
+      }
+    }
+
+    return result;
+  }
+
+  public List<List<Record>> order(List<Criteria> criteria, List<List<Record>> records) {
+    List<List<Record>> result = new ArrayList<List<Record>>(records);
+    List<Integer> index = new ArrayList<Integer>();
+
+    for (Criteria c : criteria) {
+      if (this.columns.contains(c.getColumn())) {
+        index.add(this.columns.indexOf(c.getColumn()));
+      }
+    }
+
+    RecordListComparator comparator = new RecordListComparator(index);
+    Collections.sort(records, comparator);
+
+    return result;
   }
 
   public abstract void insert(String[] data);
