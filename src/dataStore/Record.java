@@ -16,7 +16,7 @@ public abstract class Record implements Comparable<Record> {
 
   public void setData(String data) {
     this.data = data;
-  };
+  }
 
   public String getData() {
     return this.data;
@@ -29,6 +29,9 @@ public abstract class Record implements Comparable<Record> {
   }
 
   public int compareTo(Record record) {
+    if (record == null) {
+      return 1;
+    }
     return this.data.compareTo(record.data);
   }
 

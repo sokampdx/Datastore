@@ -52,6 +52,9 @@ class QueryMainTest extends GroovyTestCase  {
     public final String query10 = "-s VIEW_TIME:max";
     public final String query10Answer = "2:45\n"
 
+    public final String query11 = "-s TITLE,PROVIDER:max,VIEW_TIME:max";
+    public final String query11Answer = "the matrix,warner bros,2:45\n"
+
     public void testSimpleSelect () {
         String result = QueryMain.run(query1);
         String[] expected = query1Answer.split(EOL);
@@ -102,22 +105,21 @@ class QueryMainTest extends GroovyTestCase  {
     public void testMinTIME () {
         String result = QueryMain.run(query8);
         assertEquals(query8Answer.toString(), result.toString());
-        MyUtil.print(query8Answer.toString());
-        MyUtil.print(result.toString());
     }
 
     public void testMaxDATE () {
         String result = QueryMain.run(query9);
         assertEquals(query9Answer.toString(), result.toString());
-        MyUtil.print(query9Answer.toString());
-        MyUtil.print(result.toString());
     }
 
     public void testMaxTIME () {
         String result = QueryMain.run(query10);
         assertEquals(query10Answer.toString(), result.toString());
-        MyUtil.print(query10Answer.toString());
-        MyUtil.print(result.toString());
+    }
+
+    public void testMaxPROVIDERSelectTITLE () {
+        String result = QueryMain.run(query11);
+        assertEquals(query11Answer.toString(), result.toString());
     }
 
 }

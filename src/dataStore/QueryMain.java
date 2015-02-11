@@ -24,11 +24,8 @@ public abstract class QueryMain {
   }
 
   public static String run(String[] args) {
-    String result = "";
-    List<List<Record>> current = new ArrayList<List<Record>>();
-
     DataStore dataStore = new TextFileDataStore(QueryMain.FILENAME);
-    current = dataStore.getRecords();
+    List<List<Record>> current = dataStore.getRecords();
 
     String input = QueryMain.createInput(args);
     QueryScanner scanner = new QueryScanner(input);
@@ -53,12 +50,8 @@ public abstract class QueryMain {
 
     }
 
-
-
-    result = MyUtil.ListOfListOfRecordToString(current, COMMA);
-
-    return result;
-  }
+    return MyUtil.ListOfListOfRecordToString(current);
+}
 
   public static void printResult(String result) {
     System.out.println(result);

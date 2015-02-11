@@ -46,10 +46,9 @@ public class TextFileDataStore extends DataStore {
 
   public void open(String name) {
     this.name = name;
-    Scanner in = null;
 
     try {
-      in = new Scanner(new File(name + EXTENSION));
+      Scanner in = new Scanner(new File(name + EXTENSION));
       importExistingData(in);
 
     } catch (IOException ioe) {
@@ -63,7 +62,7 @@ public class TextFileDataStore extends DataStore {
     boolean hasNotSetTypes = true;
     boolean hasNotSetKeys = true;
 
-    String line = "";
+    String line;
     String [] listOfData;
 
     while (in.hasNextLine()) {

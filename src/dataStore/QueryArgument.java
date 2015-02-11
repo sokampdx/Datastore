@@ -7,7 +7,6 @@ import java.util.List;
  * Created by sokam on 2/9/15.
  */
 public class QueryArgument {
-  private final String COMMA = ",";
 
   private List<Criteria> arguments;
 
@@ -52,6 +51,7 @@ public class QueryArgument {
   @Override
   public String toString() {
     String string = "";
+    String COMMA = ",";
     for (Criteria criteria : arguments) {
       string += criteria.toString() + COMMA;
     }

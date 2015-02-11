@@ -14,11 +14,10 @@ public class RecordListComparator implements Comparator<List<Record>> {
   }
 
   public int compare(List<Record> first, List<Record> second) {
-    int compare = 0;
     int len = this.index.size() - 1;
 
     int i = 0;
-    compare = first.get(this.index.get(i)).compareTo(second.get(this.index.get(i)));
+    int compare = first.get(this.index.get(i)).compareTo(second.get(this.index.get(i)));
     while (compare == 0 && i < len) {
       ++i;
       compare = first.get(this.index.get(i)).compareTo(second.get(this.index.get(i)));

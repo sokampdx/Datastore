@@ -18,7 +18,8 @@ public class DateRecord extends Record {
   public static final int FIRST_MONTH = 1;
   public static final int LAST_MONTH = 12;
   public static final int[] LARGE_MONTH = {1,3,5,7,8,10,12};
-/*
+  public static final String MATCH = "\\d{4}-\\d{2}-\\d{2}";
+  /*
 
   public DateRecord () {
     super();
@@ -63,7 +64,7 @@ public class DateRecord extends Record {
     int month = Integer.parseInt(str[1]);
     int day = Integer.parseInt(str[2]);
 
-    return date.matches("\\d{4}-\\d{2}-\\d{2}") && DateRecord.isValid(year, month, day);
+    return date.matches(MATCH) && DateRecord.isValid(year, month, day);
   }
 
   private static boolean isValid (int year, int month, int day) {

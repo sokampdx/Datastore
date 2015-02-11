@@ -1,4 +1,5 @@
 import dataStore.DateRecord
+import dataStore.IntegerRecord
 import dataStore.MoneyRecord
 import dataStore.TimeRecord
 import dataStore.Record
@@ -170,6 +171,25 @@ class RecordTest extends GroovyTestCase {
     public void testCompareDifferentMinuteDataInHourAndMinuteRecord() {
         Record record1 = new TimeRecord("15:50");
         Record record2 = new TimeRecord("15:51");
+        assertTrue(record1.compareTo(record2) < 0);
+    }
+
+    public void testCreateIntegerRecordWithInteger() {
+        Integer value = 1932;
+        Record record = new IntegerRecord(value);
+        assertEquals(value.toString(), record.getData());
+    }
+
+    public void testCompareSameRecord() {
+        Integer value = 567;
+        Record record1 = new IntegerRecord(value);
+        Record record2 = new IntegerRecord(value);
+        assertTrue(record1.compareTo(record2) == 0);
+    }
+
+    public void testCompareDifferentRecord() {
+        Record record1 = new IntegerRecord(567);
+        Record record2 = new IntegerRecord(568);
         assertTrue(record1.compareTo(record2) < 0);
     }
 }

@@ -1,5 +1,4 @@
 package dataStore;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +7,7 @@ import java.util.List;
 public abstract class MyUtil {
   public static final String DIVIDER = "---------------";
 
-  public static String ListOfListOfRecordToString(List<List<Record>> collection, String delimiter) {
+  public static String ListOfListOfRecordToString(List<List<Record>> collection) {
     String str = "";
 
     for (List<Record> row : collection) {
@@ -16,7 +15,7 @@ public abstract class MyUtil {
 
       str += row.get(0);
       for (int j = 1; j < len; ++j) {
-        str += delimiter + row.get(j).toString();
+        str += QueryMain.COMMA + row.get(j).toString();
       }
       str += '\n';
     }

@@ -30,5 +30,5 @@ public abstract class Importer {
 
   public List<List<String>> getData() {
     return this.data;
-  };
+  }
 }

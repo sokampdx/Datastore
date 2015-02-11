@@ -19,14 +19,12 @@ public class DelimitedTextImporter extends Importer {
   }
 
   private void readFromFile() {
-    String line = "";
     String [] strList;
     Scanner in = null;
-    int numCol = 0;
     try {
       in = new Scanner(new File(getSource()));
       while (in.hasNextLine()) {
-        line = in.nextLine();
+        String line = in.nextLine();
         strList = line.split(delimiter);
         super.addData(new ArrayList<String>(Arrays.asList(strList)));
       }

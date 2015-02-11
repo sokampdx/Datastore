@@ -1,6 +1,5 @@
 package dataStore;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -200,7 +199,7 @@ public class QueryParser {
 
   private Criteria getCriteria(String command) {
     // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getCriteria");
-    Criteria criteria = null;
+    Criteria criteria;
 
     if (command.equals(SELECT)) {
       criteria = getSelectCriteria();
@@ -231,7 +230,7 @@ public class QueryParser {
 
     } else {
       // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getFilterCriteria Non-BinOP");
-      String match = "";
+      String match;
       String column = getColumn();
 
       if (this.nextToken.equals(EQUAL)) {
@@ -256,7 +255,7 @@ public class QueryParser {
 
   private Criteria getSelectCriteria() {
     // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getSelectCriteria");
-    String aggregate = "";
+    String aggregate;
     String column = getColumn();
 
     if (this.nextToken.equals(COLON)) {

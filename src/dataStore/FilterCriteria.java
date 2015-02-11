@@ -4,7 +4,6 @@ package dataStore;
  * Created by sokam on 2/9/15.
  */
 public class FilterCriteria extends Criteria {
-  private final String EQUAL = "=";
 
   private String match;
   private String binOp;
@@ -48,6 +47,7 @@ public class FilterCriteria extends Criteria {
 
   @Override
   public String toString() {
+    String EQUAL = "=";
     if (this.binOp.length() > 0) {
       return binOp;
     } else {

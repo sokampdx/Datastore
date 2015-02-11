@@ -20,7 +20,7 @@ public abstract class Criteria {
 
   public boolean isBinOp () {
     return false;
-  };
+  }
 
   @Override
   public String toString() {

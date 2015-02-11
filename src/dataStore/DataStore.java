@@ -100,16 +100,16 @@ public abstract class DataStore {
       records.add(pair.getValue());
     }
     return records;
-  };
+  }
 
   public List<List<String>> getRecordsToString() {
     List<List<String>> records = new ArrayList<List<String>>();
-    for (Map.Entry<String, List<Record>> pair : this.records.entrySet()) {;
+    for (Map.Entry<String, List<Record>> pair : this.records.entrySet()) {
       List<Record> row = pair.getValue();
       int len = row.size();
       List<String> stringList =  new ArrayList<String>();
-      for (int i = 0; i < len; ++i) {
-        stringList.add(row.get(i).toString());
+      for (Record aRow : row) {
+        stringList.add(aRow.toString());
       }
 
       records.add(stringList);
@@ -142,11 +142,11 @@ public abstract class DataStore {
       int currentIndex = 0;
       List<Record> currentRow = records.get(currentIndex);
       for (int i = 0; i < numOfCol; ++i) {
-        record = currentRow.get(index.get(i));
         String agg = aggregate.get(i);
-        if (agg.equals(MIN) || agg.equals(MAX)) {
-          aggregateValue.add(record);
+        if (agg.equals(MIN) || agg.equals(MAX) || agg.equals("")) {
+          record = currentRow.get(index.get(i));
         }
+        aggregateValue.add(record);
       }
 
       for (int j = 1; j < numOfRow; ++j) {
@@ -163,9 +163,7 @@ public abstract class DataStore {
           }
         }
       }
-
       result.add(aggregateValue);
-
 
     } else {
       for (List<Record> record : records) {
@@ -189,8 +187,6 @@ public abstract class DataStore {
 
   public List<List<Record>> filter(List<Criteria> criteria, List<List<Record>> records) {
     List<List<Record>> result = new ArrayList<List<Record>>();
-    int index = 0;
-    String match = "";
 
     int criteriaIndex = 0;
     Criteria c = criteria.get(criteriaIndex);
@@ -199,8 +195,8 @@ public abstract class DataStore {
       c = criteria.get(criteriaIndex);
     }
 
-    index = this.columns.indexOf(c.getColumn());
-    match = ((FilterCriteria) c).getMatch();
+    int index = this.columns.indexOf(c.getColumn());
+    String match = ((FilterCriteria) c).getMatch();
 
     for (List<Record> record : records) {
       if (record.get(index).getData().equals(match)) {
@@ -210,6 +206,10 @@ public abstract class DataStore {
 
     return result;
   }
+
+
+
+
 
   public List<List<Record>> order(List<Criteria> criteria, List<List<Record>> records) {
     List<List<Record>> result = new ArrayList<List<Record>>(records);
