@@ -88,6 +88,29 @@ public abstract class DataStore {
     return this.types;
   }
 
+  public List<List<Record>> select(List<Criteria> criteria, List<List<Record>> records) {
+    List<List<Record>> result = new ArrayList<List<Record>>();
+    List<Integer> index = new ArrayList<Integer>();
+//    List<String> aggregate = new ArrayList<String>();
+
+    for (Criteria c : criteria) {
+      if (this.columns.contains(c.getColumn())) {
+        index.add(this.columns.indexOf(c.getColumn()));
+      }
+    }
+
+    for (List<Record> record : records) {
+      List<Record> current = new ArrayList<Record>();
+      for (Integer i : index) {
+        current.add(record.get(i));
+      }
+      result.add(current);
+    }
+
+    return result;
+  }
+
+
   public List<List<Record>> getRecords() {
     List<List<Record>> records = new ArrayList<List<Record>>();
     for (Map.Entry<String, List<Record>> pair : this.records.entrySet()) {
@@ -95,6 +118,21 @@ public abstract class DataStore {
     }
     return records;
   };
+
+  public List<List<String>> getRecordsToString() {
+    List<List<String>> records = new ArrayList<List<String>>();
+    for (Map.Entry<String, List<Record>> pair : this.records.entrySet()) {;
+      List<Record> row = pair.getValue();
+      int len = row.size();
+      List<String> stringList =  new ArrayList<String>();
+      for (int i = 0; i < len; ++i) {
+        stringList.add(row.get(i).toString());
+      }
+
+      records.add(stringList);
+    }
+    return records;
+  }
 
   public abstract void insert(String[] data);
 

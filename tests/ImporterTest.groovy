@@ -23,7 +23,7 @@ class ImporterTest extends GroovyTestCase {
 
     public void testImporterReadIncorrectFilename() {
         Importer importer = new DelimitedTextImporter(ORIGINAL_TXT_FILE, DELIMITER);
-        assertEquals(ORIGINAL, MyUtil.toStringForArrayListOfList(importer.getData()));
+        assertEquals(ORIGINAL, MyUtil.ListOfListOfStringToString(importer.getData(),"|"));
     }
 
 

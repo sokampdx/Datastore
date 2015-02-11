@@ -8,15 +8,31 @@ import java.util.List;
 public abstract class MyUtil {
   public static final String DIVIDER = "---------------";
 
-  public static String toStringForArrayListOfList(List<List<Object>> collection) {
+  public static String ListOfListOfRecordToString(List<List<Record>> collection, String delimiter) {
     String str = "";
 
-    for (List<Object> row : collection) {
+    for (List<Record> row : collection) {
       int len = row.size();
 
       str += row.get(0);
       for (int j = 1; j < len; ++j) {
-        str += "|" + row.get(j).toString();
+        str += delimiter + row.get(j).toString();
+      }
+      str += '\n';
+    }
+
+    return str;
+  }
+
+  public static String ListOfListOfStringToString(List<List<String>> collection, String delimiter) {
+    String str = "";
+
+    for (List<String> row : collection) {
+      int len = row.size();
+
+      str += row.get(0);
+      for (int j = 1; j < len; ++j) {
+        str += delimiter + row.get(j);
       }
       str += '\n';
     }
@@ -37,5 +53,6 @@ public abstract class MyUtil {
     }
     return finalString;
   }
+
 
 }

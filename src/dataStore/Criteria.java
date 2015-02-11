@@ -14,6 +14,10 @@ public abstract class Criteria {
     return this.column.equals(match.column);
   }
 
+  public String getColumn() {
+    return this.column;
+  }
+
   @Override
   public String toString() {
     return this.column;

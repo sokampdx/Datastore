@@ -12,12 +12,25 @@ public class FilterCriteria extends Criteria {
   public FilterCriteria (String column, String match) {
     super(column);
     this.match = match;
+    this.binOp = "";
   }
 
   public FilterCriteria (String binOp) {
     super("");
     this.match = "";
     this.binOp = binOp;
+  }
+
+  public boolean isBinOp () {
+    return this.binOp.length() > 0;
+  }
+
+  public String getMatch() {
+    return this.match;
+  }
+
+  public String getBinOp() {
+    return this.binOp;
   }
 
   @Override
@@ -34,6 +47,10 @@ public class FilterCriteria extends Criteria {
 
   @Override
   public String toString() {
-    return super.toString() + EQUAL + this.match;
+    if (this.binOp.length() > 0) {
+      return binOp;
+    } else {
+      return super.toString() + EQUAL + this.match;
+    }
   }
 }

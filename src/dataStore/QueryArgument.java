@@ -29,6 +29,10 @@ public class QueryArgument {
     this.arguments.addAll(index, anotherlist.arguments);
   }
 
+  public List<Criteria> getArguments () {
+    return this.arguments;
+  }
+
   public boolean equals (QueryArgument match) {
     boolean isEqual = true;
     int len = this.arguments.size();

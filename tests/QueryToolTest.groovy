@@ -3,9 +3,10 @@ import dataStore.DataStore
 import dataStore.Expression
 import dataStore.FilterCriteria
 import dataStore.GroupCriteria
+import dataStore.MyUtil
 import dataStore.OrderCriteria
 import dataStore.QueryArgument
-import dataStore.QueryTool
+import dataStore.QueryParser
 import dataStore.QueryScanner
 import dataStore.SelectCriteria
 import dataStore.TextFileDataStore
@@ -51,7 +52,7 @@ class QueryToolTest extends GroovyTestCase {
     public final String queryErr4 = "-s TITLE,REV,DATE -w DATE,TITLE";
 
     private DataStore dataStore = new TextFileDataStore(ORIGINAL);
-    private QueryTool queryTool = new QueryTool(dataStore);
+    private QueryParser queryTool = new QueryParser(dataStore);
 
     public void testScannerForSelect() {
         QueryScanner scanner = new QueryScanner(query1);
@@ -106,7 +107,7 @@ class QueryToolTest extends GroovyTestCase {
         arguments.add(criteria);
         criteria = new SelectCriteria("DATE");
         arguments.add(criteria);
-        expression.add(QueryTool.SELECT, arguments);
+        expression.add(QueryParser.SELECT, arguments);
         return expression;
     }
 
@@ -124,7 +125,7 @@ class QueryToolTest extends GroovyTestCase {
         arguments.add(criteria);
         criteria = new OrderCriteria("TITLE");
         arguments.add(criteria);
-        expression.add(QueryTool.ORDER, arguments);
+        expression.add(QueryParser.ORDER, arguments);
         return expression;
     }
 
@@ -140,7 +141,7 @@ class QueryToolTest extends GroovyTestCase {
         QueryArgument arguments = new QueryArgument();
         Criteria criteria = new FilterCriteria("DATE", "2014-04-01");
         arguments.add(criteria);
-        expression.add(QueryTool.FILTER, arguments);
+        expression.add(QueryParser.FILTER, arguments);
         return expression;
     }
 
@@ -160,12 +161,12 @@ class QueryToolTest extends GroovyTestCase {
         arguments.add(criteria);
         criteria = new SelectCriteria("STB");
         arguments.add(criteria);
-        expression.add(QueryTool.SELECT, arguments);
+        expression.add(QueryParser.SELECT, arguments);
 
         QueryArgument argument2 = new QueryArgument();
         criteria = new GroupCriteria("TITLE");
         argument2.add(criteria);
-        expression.add(QueryTool.GROUP, argument2);
+        expression.add(QueryParser.GROUP, argument2);
         return expression;
     }
 
@@ -185,22 +186,23 @@ class QueryToolTest extends GroovyTestCase {
         arguments.add(criteria);
         criteria = new SelectCriteria("STB", "collect");
         arguments.add(criteria);
-        expression.add(QueryTool.SELECT, arguments);
+        expression.add(QueryParser.SELECT, arguments);
 
         QueryArgument argument2 = new QueryArgument();
         criteria = new GroupCriteria("TITLE");
         argument2.add(criteria);
-        expression.add(QueryTool.GROUP, argument2);
+        expression.add(QueryParser.GROUP, argument2);
         return expression;
     }
 
- /*   public void testQueryForSelectAdvanceFilterWithParen() {
+    public void testQueryForSelectAdvanceFilterWithParen() {
         Expression expression = select_TITLE_REV_filter_With_Paren();
         queryTool.query(query8);
 //        assertTrue(expression.equals(queryTool.getQuery()));
         assertEquals(expression.toString(), queryTool.getQuery().toString());
+        MyUtil.print(queryTool.getQuery().toString());
     }
-*/
+
     private Expression select_TITLE_REV_filter_With_Paren() {
         Expression expression = new Expression();
         QueryArgument arguments = new QueryArgument();
@@ -208,16 +210,29 @@ class QueryToolTest extends GroovyTestCase {
         arguments.add(criteria);
         criteria = new SelectCriteria("REV");
         arguments.add(criteria);
-        expression.add(QueryTool.SELECT, arguments);
+        expression.add(QueryParser.SELECT, arguments);
+
+        QueryArgument argument1 = new QueryArgument();
+        criteria = new FilterCriteria("STB", "stb1");
+        argument1.add(criteria);
+        criteria = new FilterCriteria(QueryParser.OR);
+        argument1.addBinOp(criteria);
 
         QueryArgument argument2 = new QueryArgument();
         criteria = new FilterCriteria("TITLE", "the hobbit");
         argument2.add(criteria);
+        criteria = new FilterCriteria(QueryParser.OR);
+        argument2.addBinOp(criteria);
         criteria = new FilterCriteria("TITLE", "unbreakable");
         argument2.add(criteria);
-        criteria = new FilterCriteria("STB", "stb1");
+        criteria = new FilterCriteria(QueryParser.AND);
+        argument2.addBinOp(criteria);
+        criteria = new FilterCriteria("DATE", "2014-04-01");
         argument2.add(criteria);
-        expression.add(QueryTool.FILTER, argument2);
+
+        argument1.addAll(argument2);
+
+        expression.add(QueryParser.FILTER, argument1);
         return expression;
     }
 
@@ -225,27 +240,27 @@ class QueryToolTest extends GroovyTestCase {
         def msg = shouldFail(IllegalArgumentException) {
             queryTool.query(queryErr1);
         }
-        assertEquals(QueryTool.COLUMN_ERR, msg);
+        assertEquals(QueryParser.COLUMN_ERR, msg);
     }
 
     public void testQueryNoAggregateAfterColon() {
         def msg = shouldFail(IllegalArgumentException) {
             queryTool.query(queryErr2);
         }
-        assertEquals(QueryTool.UNKNOWN_AGGREGATE_ERR, msg);
+        assertEquals(QueryParser.UNKNOWN_AGGREGATE_ERR, msg);
     }
 
     public void testQueryNoEqualInFilter() {
         def msg = shouldFail(IllegalArgumentException) {
             queryTool.query(queryErr3);
         }
-        assertEquals(QueryTool.INCORRECT_FILTER_ERR, msg);
+        assertEquals(QueryParser.INCORRECT_FILTER_ERR, msg);
     }
 
     public void testQueryUnknownCommand() {
         def msg = shouldFail(IllegalArgumentException) {
             queryTool.query(queryErr4);
         }
-        assertEquals(QueryTool.USAGE, msg);
+        assertEquals(QueryParser.USAGE, msg);
     }
 }

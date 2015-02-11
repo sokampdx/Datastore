@@ -20,6 +20,10 @@ public class SelectCriteria extends Criteria {
     this.aggregate = aggregate;
   }
 
+  public String getAggregate() {
+    return this.aggregate;
+  }
+
   @Override
   public String toString() {
     String string = super.toString();

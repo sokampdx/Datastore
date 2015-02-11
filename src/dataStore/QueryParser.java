@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class QueryTool {
+public class QueryParser {
   public static final String USAGE = "USAGE: ./query " +
       "-s column[:aggregate]{,column[:aggregate]} " +
       "[-o column{,column}] " +
@@ -31,8 +31,6 @@ public class QueryTool {
   public static final String GROUP = "g";
   public static final String OPEN = "(";
   public static final String CLOSE = ")";
-
-  public final String[] BINOP = {AND, OR};
   public static final String AND = "AND";
   public static final String OR = "OR";
 
@@ -50,7 +48,7 @@ public class QueryTool {
 
   private Expression expression;
 
-  public QueryTool(DataStore dataStore) {
+  public QueryParser(DataStore dataStore) {
     this.dataStore = dataStore;
     this.expression = new Expression();
     this.tokens = null;
@@ -64,7 +62,7 @@ public class QueryTool {
   }
 
   public String query(List<String> tokens) {
-    MyUtil.print(MyUtil.DIVIDER + "Start query" + MyUtil.DIVIDER);
+    // MyUtil.print(MyUtil.DIVIDER + "Start query" + MyUtil.DIVIDER);
     reset();
     this.tokens = tokens;
     String output = "";
@@ -76,7 +74,7 @@ public class QueryTool {
       throw new IllegalArgumentException(USAGE);
     }
 
-    MyUtil.print(MyUtil.DIVIDER + "End query" + MyUtil.DIVIDER + EOL + EOL);
+    // MyUtil.print(MyUtil.DIVIDER + "End query" + MyUtil.DIVIDER + EOL + EOL);
 
     return output;
   }
@@ -93,7 +91,7 @@ public class QueryTool {
 
   private void buildDataStoreQuery() {
     while (isValidCommand(this.nextToken)) {
-      MyUtil.print("In buildDataStoreQuery while");
+      // MyUtil.print(this.nextToken + "In buildDataStoreQuery while");
       getCommandArgument();
     }
   }
@@ -115,7 +113,7 @@ public class QueryTool {
   }
 
   private void getCommandArgument() {
-    MyUtil.print(MyUtil.DIVIDER + "In getCommandArgument");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getCommandArgument");
 
     String token = this.nextToken;
     String command = token.substring(1,2);
@@ -130,21 +128,19 @@ public class QueryTool {
     }
   }
 
-  private QueryArgument getLogicalArguments(String command) {
-    MyUtil.print(MyUtil.DIVIDER + "In LogicalArguments");
+/*  private QueryArgument getLogicalArguments(String command) {
+    // MyUtil.print(MyUtil.DIVIDER + "In LogicalArguments");
     return getSingleArgument(command);
-  }
-/*
+  }*/
 
   private QueryArgument getLogicalArguments(String command) {
-    MyUtil.print(MyUtil.DIVIDER + "In LogicalArguments");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In LogicalArguments");
 
     QueryArgument arguments = new QueryArgument();
     arguments.addAll(getMoreArguments(command));
 
     while (this.nextToken.equals(OR)) {
       arguments.addBinOp(getCriteria(command));
-      getToken();
       arguments.addAll(getLogicalArguments(command));
     }
 
@@ -152,14 +148,13 @@ public class QueryTool {
   }
 
   private QueryArgument getMoreArguments(String command) {
-    MyUtil.print(MyUtil.DIVIDER + "In MoreArguments");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In MoreArguments");
 
     QueryArgument arguments = new QueryArgument();
     arguments.addAll(getParenArguments(command));
 
     while (this.nextToken.equals(AND)) {
       arguments.addBinOp(getCriteria(command));
-      getToken();
       arguments.addAll(getMoreArguments(command));
     }
 
@@ -167,7 +162,7 @@ public class QueryTool {
   }
 
   private QueryArgument getParenArguments(String command) {
-    MyUtil.print(MyUtil.DIVIDER + "In ParenArguments");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In ParenArguments");
     QueryArgument arguments = new QueryArgument();
 
     if (this.nextToken.equals(OPEN)) {
@@ -185,10 +180,9 @@ public class QueryTool {
     return arguments;
   }
 
-*/
 
   private QueryArgument getSingleArgument(String command) {
-    MyUtil.print(MyUtil.DIVIDER + "In SingleArguments");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In SingleArguments");
     QueryArgument arguments = new QueryArgument();
     arguments.add(getCriteria(command));
     return arguments;
@@ -196,10 +190,10 @@ public class QueryTool {
 
 
   private QueryArgument getListOfArguments(String command) {
-    MyUtil.print(MyUtil.DIVIDER + "In ListArguments");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In ListArguments");
     QueryArgument arguments = getSingleArgument(command);
     while (this.nextToken.equals(COMMA)) {
-      MyUtil.print(MyUtil.DIVIDER + "In ListArgument While");
+      // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In ListArgument While");
       getToken();
       arguments.add(getCriteria(command));
     }
@@ -207,7 +201,7 @@ public class QueryTool {
   }
 
   private Criteria getCriteria(String command) {
-    MyUtil.print(MyUtil.DIVIDER + "In getCriteria");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getCriteria");
     Criteria criteria = null;
 
     if (command.equals(SELECT)) {
@@ -224,19 +218,21 @@ public class QueryTool {
     return criteria;
   }
   private Criteria getGroupCriteria() {
-    MyUtil.print(MyUtil.DIVIDER + "In getGroupCriteria");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getGroupCriteria");
     return new GroupCriteria(getColumn());
   }
 
   private Criteria getFilterCriteria() {
-    MyUtil.print(MyUtil.DIVIDER + "In getFilterCriteria");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getFilterCriteria");
 
-    if (Arrays.asList(BINOP).contains(this.nextToken)) {
+    if (isBinOp()) {
+      // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getFilterCriteria BinOP");
       String binOp = this.nextToken;
       getToken();
       return new FilterCriteria(binOp);
 
     } else {
+      // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getFilterCriteria Non-BinOP");
       String match = "";
       String column = getColumn();
 
@@ -251,13 +247,17 @@ public class QueryTool {
     }
   }
 
+  private boolean isBinOp() {
+    return this.nextToken.equals(AND) || this.nextToken.equals(OR);
+  }
+
   private Criteria getOrderCriteria() {
-    MyUtil.print(MyUtil.DIVIDER + "In getOrderCriteria");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getOrderCriteria");
     return new OrderCriteria(getColumn());
   }
 
   private Criteria getSelectCriteria() {
-    MyUtil.print(MyUtil.DIVIDER + "In getSelectCriteria");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getSelectCriteria");
     String aggregate = "";
     String column = getColumn();
 
@@ -276,7 +276,7 @@ public class QueryTool {
   }
 
   private String getColumn() {
-    MyUtil.print(MyUtil.DIVIDER + "In getColumn");
+    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getColumn");
     if (dataStore.getColumns().contains(this.nextToken)) {
       String column = this.nextToken;
       getToken();
@@ -293,7 +293,7 @@ public class QueryTool {
     } else {
       this.nextToken = EOL;
     }
-    MyUtil.print(this.nextToken, this.nextIndex + "", tokens.toString());
+    // MyUtil.print(this.nextToken, this.nextIndex + "", tokens.toString());
   }
 
 

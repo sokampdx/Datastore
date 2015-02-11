@@ -16,7 +16,7 @@ public class Expression {
     this.expression = new HashMap<String, QueryArgument>();
   }
 
-  public void add (String queryCommand, QueryArgument queryArgument) {
+  public void add(String queryCommand, QueryArgument queryArgument) {
     this.expression.put(queryCommand, queryArgument);
   }
 
@@ -28,6 +28,10 @@ public class Expression {
     }
 
     return isMatch;
+  }
+
+  public Map<String, QueryArgument> getExpression() {
+    return this.expression;
   }
 
   private boolean isMatchArgs(Expression match, Map.Entry<String, QueryArgument> pair) {
