@@ -73,9 +73,7 @@ public class QueryParser {
     if (!this.nextToken.equals(EOL)) {
       throw new IllegalArgumentException(USAGE);
     }
-
     // MyUtil.print(MyUtil.DIVIDER + "End query" + MyUtil.DIVIDER + EOL + EOL);
-
     return output;
   }
 

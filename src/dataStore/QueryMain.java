@@ -48,8 +48,11 @@ public abstract class QueryMain {
     }
 
     if (commandList.containsKey(SELECT)) {
-      current = dataStore.select(commandList.get(SELECT).getArguments(), current);
+        current = dataStore.select(commandList.get(SELECT).getArguments(), current);
+
+
     }
+
 
 
     result = MyUtil.ListOfListOfRecordToString(current, COMMA);

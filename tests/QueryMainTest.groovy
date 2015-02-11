@@ -15,7 +15,8 @@ class QueryMainTest extends GroovyTestCase  {
             "the hobbit,8.00,2014-04-02\n" +
             "the matrix,4.00,2014-04-02\n";
     public final String query2 = "-s TITLE,REV,DATE -o DATE,TITLE";
-    public final String query2Answer = "the matrix,4.00,2014-04-01\n" +
+    public final String query2Answer =
+            "the matrix,4.00,2014-04-01\n" +
             "the hobbit,8.00,2014-04-02\n" +
             "the matrix,4.00,2014-04-02\n" +
             "unbreakable,6.00,2014-04-03\n";
@@ -34,7 +35,22 @@ class QueryMainTest extends GroovyTestCase  {
             "stb3,the matrix,warner bros,2014-04-02,4.00,1:05\n" +
             "stb1,unbreakable,buena vista,2014-04-03,6.00,2:05\n";
 
+    public final String query6 = "-s TITLE,REV,DATE -o DATE,REV -f DATE=2014-04-02";
+    public final String query6Answer =
+            "the matrix,4.00,2014-04-02\n" +
+            "the hobbit,8.00,2014-04-02\n";
 
+    public final String query7 = "-s REV:min";
+    public final String query7Answer = "4.00\n"
+
+    public final String query8 = "-s VIEW_TIME:min";
+    public final String query8Answer = "1:05\n"
+
+    public final String query9 = "-s DATE:max";
+    public final String query9Answer = "2014-04-03\n"
+
+    public final String query10 = "-s VIEW_TIME:max";
+    public final String query10Answer = "2:45\n"
 
     public void testSimpleSelect () {
         String result = QueryMain.run(query1);
@@ -65,20 +81,43 @@ class QueryMainTest extends GroovyTestCase  {
 
     public void testOrder () {
         String result = QueryMain.run(query5);
-        String[] expected = query5Answer.split(EOL);
-        String[] actual = result.split(EOL);
-        Arrays.sort(expected);
-        Arrays.sort(actual);
-        assertEquals(expected.toString(), actual.toString());
+        assertEquals(query5Answer.toString(), result.toString());
     }
 
     public void testSimpleSelectWithOrder () {
         String result = QueryMain.run(query2);
-        String[] expected = query2Answer.split(EOL);
-        String[] actual = result.split(EOL);
-        Arrays.sort(expected);
-        Arrays.sort(actual);
-        assertEquals(expected.toString(), actual.toString());
-//        MyUtil.print(actual.toString());
+        assertEquals(query2Answer.toString(), result.toString());
     }
+
+    public void testSimpleSelectWithOrderWithSimpleFilter () {
+        String result = QueryMain.run(query6);
+        assertEquals(query6Answer.toString(), result.toString());
+    }
+
+    public void testMinRev () {
+        String result = QueryMain.run(query7);
+        assertEquals(query7Answer.toString(), result.toString());
+    }
+
+    public void testMinTIME () {
+        String result = QueryMain.run(query8);
+        assertEquals(query8Answer.toString(), result.toString());
+        MyUtil.print(query8Answer.toString());
+        MyUtil.print(result.toString());
+    }
+
+    public void testMaxDATE () {
+        String result = QueryMain.run(query9);
+        assertEquals(query9Answer.toString(), result.toString());
+        MyUtil.print(query9Answer.toString());
+        MyUtil.print(result.toString());
+    }
+
+    public void testMaxTIME () {
+        String result = QueryMain.run(query10);
+        assertEquals(query10Answer.toString(), result.toString());
+        MyUtil.print(query10Answer.toString());
+        MyUtil.print(result.toString());
+    }
+
 }

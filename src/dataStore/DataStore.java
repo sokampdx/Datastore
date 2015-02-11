@@ -6,6 +6,12 @@ import java.util.*;
  * Created by sokam on 2/7/15.
  */
 public abstract class DataStore {
+  public static final String MAX = "max";
+  public static final String MIN = "min";
+  public static final String SUM = "sum";
+  public static final String COUNT = "count";
+  public static final String COLLECT = "collect";
+
   protected String name;
   protected List<String> keys;
   protected List<String> columns;
@@ -114,23 +120,71 @@ public abstract class DataStore {
   public List<List<Record>> select(List<Criteria> criteria, List<List<Record>> records) {
     List<List<Record>> result = new ArrayList<List<Record>>();
     List<Integer> index = new ArrayList<Integer>();
-//    List<String> aggregate = new ArrayList<String>();
+    List<String> aggregate = new ArrayList<String>();
+    List<Record> aggregateValue = new ArrayList<Record>();
+    boolean hasAggregate = false;
 
-    for (Criteria c : criteria) { // simple select only ... no aggregate function
+    for (Criteria c : criteria) {
       if (this.columns.contains(c.getColumn())) {
         index.add(this.columns.indexOf(c.getColumn()));
+
+        String cAggregate = ((SelectCriteria) c).getAggregate();
+        hasAggregate |= cAggregate.length() > 0;
+        aggregate.add(cAggregate);
       }
     }
 
-    for (List<Record> record : records) {
-      List<Record> current = new ArrayList<Record>();
-      for (Integer i : index) {
-        current.add(record.get(i));
-      }
-      result.add(current);
-    }
+    if (hasAggregate) {
+      int numOfRow = records.size();
+      int numOfCol = index.size();
+      Record record = null;
 
+      int currentIndex = 0;
+      List<Record> currentRow = records.get(currentIndex);
+      for (int i = 0; i < numOfCol; ++i) {
+        record = currentRow.get(index.get(i));
+        String agg = aggregate.get(i);
+        if (agg.equals(MIN) || agg.equals(MAX)) {
+          aggregateValue.add(record);
+        }
+      }
+
+      for (int j = 1; j < numOfRow; ++j) {
+        currentRow = records.get(j);
+        for (int i = 0; i < numOfCol; ++i) {
+          record = currentRow.get(index.get(i));
+          String agg = aggregate.get(i);
+          Record aggValue = aggregateValue.get(i);
+
+          if (isMIN(record, agg, aggValue)) {
+            aggregateValue.set(i, record);
+          } else if (isMAX(record, agg, aggValue)) {
+            aggregateValue.set(i, record);
+          }
+        }
+      }
+
+      result.add(aggregateValue);
+
+
+    } else {
+      for (List<Record> record : records) {
+        List<Record> current = new ArrayList<Record>();
+        for (Integer i : index) {
+          current.add(record.get(i));
+        }
+        result.add(current);
+      }
+    }
     return result;
+  }
+
+  private boolean isMIN(Record record, String agg, Record aggValue) {
+    return (agg.equals(MIN) && record.compareTo(aggValue) < 0);
+  }
+
+  private boolean isMAX(Record record, String agg, Record aggValue) {
+    return (agg.equals(MAX) && record.compareTo(aggValue) > 0);
   }
 
   public List<List<Record>> filter(List<Criteria> criteria, List<List<Record>> records) {
@@ -168,7 +222,7 @@ public abstract class DataStore {
     }
 
     RecordListComparator comparator = new RecordListComparator(index);
-    Collections.sort(records, comparator);
+    Collections.sort(result, comparator);
 
     return result;
   }
