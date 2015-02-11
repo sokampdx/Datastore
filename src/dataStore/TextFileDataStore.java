@@ -15,9 +15,6 @@ public class TextFileDataStore extends DataStore {
   public static String TIMES = "TIME";
   public static String MONEY = "MONEY";
 
-  public static String[] TYPES_RECORD = {TEXTS, DATES, TIMES, MONEY};
-  public static ArrayList<String> TYPES = new ArrayList<String>(Arrays.asList(TYPES_RECORD));
-
   public static final String EXTENSION = ".datastore";
   public static final String WRITE_DELIMITER = "|";
   public static final String READ_DELIMITER = "\\|";

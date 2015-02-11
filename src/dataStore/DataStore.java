@@ -51,7 +51,10 @@ public abstract class DataStore {
   }
 
 
-  protected void create(String name, List<String> keys, List<String> columns, List<String> types) {
+  protected void create(String name,
+                        List<String> keys,
+                        List<String> columns,
+                        List<String> types) {
     this.name = name;
     this.keys = new ArrayList<String>(keys);
     this.columns = new ArrayList<String>(columns);
@@ -106,7 +109,6 @@ public abstract class DataStore {
     List<List<String>> records = new ArrayList<List<String>>();
     for (Map.Entry<String, List<Record>> pair : this.records.entrySet()) {
       List<Record> row = pair.getValue();
-      int len = row.size();
       List<String> stringList =  new ArrayList<String>();
       for (Record aRow : row) {
         stringList.add(aRow.toString());
@@ -122,8 +124,85 @@ public abstract class DataStore {
     List<Integer> index = new ArrayList<Integer>();
     List<String> aggregate = new ArrayList<String>();
     List<Record> aggregateValue = new ArrayList<Record>();
-    boolean hasAggregate = false;
 
+    boolean hasAggregate = setupCriteria(criteria, index, aggregate);
+
+    if (hasAggregate) {
+      createAggregateResult(records, index, aggregate, aggregateValue);
+      result.add(aggregateValue);
+    } else {
+      createNonAggregateResult(records, result, index);
+    }
+    return result;
+  }
+
+  private void createNonAggregateResult(List<List<Record>> records,
+                                        List<List<Record>> result,
+                                        List<Integer> index) {
+    for (List<Record> record : records) {
+      List<Record> current = new ArrayList<Record>();
+      for (Integer i : index) {
+        current.add(record.get(i));
+      }
+      result.add(current);
+    }
+  }
+
+  private void createAggregateResult(List<List<Record>> records,
+                                     List<Integer> index,
+                                     List<String> aggregate,
+                                     List<Record> aggregateValue) {
+
+    setInitialAggregteValue(records, index, aggregate, aggregateValue);
+    findAggregateValueResult(records, index, aggregate, aggregateValue);
+  }
+
+  private void findAggregateValueResult(List<List<Record>> records,
+                                        List<Integer> index,
+                                        List<String> aggregate,
+                                        List<Record> aggregateValue) {
+    int numOfRow = records.size();
+    int numOfCol = index.size();
+    Record record;
+    List<Record> currentRow;
+
+    for (int j = 1; j < numOfRow; ++j) {
+      currentRow = records.get(j);
+      for (int i = 0; i < numOfCol; ++i) {
+        record = currentRow.get(index.get(i));
+        String agg = aggregate.get(i);
+        Record aggValue = aggregateValue.get(i);
+
+        if (isMIN(record, agg, aggValue)) {
+          aggregateValue.set(i, record);
+        } else if (isMAX(record, agg, aggValue)) {
+          aggregateValue.set(i, record);
+        }
+      }
+    }
+  }
+
+  private void setInitialAggregteValue(List<List<Record>> records,
+                                       List<Integer> index,
+                                       List<String> aggregate,
+                                       List<Record> aggregateValue) {
+    int numOfCol = index.size();
+    Record record = null;
+    int currentIndex = 0;
+    List<Record> currentRow = records.get(currentIndex);
+    for (int i = 0; i < numOfCol; ++i) {
+      String agg = aggregate.get(i);
+      if (agg.equals(MIN) || agg.equals(MAX) || agg.equals("")) {
+        record = currentRow.get(index.get(i));
+      }
+      aggregateValue.add(record);
+    }
+  }
+
+  private boolean setupCriteria(List<Criteria> criteria,
+                                List<Integer> index,
+                                List<String> aggregate) {
+    boolean hasAggregate = false;
     for (Criteria c : criteria) {
       if (this.columns.contains(c.getColumn())) {
         index.add(this.columns.indexOf(c.getColumn()));
@@ -133,48 +212,7 @@ public abstract class DataStore {
         aggregate.add(cAggregate);
       }
     }
-
-    if (hasAggregate) {
-      int numOfRow = records.size();
-      int numOfCol = index.size();
-      Record record = null;
-
-      int currentIndex = 0;
-      List<Record> currentRow = records.get(currentIndex);
-      for (int i = 0; i < numOfCol; ++i) {
-        String agg = aggregate.get(i);
-        if (agg.equals(MIN) || agg.equals(MAX) || agg.equals("")) {
-          record = currentRow.get(index.get(i));
-        }
-        aggregateValue.add(record);
-      }
-
-      for (int j = 1; j < numOfRow; ++j) {
-        currentRow = records.get(j);
-        for (int i = 0; i < numOfCol; ++i) {
-          record = currentRow.get(index.get(i));
-          String agg = aggregate.get(i);
-          Record aggValue = aggregateValue.get(i);
-
-          if (isMIN(record, agg, aggValue)) {
-            aggregateValue.set(i, record);
-          } else if (isMAX(record, agg, aggValue)) {
-            aggregateValue.set(i, record);
-          }
-        }
-      }
-      result.add(aggregateValue);
-
-    } else {
-      for (List<Record> record : records) {
-        List<Record> current = new ArrayList<Record>();
-        for (Integer i : index) {
-          current.add(record.get(i));
-        }
-        result.add(current);
-      }
-    }
-    return result;
+    return hasAggregate;
   }
 
   private boolean isMIN(Record record, String agg, Record aggValue) {
@@ -206,10 +244,6 @@ public abstract class DataStore {
 
     return result;
   }
-
-
-
-
 
   public List<List<Record>> order(List<Criteria> criteria, List<List<Record>> records) {
     List<List<Record>> result = new ArrayList<List<Record>>(records);

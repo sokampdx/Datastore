@@ -12,14 +12,12 @@ public class QueryParser {
       "[-o column{,column}] " +
       "[-g column] " +
       "[-f [(]column=data {[(] (AND|OR) column=data} [)]]";
-  public static final String SYNTAX_ERR = "Syntax Error.";
   public static final String COLUMN_ERR = "Column Name is not in the Database.";
   public static final String UNKNOWN_COMMAND_ERR = "Unknown command.";
   public static final String INCORRECT_FILTER_ERR = "Must specified Filter criteria for the column";
   public static final String UNKNOWN_AGGREGATE_ERR = "Unrecognized aggregate function.";
   private static final String EXPECT_CLOSE_PARENT = "Expecting a close parenthesis.";
   public static final String EOL = "\n";
-  public static final String BLANK = " ";
   public static final String COMMA = ",";
   public static final String COLON = ":";
   public static final String EQUAL = "=";

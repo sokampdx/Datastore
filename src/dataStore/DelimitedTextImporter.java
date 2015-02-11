@@ -20,9 +20,8 @@ public class DelimitedTextImporter extends Importer {
 
   private void readFromFile() {
     String [] strList;
-    Scanner in = null;
     try {
-      in = new Scanner(new File(getSource()));
+      Scanner in = new Scanner(new File(getSource()));
       while (in.hasNextLine()) {
         String line = in.nextLine();
         strList = line.split(delimiter);
