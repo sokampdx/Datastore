@@ -7,6 +7,7 @@ public class MoneyRecord extends Record {
 
   public static final String DATA_NOT_IN_CORRECT_FORMAT = "Data must be in Dollar and Cents. e.g. 3.25";
   public static final String COMPARED_TO_DIFFERENT_OBJECT = "Must compare to same data Type";
+  public static final String REGEX = "\\d+\\.\\d{2}";
 
   // TODO: MoneyRecord extends DoubleRecord extends Record. Create string dollar format method
 
@@ -16,7 +17,7 @@ public class MoneyRecord extends Record {
   }
 
   public void setData(String data) {
-    if (data.matches("\\d+\\.\\d{2}")) {
+    if (data.matches(REGEX)) {
       super.setData(data);
     } else {
       throw new IllegalArgumentException(DATA_NOT_IN_CORRECT_FORMAT);
@@ -34,7 +35,7 @@ public class MoneyRecord extends Record {
   }
 
   public static boolean isValid (String data) {
-    return data.matches("\\d+\\.\\d{2}");
+    return data.matches(REGEX);
   }
 
   @Override

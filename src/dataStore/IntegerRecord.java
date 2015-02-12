@@ -4,7 +4,7 @@ package dataStore;
  * Created by sokam on 2/11/15.
  */
 public class IntegerRecord extends Record {
-  private final static String MATCH = ("0|([1-9]\\d*)");
+  private final static String REGEX = ("0|([1-9]\\d*)");
   private final static String DATA_IS_NOT_INTEGER = "Data is not an Integer.";
 
   public IntegerRecord (int data) {
@@ -37,6 +37,6 @@ public class IntegerRecord extends Record {
   }
 
   public static boolean isValid (String data) {
-    return data.matches(MATCH);
+    return data.matches(REGEX);
   }
 }

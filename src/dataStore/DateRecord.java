@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * Created by sokam on 2/7/15.
  */
 public class DateRecord extends Record {
+  // TODO: Move Date checking into its own interface
+
   public static final String DATA_NOT_IN_CORRECT_FORMAT = "Data must be Date Format YYYY-MM-DD. e.g. 2014-12-31";
   public static final String COMPARED_TO_DIFFERENT_OBJECT = "Must compare to same data Type";
   public static final int FIRST_YEAR = 1900;
@@ -18,7 +20,7 @@ public class DateRecord extends Record {
   public static final int FIRST_MONTH = 1;
   public static final int LAST_MONTH = 12;
   public static final int[] LARGE_MONTH = {1,3,5,7,8,10,12};
-  public static final String MATCH = "\\d{4}-\\d{2}-\\d{2}";
+  public static final String REGEX = "\\d{4}-\\d{2}-\\d{2}";
   /*
 
   public DateRecord () {
@@ -64,7 +66,7 @@ public class DateRecord extends Record {
     int month = Integer.parseInt(str[1]);
     int day = Integer.parseInt(str[2]);
 
-    return date.matches(MATCH) && DateRecord.isValid(year, month, day);
+    return date.matches(REGEX) && DateRecord.isValid(year, month, day);
   }
 
   private static boolean isValid (int year, int month, int day) {

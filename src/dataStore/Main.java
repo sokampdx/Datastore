@@ -7,6 +7,7 @@ import java.util.Map;
  * Created by sokam on 2/10/15.
  */
 public abstract class Main {
+  // TODO: Remove constant after query logic has moved
   public static final String SELECT = "s";
   public static final String ORDER = "o";
   public static final String FILTER = "f";
@@ -25,6 +26,9 @@ public abstract class Main {
   public static String run(String[] args) {
     DataStore dataStore = new TextFileDataStore(Main.FILENAME);
     List<List<Record>> current = dataStore.getRecords();
+    List<String> columns = dataStore.getColumns();
+
+    // TODO: Move query logic to its own class that implement QueryKeywords
 
     String input = Main.createInput(args);
     QueryScanner scanner = new QueryScanner(input);
@@ -33,7 +37,7 @@ public abstract class Main {
     queryParser.query(scanner.getTokens());
 
     Expression expression = queryParser.getQuery();
-    Map<String, QueryArgument> commandList = expression.getExpression();
+    Map<String, CommandArgumentList> commandList = expression.getExpression();
 
     if (commandList.containsKey(FILTER)) {
       current = dataStore.filter(commandList.get(FILTER).getArguments(), current);

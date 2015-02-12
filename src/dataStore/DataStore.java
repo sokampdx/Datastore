@@ -6,6 +6,7 @@ import java.util.*;
  * Created by sokam on 2/7/15.
  */
 public abstract class DataStore {
+  // TODO: remove constant after query logic has moved
   public static final String MAX = "max";
   public static final String MIN = "min";
   public static final String SUM = "sum";
@@ -295,6 +296,8 @@ public abstract class DataStore {
 
     return result;
   }
+
+
 
   public abstract void insert(String[] data);
 

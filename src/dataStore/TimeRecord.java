@@ -9,6 +9,7 @@ public class TimeRecord extends Record {
   public static final String TIME_DELIMITER = ":";
   public static final int HOUR = 0;
   public static final int MINUTE = 1;
+  public static final String REGEX = "((2[0-3])|((1|0?)[0-9])):[0-5][0-9]";
 
   public TimeRecord(String data) {
     super();
@@ -28,7 +29,7 @@ public class TimeRecord extends Record {
   }
 
   public static boolean isValid(String data) {
-    return data.matches("((2[0-3])|((1|0?)[0-9])):[0-5][0-9]");
+    return data.matches(REGEX);
   }
 
   @Override

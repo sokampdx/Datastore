@@ -6,11 +6,11 @@ import java.util.List;
 /**
  * Created by sokam on 2/9/15.
  */
-public class QueryArgument {
+public class CommandArgumentList {
 
   private List<Criteria> arguments;
 
-  public QueryArgument () {
+  public CommandArgumentList() {
     this.arguments = new ArrayList<Criteria>();
   }
 
@@ -20,11 +20,11 @@ public class QueryArgument {
 
   public void addBinOp(Criteria criteria) { this.arguments.add(0, criteria); }
 
-  public void addAll(QueryArgument anotherlist) {
+  public void addAll(CommandArgumentList anotherlist) {
     this.arguments.addAll(anotherlist.arguments);
   }
 
-  public void addAll(int index, QueryArgument anotherlist) {
+  public void addAll(int index, CommandArgumentList anotherlist) {
     this.arguments.addAll(index, anotherlist.arguments);
   }
 
@@ -32,7 +32,7 @@ public class QueryArgument {
     return this.arguments;
   }
 
-  public boolean equals (QueryArgument match) {
+  public boolean equals (CommandArgumentList match) {
     boolean isEqual = true;
     int len = this.arguments.size();
 

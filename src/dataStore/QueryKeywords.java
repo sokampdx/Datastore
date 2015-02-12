@@ -26,4 +26,5 @@ public interface QueryKeywords {
   public final String SUM = "sum";
   public final String COUNT = "count";
   public final String COLLECT = "collect";
+
 }

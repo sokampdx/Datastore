@@ -3,9 +3,8 @@ import dataStore.DataStore
 import dataStore.Expression
 import dataStore.FilterCriteria
 import dataStore.GroupCriteria
-import dataStore.MyUtil
 import dataStore.OrderCriteria
-import dataStore.QueryArgument
+import dataStore.CommandArgumentList
 import dataStore.QueryParser
 import dataStore.QueryScanner
 import dataStore.SelectCriteria
@@ -100,7 +99,7 @@ class QueryToolTest extends GroovyTestCase {
 
     private Expression select_TITLE_REV_DATE() {
         Expression expression = new Expression();
-        QueryArgument arguments = new QueryArgument();
+        CommandArgumentList arguments = new CommandArgumentList();
         Criteria criteria = new SelectCriteria("TITLE");
         arguments.add(criteria);
         criteria = new SelectCriteria("REV");
@@ -120,7 +119,7 @@ class QueryToolTest extends GroovyTestCase {
 
     private Expression select_TITLE_REV_DATE_order_DATE_TITLE() {
         Expression expression = select_TITLE_REV_DATE();
-        QueryArgument arguments = new QueryArgument();
+        CommandArgumentList arguments = new CommandArgumentList();
         Criteria criteria = new OrderCriteria("DATE");
         arguments.add(criteria);
         criteria = new OrderCriteria("TITLE");
@@ -138,7 +137,7 @@ class QueryToolTest extends GroovyTestCase {
 
     private Expression select_TITLE_REV_DATE_filter_DATE_2014_04_01() {
         Expression expression = select_TITLE_REV_DATE();
-        QueryArgument arguments = new QueryArgument();
+        CommandArgumentList arguments = new CommandArgumentList();
         Criteria criteria = new FilterCriteria("DATE", "2014-04-01");
         arguments.add(criteria);
         expression.add(QueryParser.FILTER, arguments);
@@ -154,7 +153,7 @@ class QueryToolTest extends GroovyTestCase {
 
     private Expression select_TITLE_REV_STB_group_TITLE() {
         Expression expression = new Expression();
-        QueryArgument arguments = new QueryArgument();
+        CommandArgumentList arguments = new CommandArgumentList();
         Criteria criteria = new SelectCriteria("TITLE");
         arguments.add(criteria);
         criteria = new SelectCriteria("REV");
@@ -163,7 +162,7 @@ class QueryToolTest extends GroovyTestCase {
         arguments.add(criteria);
         expression.add(QueryParser.SELECT, arguments);
 
-        QueryArgument argument2 = new QueryArgument();
+        CommandArgumentList argument2 = new CommandArgumentList();
         criteria = new GroupCriteria("TITLE");
         argument2.add(criteria);
         expression.add(QueryParser.GROUP, argument2);
@@ -179,7 +178,7 @@ class QueryToolTest extends GroovyTestCase {
 
     private Expression select_TITLE_REVsum_STBcollect_group_TITLE() {
         Expression expression = new Expression();
-        QueryArgument arguments = new QueryArgument();
+        CommandArgumentList arguments = new CommandArgumentList();
         Criteria criteria = new SelectCriteria("TITLE");
         arguments.add(criteria);
         criteria = new SelectCriteria("REV", "sum");
@@ -188,7 +187,7 @@ class QueryToolTest extends GroovyTestCase {
         arguments.add(criteria);
         expression.add(QueryParser.SELECT, arguments);
 
-        QueryArgument argument2 = new QueryArgument();
+        CommandArgumentList argument2 = new CommandArgumentList();
         criteria = new GroupCriteria("TITLE");
         argument2.add(criteria);
         expression.add(QueryParser.GROUP, argument2);
@@ -205,20 +204,20 @@ class QueryToolTest extends GroovyTestCase {
 
     private Expression select_TITLE_REV_filter_With_Paren() {
         Expression expression = new Expression();
-        QueryArgument arguments = new QueryArgument();
+        CommandArgumentList arguments = new CommandArgumentList();
         Criteria criteria = new SelectCriteria("TITLE");
         arguments.add(criteria);
         criteria = new SelectCriteria("REV");
         arguments.add(criteria);
         expression.add(QueryParser.SELECT, arguments);
 
-        QueryArgument argument1 = new QueryArgument();
+        CommandArgumentList argument1 = new CommandArgumentList();
         criteria = new FilterCriteria("STB", "stb1");
         argument1.add(criteria);
         criteria = new FilterCriteria(QueryParser.OR);
         argument1.addBinOp(criteria);
 
-        QueryArgument argument2 = new QueryArgument();
+        CommandArgumentList argument2 = new CommandArgumentList();
         criteria = new FilterCriteria("TITLE", "the hobbit");
         argument2.add(criteria);
         criteria = new FilterCriteria(QueryParser.OR);

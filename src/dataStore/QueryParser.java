@@ -6,14 +6,8 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class QueryParser implements QueryKeywords{
-  public static final String USAGE = "USAGE: ./query " +
-      "-s column[:aggregate],... -o column,... -g column,... -f column=data (AND|OR) ... ";
-  public static final String COLUMN_ERR = "Column Name is not in the Database.";
-  public static final String UNKNOWN_COMMAND_ERR = "Unknown command.";
-  public static final String INCORRECT_FILTER_ERR = "Must specified Filter criteria for the column";
-  public static final String UNKNOWN_AGGREGATE_ERR = "Unrecognized aggregate function.";
-  private static final String EXPECT_CLOSE_PARENT = "Expecting a close parenthesis.";
+public class QueryParser implements QueryKeywords, QueryErrorMessage{
+
 
   private DataStore dataStore;
   private List<String> tokens;
@@ -98,8 +92,8 @@ public class QueryParser implements QueryKeywords{
     }
   }
 
-  private QueryArgument getLogicalArguments(String command) {
-    QueryArgument arguments = new QueryArgument();
+  private CommandArgumentList getLogicalArguments(String command) {
+    CommandArgumentList arguments = new CommandArgumentList();
     arguments.addAll(getMoreArguments(command));
 
     while (this.nextToken.equals(OR)) {
@@ -110,8 +104,8 @@ public class QueryParser implements QueryKeywords{
     return arguments;
   }
 
-  private QueryArgument getMoreArguments(String command) {
-    QueryArgument arguments = new QueryArgument();
+  private CommandArgumentList getMoreArguments(String command) {
+    CommandArgumentList arguments = new CommandArgumentList();
     arguments.addAll(getParenArguments(command));
 
     while (this.nextToken.equals(AND)) {
@@ -122,8 +116,8 @@ public class QueryParser implements QueryKeywords{
     return arguments;
   }
 
-  private QueryArgument getParenArguments(String command) {
-    QueryArgument arguments = new QueryArgument();
+  private CommandArgumentList getParenArguments(String command) {
+    CommandArgumentList arguments = new CommandArgumentList();
 
     if (this.nextToken.equals(OPEN)) {
       getToken();
@@ -141,15 +135,15 @@ public class QueryParser implements QueryKeywords{
   }
 
 
-  private QueryArgument getSingleArgument(String command) {
-    QueryArgument arguments = new QueryArgument();
+  private CommandArgumentList getSingleArgument(String command) {
+    CommandArgumentList arguments = new CommandArgumentList();
     arguments.add(getCriteria(command));
     return arguments;
   }
 
 
-  private QueryArgument getListOfArguments(String command) {
-    QueryArgument arguments = getSingleArgument(command);
+  private CommandArgumentList getListOfArguments(String command) {
+    CommandArgumentList arguments = getSingleArgument(command);
     while (this.nextToken.equals(COMMA)) {
       getToken();
       arguments.add(getCriteria(command));
