@@ -9,10 +9,6 @@ public abstract class Record implements Comparable<Record> {
   public Record() {
     this.data = "";
   }
-/*
-  public Record(String data) {
-    this.data = data;
-  }*/
 
   public void setData(String data) {
     this.data = data;

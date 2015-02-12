@@ -59,7 +59,6 @@ public class QueryParser {
   }
 
   public String query(List<String> tokens) {
-//    MyUtil.print(MyUtil.DIVIDER + "Start query" + MyUtil.DIVIDER);
     reset();
     this.tokens = tokens;
     String output = "";
@@ -70,7 +69,6 @@ public class QueryParser {
     if (!this.nextToken.equals(EOL)) {
       throw new IllegalArgumentException(USAGE);
     }
-//    MyUtil.print(MyUtil.DIVIDER + "End query" + MyUtil.DIVIDER + EOL + EOL);
     return output;
   }
 
@@ -86,9 +84,10 @@ public class QueryParser {
 
   private void buildDataStoreQuery() {
     while (isValidCommand(this.nextToken)) {
-//      MyUtil.print(this.nextToken + "In buildDataStoreQuery while");
       getCommandArgument();
     }
+
+    // TODO Throw exception if GROUP is found but there is no Aggregates
   }
 
   private boolean isValidCommand(String command) {
@@ -108,7 +107,6 @@ public class QueryParser {
   }
 
   private void getCommandArgument() {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getCommandArgument");
 
     String token = this.nextToken;
     String command = token.substring(1,2);
@@ -123,14 +121,7 @@ public class QueryParser {
     }
   }
 
-/*  private QueryArgument getLogicalArguments(String command) {
-    // MyUtil.print(MyUtil.DIVIDER + "In LogicalArguments");
-    return getSingleArgument(command);
-  }*/
-
   private QueryArgument getLogicalArguments(String command) {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In LogicalArguments");
-
     QueryArgument arguments = new QueryArgument();
     arguments.addAll(getMoreArguments(command));
 
@@ -143,8 +134,6 @@ public class QueryParser {
   }
 
   private QueryArgument getMoreArguments(String command) {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In MoreArguments");
-
     QueryArgument arguments = new QueryArgument();
     arguments.addAll(getParenArguments(command));
 
@@ -157,7 +146,6 @@ public class QueryParser {
   }
 
   private QueryArgument getParenArguments(String command) {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In ParenArguments");
     QueryArgument arguments = new QueryArgument();
 
     if (this.nextToken.equals(OPEN)) {
@@ -177,7 +165,6 @@ public class QueryParser {
 
 
   private QueryArgument getSingleArgument(String command) {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In SingleArguments");
     QueryArgument arguments = new QueryArgument();
     arguments.add(getCriteria(command));
     return arguments;
@@ -185,10 +172,8 @@ public class QueryParser {
 
 
   private QueryArgument getListOfArguments(String command) {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In ListArguments");
     QueryArgument arguments = getSingleArgument(command);
     while (this.nextToken.equals(COMMA)) {
-      // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In ListArgument While");
       getToken();
       arguments.add(getCriteria(command));
     }
@@ -196,7 +181,6 @@ public class QueryParser {
   }
 
   private Criteria getCriteria(String command) {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getCriteria");
     Criteria criteria;
 
     if (command.equals(SELECT)) {
@@ -213,21 +197,17 @@ public class QueryParser {
     return criteria;
   }
   private Criteria getGroupCriteria() {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getGroupCriteria");
     return new GroupCriteria(getColumn());
   }
 
   private Criteria getFilterCriteria() {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getFilterCriteria");
 
     if (isBinOp()) {
-      // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getFilterCriteria BinOP");
       String binOp = this.nextToken;
       getToken();
       return new FilterCriteria(binOp);
 
     } else {
-      // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getFilterCriteria Non-BinOP");
       String match;
       String column = getColumn();
 
@@ -247,12 +227,10 @@ public class QueryParser {
   }
 
   private Criteria getOrderCriteria() {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getOrderCriteria");
     return new OrderCriteria(getColumn());
   }
 
   private Criteria getSelectCriteria() {
-    // MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getSelectCriteria");
     String aggregate;
     String column = getColumn();
 
@@ -271,7 +249,6 @@ public class QueryParser {
   }
 
   private String getColumn() {
-//    MyUtil.print(this.nextToken + MyUtil.DIVIDER + "In getColumn");
     if (dataStore.getColumns().contains(this.nextToken)) {
       String column = this.nextToken;
       getToken();
@@ -288,7 +265,6 @@ public class QueryParser {
     } else {
       this.nextToken = EOL;
     }
-//    MyUtil.print(this.nextToken, this.nextIndex + "", tokens.toString());
   }
 
 

@@ -8,9 +8,7 @@ public class MoneyRecord extends Record {
   public static final String DATA_NOT_IN_CORRECT_FORMAT = "Data must be in Dollar and Cents. e.g. 3.25";
   public static final String COMPARED_TO_DIFFERENT_OBJECT = "Must compare to same data Type";
 
-/*  public MoneyRecord() {
-    super();
-  }*/
+  // TODO MoneyRecord extends DoubleRecord extends Record. Create string dollar format method
 
   public MoneyRecord(String data) {
     super();

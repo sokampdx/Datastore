@@ -44,7 +44,9 @@ public abstract class Main {
       current = dataStore.order(commandList.get(ORDER).getArguments(), current);
     }
 
-    if (commandList.containsKey(SELECT)) {
+    if (commandList.containsKey(GROUP)) {
+      // TODO: Group split the table by Distinct value, feed sub-tables to SELECT and recombine them
+    } else if (commandList.containsKey(SELECT)) {
         current = dataStore.select(commandList.get(SELECT).getArguments(), current);
     }
 

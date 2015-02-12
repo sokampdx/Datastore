@@ -1,5 +1,7 @@
 package dataStore;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.util.*;
 
 /**
@@ -262,7 +264,10 @@ public abstract class DataStore {
 
     int criteriaIndex = 0;
     Criteria c = criteria.get(criteriaIndex);
-    while (c.isBinOp()) { // simple filter only... take first non-BinOp criteria
+
+    // TODO: use the tree structure to recursively to combine filter results
+
+    while (c.isBinOp()) {
       ++criteriaIndex;
       c = criteria.get(criteriaIndex);
     }
