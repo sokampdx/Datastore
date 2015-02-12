@@ -18,10 +18,7 @@ public class QueryScanner {
   public static final String SINGLE_QUOTE = "'";
 
   public static final String USAGE = "USAGE: ./query " +
-      "-s column[:aggregate]{,column[:aggregate]} " +
-      "[-o column{,column}] " +
-      "[-g column] " +
-      "[-f [(]column=data {[(] (AND|OR) column=data} [)]]";
+      "-s column[:aggregate],... -o column,... -g column,... -f column=data (AND|OR) ... ";
   public static final String EXPECTED_QUOTE = "Expect a matching quote." + EOL + USAGE;
 
 

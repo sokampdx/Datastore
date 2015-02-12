@@ -8,10 +8,7 @@ import java.util.List;
  */
 public class QueryParser {
   public static final String USAGE = "USAGE: ./query " +
-      "-s column[:aggregate]{,column[:aggregate]} " +
-      "[-o column{,column}] " +
-      "[-g column] " +
-      "[-f [(]column=data {[(] (AND|OR) column=data} [)]]";
+      "-s column[:aggregate],... -o column,... -g column,... -f column=data (AND|OR) ... ";
   public static final String COLUMN_ERR = "Column Name is not in the Database.";
   public static final String UNKNOWN_COMMAND_ERR = "Unknown command.";
   public static final String INCORRECT_FILTER_ERR = "Must specified Filter criteria for the column";
