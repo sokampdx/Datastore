@@ -8,6 +8,7 @@ public class DoubleRecord extends Record {
   public static final String DATA_NOT_IN_CORRECT_FORMAT = "Data must be in number format. e.g. 3.25";
   public static final String COMPARED_TO_DIFFERENT_OBJECT = "Must compare to same data Type";
   public static final String REGEX = "(0|([1-9]\\d*))(\\.[0-9]*)?";
+  public static final String FORMAT = "%f";
 
   public DoubleRecord() {
     super();
@@ -15,15 +16,33 @@ public class DoubleRecord extends Record {
 
   public DoubleRecord(String data) {
     super();
-    setData(data);
+    setData(FORMAT, data);
+  }
+
+  public DoubleRecord(String data, String format) {
+    super();
+    setData(String.format(format, data));
   }
 
   public void setData(String data) {
+    setData(FORMAT, data);
+  }
+
+  public void setData(String format, String data) {
     if (data.matches(REGEX)) {
-      super.setData(data);
+      String formatData = String.format(format, Double.parseDouble(data));
+      super.setData(formatData);
     } else {
       System.out.println(data);
       throw new IllegalArgumentException(DATA_NOT_IN_CORRECT_FORMAT);
+    }
+  }
+
+  @Override
+  public void add(Record record) {
+    if (this.isSummable() && record.isSummable()) {
+      super.add(record);
+      super.setData(String.format(FORMAT, Double.parseDouble(getData())));
     }
   }
 

@@ -4,6 +4,7 @@ package dataStore.Records;
  * Created by sokam on 2/7/15.
  */
 public abstract class Record implements Comparable<Record> {
+  private String REGEX = "\\d+(\\.\\d+)?";
   private String data;
 
   public Record() {
@@ -14,6 +15,13 @@ public abstract class Record implements Comparable<Record> {
     this.data = data;
   }
 
+  public void setData(String format, String data) {
+    if (data.matches(REGEX)) {
+      this.data = String.format(format, Double.parseDouble(data));
+    } else {
+      this.data = data;
+    }
+  }
   public String getData() {
     return this.data;
   }

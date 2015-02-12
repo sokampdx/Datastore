@@ -1,7 +1,5 @@
 package dataStore.Records;
 
-import dataStore.Records.Record;
-
 /**
  * Created by sokam on 2/7/15.
  */

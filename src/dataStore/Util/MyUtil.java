@@ -1,6 +1,6 @@
 package dataStore.Util;
-import dataStore.Records.Record;
 
+import dataStore.Records.Record;
 import java.util.List;
 
 /**

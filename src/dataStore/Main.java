@@ -1,12 +1,9 @@
 package dataStore;
 
-import dataStore.DataStorage.DataStore;
-import dataStore.DataStorage.TextFileDataStore;
+import dataStore.DataStorage.*;
 import dataStore.QueryStruct.CommandArgumentList;
 import dataStore.QueryStruct.Expression;
-import dataStore.QueryTool.DataFactory;
-import dataStore.QueryTool.Parser;
-import dataStore.QueryTool.Scanner;
+import dataStore.QueryTool.*;
 import dataStore.Records.Record;
 import dataStore.Util.MyUtil;
 
@@ -30,7 +27,7 @@ public abstract class Main {
   public static String run(String[] args) {
     String input = Main.createInput(args);
     DataStore dataStore = new TextFileDataStore(FILENAME);
-    List<List<Record>> current = dataStore.getRecords();
+    List<List<Record>> records = dataStore.getRecords();
     List<String> columns = dataStore.getColumns();
 
     Scanner scanner = new Scanner(input);
@@ -39,7 +36,7 @@ public abstract class Main {
 
     Expression expression = queryParser.getQuery();
     Map<String, CommandArgumentList> commandList = expression.getExpression();
-    DataFactory dataFactory = new DataFactory(current, columns, commandList);
+    DataFactory dataFactory = new DataFactory(records, columns, commandList);
 
     return MyUtil.ListOfListOfRecordToString(dataFactory.getResult());
 }

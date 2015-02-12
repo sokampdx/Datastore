@@ -1,7 +1,6 @@
 package dataStore.QueryTool;
 
 import dataStore.QueryStruct.*;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,11 +71,12 @@ public class Parser implements Keywords, ErrorMessage {
   }
 
   private boolean hasListOfArgument(String command) {
-    return command.equals(DASH + SELECT) || command.equals(DASH + ORDER);
+    return command.equals(DASH + SELECT) || command.equals(DASH + ORDER) || command.equals(DASH + GROUP);
   }
 
   private boolean hasSingleArgument(String command) {
-    return command.equals(DASH + GROUP);
+    return false;
+    //return command.equals(DASH + GROUP);
   }
 
   private boolean hasLogicalArgument(String command) {

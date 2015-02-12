@@ -78,7 +78,7 @@ class QueryToolTest extends GroovyTestCase {
 
     public void testScannerForIncorrectAdvanceFilter() {
         def msg = shouldFail(IllegalArgumentException) {
-            Scanner scanner = new Scanner(query6);
+            new Scanner(query6);
         }
         assertEquals(Scanner.EXPECTED_QUOTE, msg);
     }
@@ -161,7 +161,6 @@ class QueryToolTest extends GroovyTestCase {
     public void testQueryForSelectAggregateGroup() {
         Expression expression = select_TITLE_REVsum_STBcollect_group_TITLE();
         queryTool.query(query4);
-//        assertTrue(expression.equals(queryTool.getQuery()));
         assertEquals(expression.toString(), queryTool.getQuery().toString());
     }
 

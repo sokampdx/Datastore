@@ -34,12 +34,47 @@ public class DataFactory implements Keywords {
 
     if (this.commandList.containsKey(GROUP)) {
       // TODO: Group split the table by Distinct value, feed sub-tables to SELECT and recombine them
+      this.records = group();
     } else if (this.commandList.containsKey(SELECT)) {
       this.records = select();
     }
   }
 
+  public List<List<Record>> group() {
+    List<Criteria> criteria = this.commandList.get(GROUP).getArguments();
+    List<List<Record>> result = new ArrayList<List<Record>>();
+    List<Integer> index = new ArrayList<Integer>();
+    Map<String, List<List<Record>>> grouped = new HashMap<String, List<List<Record>>>();
+
+    createCriteriaIndex(criteria, index);
+
+    for (List<Record> record : this.records) {
+      String key = "";
+      for (Integer i : index) {
+        key += record.get(i).toString();
+      }
+
+      List<List<Record>> current = new ArrayList<List<Record>>();
+      if (grouped.containsKey(key)) {
+        current = grouped.get(key);
+      }
+      current.add(record);
+      grouped.put(key, current);
+    }
+
+    for (Map.Entry<String, List<List<Record>>> pair : grouped.entrySet()) {
+      List<List<Record>> current = select(pair.getValue());
+      result.addAll(current);
+    }
+
+    return result;
+  }
+
   public List<List<Record>> select() {
+    return select(this.records);
+  }
+
+  public List<List<Record>> select(List<List<Record>> records) {
     List<Criteria> criteria = this.commandList.get(SELECT).getArguments();
     List<List<Record>> result = new ArrayList<List<Record>>();
     List<Integer> index = new ArrayList<Integer>();
@@ -49,17 +84,18 @@ public class DataFactory implements Keywords {
     boolean hasAggregate = setupCriteria(criteria, index, aggregate);
 
     if (hasAggregate) {
-      createAggregateResult(index, aggregate, aggregateValue);
+      createAggregateResult(records, index, aggregate, aggregateValue);
       result.add(aggregateValue);
     } else {
-      createSimpleSelectResult(result, index);
+      createSimpleSelectResult(records, result, index);
     }
     return result;
   }
 
-  public void createSimpleSelectResult(List<List<Record>> result,
+  public void createSimpleSelectResult(List<List<Record>> records,
+                                       List<List<Record>> result,
                                        List<Integer> index) {
-    for (List<Record> record : this.records) {
+    for (List<Record> record : records) {
       List<Record> current = new ArrayList<Record>();
       for (Integer i : index) {
         current.add(record.get(i));
@@ -68,15 +104,33 @@ public class DataFactory implements Keywords {
     }
   }
 
-  public void createAggregateResult(List<Integer> index,
+  public boolean setupCriteria(List<Criteria> criteria,
+                               List<Integer> index,
+                               List<String> aggregate) {
+    boolean hasAggregate = false;
+    for (Criteria c : criteria) {
+      if (this.columns.contains(c.getColumn())) {
+        index.add(this.columns.indexOf(c.getColumn()));
+
+        String cAggregate = ((SelectCriteria) c).getAggregate();
+        hasAggregate |= cAggregate.length() > 0;
+        aggregate.add(cAggregate);
+      }
+    }
+    return hasAggregate;
+  }
+
+  public void createAggregateResult(List<List<Record>> records,
+                                    List<Integer> index,
                                     List<String> aggregate,
                                     List<Record> aggregateValue) {
 
-    setInitialAggregateValue(index, aggregate, aggregateValue);
-    findAggregateValueResult(index, aggregate, aggregateValue);
+    setInitialAggregateValue(records, index, aggregate, aggregateValue);
+    findAggregateValueResult(records, index, aggregate, aggregateValue);
   }
 
-  public void findAggregateValueResult(List<Integer> index,
+  public void findAggregateValueResult(List<List<Record>> records,
+                                       List<Integer> index,
                                        List<String> aggregate,
                                        List<Record> aggregateValue) {
     int numOfCol = index.size();
@@ -87,7 +141,7 @@ public class DataFactory implements Keywords {
       String aggType = aggregate.get(i);
       List<Record> columnRecords = new ArrayList<Record>();
 
-      for (List<Record> currentRow : this.records) {
+      for (List<Record> currentRow : records) {
         aggValue = aggregateValue.get(i);
         record = currentRow.get(index.get(i));
 
@@ -111,13 +165,14 @@ public class DataFactory implements Keywords {
     }
   }
 
-  public void setInitialAggregateValue(List<Integer> index,
+  public void setInitialAggregateValue(List<List<Record>> records,
+                                       List<Integer> index,
                                        List<String> aggregate,
                                        List<Record> aggregateValue) {
     int numOfCol = index.size();
     Record record = null;
     int currentIndex = 0;
-    List<Record> currentRow = this.records.get(currentIndex);
+    List<Record> currentRow = records.get(currentIndex);
     for (int i = 0; i < numOfCol; ++i) {
       String aggType = aggregate.get(i);
       if (aggType.equals(MIN) || aggType.equals(MAX) || aggType.equals("")) {
@@ -129,25 +184,8 @@ public class DataFactory implements Keywords {
       } else if (isCOLLECT(aggType)) {
         record = new TextRecord("");
       }
-
       aggregateValue.add(record);
     }
-  }
-
-  public boolean setupCriteria(List<Criteria> criteria,
-                               List<Integer> index,
-                               List<String> aggregate) {
-    boolean hasAggregate = false;
-    for (Criteria c : criteria) {
-      if (this.columns.contains(c.getColumn())) {
-        index.add(this.columns.indexOf(c.getColumn()));
-
-        String cAggregate = ((SelectCriteria) c).getAggregate();
-        hasAggregate |= cAggregate.length() > 0;
-        aggregate.add(cAggregate);
-      }
-    }
-    return hasAggregate;
   }
 
   public boolean isMIN(Record record, String aggType, Record aggValue) {
@@ -177,8 +215,7 @@ public class DataFactory implements Keywords {
     int criteriaIndex = 0;
     Criteria c = criteria.get(criteriaIndex);
 
-    // TODO: use the tree structure to recursively to combine filter results
-
+    // TODO: use the tree structure recursively combine filter results
     while (c.isBinOp()) {
       ++criteriaIndex;
       c = criteria.get(criteriaIndex);
@@ -201,15 +238,19 @@ public class DataFactory implements Keywords {
     List<List<Record>> result = new ArrayList<List<Record>>(this.records);
     List<Integer> index = new ArrayList<Integer>();
 
-    for (Criteria c : criteria) {
-      if (this.columns.contains(c.getColumn())) {
-        index.add(this.columns.indexOf(c.getColumn()));
-      }
-    }
+    createCriteriaIndex(criteria, index);
 
     RecordListComparator comparator = new RecordListComparator(index);
     Collections.sort(result, comparator);
 
     return result;
+  }
+
+  private void createCriteriaIndex(List<Criteria> criteria, List<Integer> index) {
+    for (Criteria c : criteria) {
+      if (this.columns.contains(c.getColumn())) {
+        index.add(this.columns.indexOf(c.getColumn()));
+      }
+    }
   }
 }

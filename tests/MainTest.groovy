@@ -1,4 +1,5 @@
 import dataStore.Main
+import dataStore.Util.MyUtil
 
 /**
  * Created by sokam on 2/10/15.
@@ -67,10 +68,22 @@ class MainTest extends GroovyTestCase  {
     public final String query15Answer = "the matrix,[2014-04-01, 2014-04-02, 2014-04-03]\n"
 
     public final String query16 = "-s REV:sum";
-    public final String query16Answer = "22.0\n";
+    public final String query16Answer = "22.00\n";
 
     public final String query17 = "-s TITLE,DATE:collect -f TITLE=\"the matrix\"";
     public final String query17Answer = "the matrix,[2014-04-01, 2014-04-02]\n"
+
+    public final String query18 = "-s TITLE,REV:sum,STB:collect -g TITLE";
+    public final String query18Answer =
+            "the matrix,8.00,[stb1, stb3]\n" +
+            "the hobbit,8.00,[stb2]\n" +
+            "unbreakable,6.00,[stb1]\n";
+
+    public final String query19 = "-s STB:collect,TITLE,PROVIDER,VIEW_TIME:max -g TITLE,PROVIDER";
+    public final String query19Answer =
+            "[stb2],the hobbit,warner bros,2:45\n" +
+            "[stb1],unbreakable,buena vista,2:05\n" +
+            "[stb1, stb3],the matrix,warner bros,1:30\n";
 
     public void testSimpleSelect () {
         String result = Main.run(query1);
@@ -167,7 +180,17 @@ class MainTest extends GroovyTestCase  {
     public void testFilterTitle () {
         String result = Main.run(query17);
         assertEquals(query17Answer.toString(), result.toString());
-//        MyUtil.print(query17Answer.toString());
-//        MyUtil.print(result.toString());
+    }
+
+    public void testGroupWithAggregate () {
+        String result = Main.run(query18);
+        assertEquals(query18Answer.toString(), result.toString());
+    }
+
+    public void testTwoGroupWithTwoAggregate () {
+        String result = Main.run(query19);
+        assertEquals(query19Answer.toString(), result.toString());
+        MyUtil.print(query19Answer.toString());
+        MyUtil.print(result.toString());
     }
 }
