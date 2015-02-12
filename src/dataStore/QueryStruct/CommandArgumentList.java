@@ -1,4 +1,4 @@
-package dataStore;
+package dataStore.QueryStruct;
 
 import java.util.ArrayList;
 import java.util.List;

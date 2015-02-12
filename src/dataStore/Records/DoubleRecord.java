@@ -1,4 +1,4 @@
-package dataStore;
+package dataStore.Records;
 
 /**
  * Created by sokam on 2/7/15.

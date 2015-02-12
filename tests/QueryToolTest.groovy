@@ -1,14 +1,14 @@
-import dataStore.Criteria
-import dataStore.DataStore
-import dataStore.Expression
-import dataStore.FilterCriteria
-import dataStore.GroupCriteria
-import dataStore.OrderCriteria
-import dataStore.CommandArgumentList
-import dataStore.QueryParser
-import dataStore.QueryScanner
-import dataStore.SelectCriteria
-import dataStore.TextFileDataStore
+import dataStore.QueryStruct.Criteria
+import dataStore.DataStorage.DataStore
+import dataStore.QueryStruct.Expression
+import dataStore.QueryStruct.FilterCriteria
+import dataStore.QueryStruct.GroupCriteria
+import dataStore.QueryStruct.OrderCriteria
+import dataStore.QueryStruct.CommandArgumentList
+import dataStore.QueryTool.QueryParser
+import dataStore.QueryTool.QueryScanner
+import dataStore.QueryStruct.SelectCriteria
+import dataStore.DataStorage.TextFileDataStore
 
 /**
  * Created by sokam on 2/8/15.

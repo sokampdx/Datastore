@@ -1,4 +1,6 @@
-package dataStore;
+package dataStore.Importer;
+
+import dataStore.Importer.DataImporter;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.util.Scanner;
 /**
  * Created by sokam on 2/7/15.
  */
-public class DelimitedTextImporter extends Importer {
+public class DelimitedTextImporter extends DataImporter {
   private String delimiter;
 
   public DelimitedTextImporter(String filename, String delimiter) {

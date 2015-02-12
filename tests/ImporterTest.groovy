@@ -1,6 +1,6 @@
-import dataStore.DelimitedTextImporter
-import dataStore.Importer
-import dataStore.MyUtil
+import dataStore.Importer.DelimitedTextImporter
+import dataStore.Importer.DataImporter
+import dataStore.Util.MyUtil
 
 /**
  * Created by sokam on 2/7/15.
@@ -17,12 +17,12 @@ class ImporterTest extends GroovyTestCase {
             "stb3|the matrix|warner bros|2014-04-02|4.00|1:05\n"
 
     public void testImporterReadCorrectFilename() {
-        Importer importer = new DelimitedTextImporter(SAMPLE_TXT_FILE, DELIMITER);
+        DataImporter importer = new DelimitedTextImporter(SAMPLE_TXT_FILE, DELIMITER);
         assertEquals(SAMPLE_TXT_FILE, importer.getSource());
     }
 
     public void testImporterReadIncorrectFilename() {
-        Importer importer = new DelimitedTextImporter(ORIGINAL_TXT_FILE, DELIMITER);
+        DataImporter importer = new DelimitedTextImporter(ORIGINAL_TXT_FILE, DELIMITER);
         assertEquals(ORIGINAL, MyUtil.ListOfListOfStringToString(importer.getData(),"|"));
     }
 

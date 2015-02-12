@@ -1,4 +1,7 @@
-package dataStore;
+package dataStore.QueryTool;
+
+import dataStore.DataStorage.DataStore;
+import dataStore.QueryStruct.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +9,7 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class QueryParser implements QueryKeywords, QueryErrorMessage{
+public class QueryParser implements QueryKeywords, QueryErrorMessage {
 
 
   private DataStore dataStore;
@@ -58,7 +61,7 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage{
       getCommandArgument();
     }
 
-    // TODO: Throw exception if GROUP is found but there is no Aggregates
+    // TODO: Throw exception if GROUP function has no Aggregates
   }
 
   private boolean isValidCommand(String command) {

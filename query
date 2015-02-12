@@ -24,5 +24,6 @@ for a in "${array[@]}"; do
 	fi
 done
 
-javac src/dataStore/*.java
-java -cp src/ dataStore.Main "${token[@]}"
+find src -name "*.java" > sources.txt
+javac -d src/dataStore @sources.txt
+java -cp ./out/production/Datastore/ dataStore.Main "${token[@]}"

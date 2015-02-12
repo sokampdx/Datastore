@@ -1,4 +1,4 @@
-package dataStore;
+package dataStore.QueryTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class QueryScanner implements QueryKeywords, QueryErrorMessage{
+public class QueryScanner implements QueryKeywords, QueryErrorMessage {
 
   private String stream;
   private String nextChar;

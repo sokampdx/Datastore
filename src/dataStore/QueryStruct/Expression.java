@@ -1,4 +1,4 @@
-package dataStore;
+package dataStore.QueryStruct;
 
 import java.util.HashMap;
 import java.util.Map;

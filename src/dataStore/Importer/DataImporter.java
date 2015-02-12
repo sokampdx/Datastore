@@ -1,4 +1,4 @@
-package dataStore;
+package dataStore.Importer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,16 +6,16 @@ import java.util.List;
 /**
  * Created by sokam on 2/7/15.
  */
-public abstract class Importer {
+public abstract class DataImporter {
   private List<List<String>> data;
   private String source;
 
-  public Importer() {
+  public DataImporter() {
     this.data = new ArrayList<List<String>>();
     this.source = "";
   }
 
-  public Importer(String source) {
+  public DataImporter(String source) {
     this.data = new ArrayList<List<String>>();
     this.source = source;
   }

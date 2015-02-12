@@ -1,4 +1,4 @@
-package dataStore;
+package dataStore.QueryTool;
 
 /**
  * Created by sokam on 2/11/15.

@@ -1,8 +1,8 @@
-import dataStore.DataStore
+import dataStore.DataStorage.DataStore
 import dataStore.Main
-import dataStore.Record
-import dataStore.RecordListComparator
-import dataStore.TextFileDataStore
+import dataStore.Records.Record
+import dataStore.Records.RecordListComparator
+import dataStore.DataStorage.TextFileDataStore
 
 /**
  * Created by sokam on 2/10/15.

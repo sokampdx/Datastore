@@ -1,4 +1,9 @@
-package dataStore;
+package dataStore.DataStorage;
+
+import dataStore.QueryStruct.Criteria;
+import dataStore.QueryStruct.FilterCriteria;
+import dataStore.QueryStruct.SelectCriteria;
+import dataStore.Records.*;
 
 import java.util.*;
 

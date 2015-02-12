@@ -1,8 +1,8 @@
-import dataStore.DataStore
-import dataStore.DelimitedTextImporter
-import dataStore.Importer
-import dataStore.Record
-import dataStore.TextFileDataStore
+import dataStore.DataStorage.DataStore
+import dataStore.Importer.DelimitedTextImporter
+import dataStore.Importer.DataImporter
+import dataStore.Records.Record
+import dataStore.DataStorage.TextFileDataStore
 
 /**
  * Created by sokam on 2/8/15.
@@ -52,7 +52,7 @@ class DataStoreTest extends GroovyTestCase {
     }
 
     public void testNewDataStoreUsingImporterWithOutInvalidRow() {
-        Importer importer = new DelimitedTextImporter(original + ".txt", DELIMITER);
+        DataImporter importer = new DelimitedTextImporter(original + ".txt", DELIMITER);
         List<List<String>> data = importer.getData();
         DataStore dataStore = new TextFileDataStore(original,
                 Arrays.asList(keys),
@@ -63,7 +63,7 @@ class DataStoreTest extends GroovyTestCase {
     }
 
     public void testNewDataStoreUsingImporterWithInvalidRow() {
-        Importer importer = new DelimitedTextImporter(sample + ".txt", DELIMITER);
+        DataImporter importer = new DelimitedTextImporter(sample + ".txt", DELIMITER);
         List<List<String>> data = importer.getData();
         DataStore dataStore = new TextFileDataStore(sample,
                 Arrays.asList(keys),

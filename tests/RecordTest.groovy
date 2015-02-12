@@ -1,9 +1,9 @@
-import dataStore.DateRecord
-import dataStore.IntegerRecord
-import dataStore.MoneyRecord
-import dataStore.TimeRecord
-import dataStore.Record
-import dataStore.TextRecord
+import dataStore.Records.DateRecord
+import dataStore.Records.IntegerRecord
+import dataStore.Records.MoneyRecord
+import dataStore.Records.TimeRecord
+import dataStore.Records.Record
+import dataStore.Records.TextRecord
 
 /**
  * Created by sokam on 2/7/15.
