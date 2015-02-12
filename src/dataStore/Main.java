@@ -17,8 +17,6 @@ import java.util.Map;
  * Created by sokam on 2/10/15.
  */
 public abstract class Main {
-  // TODO: Remove constant after query logic has moved
-
   public final static String FILENAME = "original";
 
   public static String createInput(String[] args) {

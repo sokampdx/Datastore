@@ -1,56 +1,42 @@
 package dataStore.QueryTool;
 
-import dataStore.DataStorage.DataStore;
-import dataStore.DataStorage.TextFileDataStore;
 import dataStore.QueryStruct.*;
 import dataStore.Records.*;
 
 import java.util.*;
 
 public class QueryDataFactory implements QueryKeywords{
-/*  public static final String MAX = "max";
-  public static final String MIN = "min";
-  public static final String SUM = "sum";
-  public static final String COUNT = "count";
-  public static final String COLLECT = "collect";
-
-  public static final String SELECT = "s";
-  public static final String ORDER = "o";
-  public static final String FILTER = "f";
-  public static final String GROUP = "g";*/
-
-  private List<List<Record>> current;
+  private List<List<Record>> records;
   private List<String> columns;
   private Map<String, CommandArgumentList> commandList;
 
-
-  public QueryDataFactory(List<List<Record>> current,
+  public QueryDataFactory(List<List<Record>> records,
                           List<String> columns,
                           Map<String, CommandArgumentList> commandList) {
-    this.current = current;
+    this.records = records;
     this.columns = columns;
     this.commandList = commandList;
   }
 
   public List<List<Record>> getResult () {
     query();
-    return this.current;
+    return this.records;
   }
 
   public void query () {
 
     if (this.commandList.containsKey(FILTER)) {
-      this.current = filter();
+      this.records = filter();
     }
 
     if (this.commandList.containsKey(ORDER)) {
-      this.current = order();
+      this.records = order();
     }
 
     if (this.commandList.containsKey(GROUP)) {
       // TODO: Group split the table by Distinct value, feed sub-tables to SELECT and recombine them
     } else if (this.commandList.containsKey(SELECT)) {
-      this.current = select();
+      this.records = select();
     }
   }
 
@@ -65,18 +51,17 @@ public class QueryDataFactory implements QueryKeywords{
     boolean hasAggregate = setupCriteria(criteria, index, aggregate);
 
     if (hasAggregate) {
-      createAggregateResult(this.current, index, aggregate, aggregateValue);
+      createAggregateResult(index, aggregate, aggregateValue);
       result.add(aggregateValue);
     } else {
-      createSimpleSelectResult(this.current, result, index);
+      createSimpleSelectResult(result, index);
     }
     return result;
   }
 
-  public void createSimpleSelectResult(List<List<Record>> records,
-                                       List<List<Record>> result,
+  public void createSimpleSelectResult(List<List<Record>> result,
                                        List<Integer> index) {
-    for (List<Record> record : records) {
+    for (List<Record> record : this.records) {
       List<Record> current = new ArrayList<Record>();
       for (Integer i : index) {
         current.add(record.get(i));
@@ -85,17 +70,15 @@ public class QueryDataFactory implements QueryKeywords{
     }
   }
 
-  public void createAggregateResult(List<List<Record>> records,
-                                    List<Integer> index,
+  public void createAggregateResult(List<Integer> index,
                                     List<String> aggregate,
                                     List<Record> aggregateValue) {
 
-    setInitialAggregateValue(records, index, aggregate, aggregateValue);
-    findAggregateValueResult(records, index, aggregate, aggregateValue);
+    setInitialAggregateValue(index, aggregate, aggregateValue);
+    findAggregateValueResult(index, aggregate, aggregateValue);
   }
 
-  public void findAggregateValueResult(List<List<Record>> records,
-                                       List<Integer> index,
+  public void findAggregateValueResult(List<Integer> index,
                                        List<String> aggregate,
                                        List<Record> aggregateValue) {
     int numOfCol = index.size();
@@ -106,7 +89,7 @@ public class QueryDataFactory implements QueryKeywords{
       String aggType = aggregate.get(i);
       List<Record> columnRecords = new ArrayList<Record>();
 
-      for (List<Record> currentRow : records) {
+      for (List<Record> currentRow : this.records) {
         aggValue = aggregateValue.get(i);
         record = currentRow.get(index.get(i));
 
@@ -130,14 +113,13 @@ public class QueryDataFactory implements QueryKeywords{
     }
   }
 
-  public void setInitialAggregateValue(List<List<Record>> records,
-                                       List<Integer> index,
+  public void setInitialAggregateValue(List<Integer> index,
                                        List<String> aggregate,
                                        List<Record> aggregateValue) {
     int numOfCol = index.size();
     Record record = null;
     int currentIndex = 0;
-    List<Record> currentRow = records.get(currentIndex);
+    List<Record> currentRow = this.records.get(currentIndex);
     for (int i = 0; i < numOfCol; ++i) {
       String aggType = aggregate.get(i);
       if (aggType.equals(MIN) || aggType.equals(MAX) || aggType.equals("")) {
@@ -207,7 +189,7 @@ public class QueryDataFactory implements QueryKeywords{
     int index = this.columns.indexOf(c.getColumn());
     String match = ((FilterCriteria) c).getMatch();
 
-    for (List<Record> record : this.current) {
+    for (List<Record> record : this.records) {
       if (record.get(index).getData().equals(match)) {
         result.add(new ArrayList<Record>(record));
       }
@@ -218,7 +200,7 @@ public class QueryDataFactory implements QueryKeywords{
 
   public List<List<Record>> order() {
     List<Criteria> criteria = this.commandList.get(ORDER).getArguments();
-    List<List<Record>> result = new ArrayList<List<Record>>(this.current);
+    List<List<Record>> result = new ArrayList<List<Record>>(this.records);
     List<Integer> index = new ArrayList<Integer>();
 
     for (Criteria c : criteria) {
