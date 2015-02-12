@@ -6,21 +6,21 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class QueryScanner implements QueryKeywords, QueryErrorMessage {
+public class Scanner implements Keywords, ErrorMessage {
 
   private String stream;
   private String nextChar;
   private int nextIndex;
   private List<String> tokens;
 
-  public QueryScanner()  {
+  public Scanner()  {
     this.stream = "";
     this.tokens = new ArrayList<String>();
     this.nextChar = "";
     this.nextIndex = 0;
   }
 
-  public QueryScanner(String stream){
+  public Scanner(String stream){
     this.stream = stream;
     this.tokens = new ArrayList<String>();
     this.nextChar = "";

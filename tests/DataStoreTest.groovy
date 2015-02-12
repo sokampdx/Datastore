@@ -1,8 +1,7 @@
-import dataStore.DataStorage.DataStore
-import dataStore.Importer.DelimitedTextImporter
-import dataStore.Importer.DataImporter
+
+import dataStore.Importer.*
 import dataStore.Records.Record
-import dataStore.DataStorage.TextFileDataStore
+import dataStore.DataStorage.*
 
 /**
  * Created by sokam on 2/8/15.

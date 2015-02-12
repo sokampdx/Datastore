@@ -2,17 +2,16 @@ package dataStore.QueryTool;
 
 import dataStore.QueryStruct.*;
 import dataStore.Records.*;
-
 import java.util.*;
 
-public class QueryDataFactory implements QueryKeywords{
+public class DataFactory implements Keywords {
   private List<List<Record>> records;
   private List<String> columns;
   private Map<String, CommandArgumentList> commandList;
 
-  public QueryDataFactory(List<List<Record>> records,
-                          List<String> columns,
-                          Map<String, CommandArgumentList> commandList) {
+  public DataFactory(List<List<Record>> records,
+                     List<String> columns,
+                     Map<String, CommandArgumentList> commandList) {
     this.records = records;
     this.columns = columns;
     this.commandList = commandList;
@@ -39,7 +38,6 @@ public class QueryDataFactory implements QueryKeywords{
       this.records = select();
     }
   }
-
 
   public List<List<Record>> select() {
     List<Criteria> criteria = this.commandList.get(SELECT).getArguments();

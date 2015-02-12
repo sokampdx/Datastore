@@ -1,8 +1,7 @@
-import dataStore.DataStorage.DataStore
+import dataStore.DataStorage.*
 import dataStore.Main
 import dataStore.Records.Record
 import dataStore.Records.RecordListComparator
-import dataStore.DataStorage.TextFileDataStore
 
 /**
  * Created by sokam on 2/10/15.
@@ -19,8 +18,6 @@ class RecordListComparatorTest extends GroovyTestCase {
         RecordListComparator comparator = new RecordListComparator(index);
         List<Record> first = current.get(0);
         List<Record> second = current.get(1);
-//        MyUtil.print(first.toString());
-//        MyUtil.print(second.toString());
         assertTrue(comparator.compare(first, second) > 0);
     }
 

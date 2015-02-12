@@ -3,7 +3,7 @@ package dataStore.QueryTool;
 /**
  * Created by sokam on 2/11/15.
  */
-public interface QueryErrorMessage {
+public interface ErrorMessage {
   public static final String USAGE = "USAGE: ./query " +
       "-s column[:aggregate],... -o column,... -g column,... -f column=data (AND|OR) ... ";
 

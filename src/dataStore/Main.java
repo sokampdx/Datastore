@@ -4,9 +4,9 @@ import dataStore.DataStorage.DataStore;
 import dataStore.DataStorage.TextFileDataStore;
 import dataStore.QueryStruct.CommandArgumentList;
 import dataStore.QueryStruct.Expression;
-import dataStore.QueryTool.QueryDataFactory;
-import dataStore.QueryTool.QueryParser;
-import dataStore.QueryTool.QueryScanner;
+import dataStore.QueryTool.DataFactory;
+import dataStore.QueryTool.Parser;
+import dataStore.QueryTool.Scanner;
 import dataStore.Records.Record;
 import dataStore.Util.MyUtil;
 
@@ -33,15 +33,15 @@ public abstract class Main {
     List<List<Record>> current = dataStore.getRecords();
     List<String> columns = dataStore.getColumns();
 
-    QueryScanner scanner = new QueryScanner(input);
-    QueryParser queryParser = new QueryParser(dataStore);
+    Scanner scanner = new Scanner(input);
+    Parser queryParser = new Parser(columns);
     queryParser.query(scanner.getTokens());
 
     Expression expression = queryParser.getQuery();
     Map<String, CommandArgumentList> commandList = expression.getExpression();
-    QueryDataFactory queryDataFactory= new QueryDataFactory(current, columns, commandList);
+    DataFactory dataFactory = new DataFactory(current, columns, commandList);
 
-    return MyUtil.ListOfListOfRecordToString(queryDataFactory.getResult());
+    return MyUtil.ListOfListOfRecordToString(dataFactory.getResult());
 }
 
   public static void printResult(String result) {

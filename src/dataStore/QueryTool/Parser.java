@@ -1,6 +1,5 @@
 package dataStore.QueryTool;
 
-import dataStore.DataStorage.DataStore;
 import dataStore.QueryStruct.*;
 
 import java.util.Arrays;
@@ -9,10 +8,9 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class QueryParser implements QueryKeywords, QueryErrorMessage {
+public class Parser implements Keywords, ErrorMessage {
 
-
-  private DataStore dataStore;
+  private List<String> columns;
   private List<String> tokens;
   private String nextToken;
   private int nextIndex;
@@ -21,8 +19,8 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
 
   private Expression expression;
 
-  public QueryParser(DataStore dataStore) {
-    this.dataStore = dataStore;
+  public Parser(List<String> columns) {
+    this.columns = columns;
     this.expression = new Expression();
     this.tokens = null;
     this.nextToken = "";
@@ -32,7 +30,7 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
   }
 
   public String query(String queryString) {
-    QueryScanner queryScanner = new QueryScanner(queryString);
+    Scanner queryScanner = new Scanner(queryString);
     return query(queryScanner.getTokens());
   }
 
@@ -141,16 +139,15 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
     return arguments;
   }
 
-
   private CommandArgumentList getSingleArgument(String command) {
     CommandArgumentList arguments = new CommandArgumentList();
     arguments.add(getCriteria(command));
     return arguments;
   }
 
-
   private CommandArgumentList getListOfArguments(String command) {
     CommandArgumentList arguments = getSingleArgument(command);
+
     while (this.nextToken.equals(COMMA)) {
       getToken();
       arguments.add(getCriteria(command));
@@ -180,7 +177,6 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
   }
 
   private Criteria getFilterCriteria() {
-
     if (isBinOp()) {
       String binOp = this.nextToken;
       getToken();
@@ -229,7 +225,7 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
   }
 
   private String getColumn() {
-    if (dataStore.getColumns().contains(this.nextToken)) {
+    if (this.columns.contains(this.nextToken)) {
       String column = this.nextToken;
       getToken();
       return column;

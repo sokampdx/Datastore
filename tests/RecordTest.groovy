@@ -1,9 +1,4 @@
-import dataStore.Records.DateRecord
-import dataStore.Records.IntegerRecord
-import dataStore.Records.MoneyRecord
-import dataStore.Records.TimeRecord
-import dataStore.Records.Record
-import dataStore.Records.TextRecord
+import dataStore.Records.*
 
 /**
  * Created by sokam on 2/7/15.
@@ -50,7 +45,7 @@ class RecordTest extends GroovyTestCase {
 
     public void testCreateDollarAndCentRecordIncorrectly() {
         def msg = shouldFail(IllegalArgumentException) {
-            Record record = new MoneyRecord("abc");
+           new MoneyRecord("abc");
         }
         assertEquals(MoneyRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
     }
@@ -96,7 +91,7 @@ class RecordTest extends GroovyTestCase {
 
     public void testCreateDateRecordIncorrectly() {
         def msg = shouldFail(IllegalArgumentException) {
-            Record record = new DateRecord("1900-02-29");
+            new DateRecord("1900-02-29");
         }
         assertEquals(DateRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
     }
@@ -136,14 +131,14 @@ class RecordTest extends GroovyTestCase {
 
     public void testIncorrectMinuteDataInHourAndMinuteRecord() {
         def msg = shouldFail(IllegalArgumentException) {
-            Record record = new TimeRecord("00:60");
+            new TimeRecord("00:60");
         }
         assertEquals(TimeRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
     }
 
     public void testIncorrectHourDataInHourAndMinuteRecord() {
         def msg = shouldFail(IllegalArgumentException) {
-            Record record = new TimeRecord("24:30");
+            new TimeRecord("24:30");
         }
         assertEquals(TimeRecord.DATA_NOT_IN_CORRECT_FORMAT, msg);
     }

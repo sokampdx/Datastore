@@ -3,7 +3,7 @@ package dataStore.QueryTool;
 /**
  * Created by sokam on 2/11/15.
  */
-public interface QueryKeywords {
+public interface Keywords {
   public static final String EOL = "\n";
   public static final String BLANK = " ";
   public static final String COMMA = ",";
