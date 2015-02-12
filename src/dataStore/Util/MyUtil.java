@@ -9,6 +9,7 @@ import java.util.List;
  */
 public abstract class MyUtil {
   public static final String DIVIDER = "---------------";
+  public static final String COMMA = ",";
 
   public static String ListOfListOfRecordToString(List<List<Record>> collection) {
     String str = "";
@@ -18,7 +19,7 @@ public abstract class MyUtil {
 
       str += row.get(0);
       for (int j = 1; j < len; ++j) {
-        str += Main.COMMA + row.get(j).toString();
+        str += COMMA + row.get(j).toString();
       }
       str += '\n';
     }
