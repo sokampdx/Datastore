@@ -40,7 +40,7 @@ class QueryToolTest extends GroovyTestCase {
     public final String query5Scan = "[-s, TITLE, ,, REV, -f, TITLE, =, the hobbit, OR, TITLE, =, the matrix]";
     
     public final String query6 = "-s TITLE,REV -f 'TITLE=\"the hobbit\" OR TITLE=\"the matrix' -o TITLE";
-    public final String query7 = "-s TITLE,REV,STB -g TITLE";
+    public final String query7 = "-s TITLE,REV:max,STB -g TITLE";
 
     public final String query8 = "-s TITLE,REV -f STB=\"stb1\" OR (TITLE=\"the hobbit\" OR TITLE=\"unbreakable\") AND DATE=2014-04-01";
     public final String query8Scan = "[-s, TITLE, ,, REV, -f, STB, =, stb1, OR, (, TITLE, =, the hobbit, OR, TITLE, =, unbreakable, ), AND, DATE, =, 2014-04-01]";
@@ -49,6 +49,7 @@ class QueryToolTest extends GroovyTestCase {
     public final String queryErr2 = "-s TITLE,REV:,STB:collect -g TITLE";
     public final String queryErr3 = "-s TITLE,REV,DATE -f DATE";
     public final String queryErr4 = "-s TITLE,REV,DATE -w DATE,TITLE";
+    public final String queryErr5 = "-s TITLE,PROVIDER,STB -g TITLE";
 
     private DataStore dataStore = new TextFileDataStore(ORIGINAL);
     private QueryParser queryTool = new QueryParser(dataStore);
@@ -156,7 +157,7 @@ class QueryToolTest extends GroovyTestCase {
         CommandArgumentList arguments = new CommandArgumentList();
         Criteria criteria = new SelectCriteria("TITLE");
         arguments.add(criteria);
-        criteria = new SelectCriteria("REV");
+        criteria = new SelectCriteria("REV", "max");
         arguments.add(criteria);
         criteria = new SelectCriteria("STB");
         arguments.add(criteria);
@@ -261,5 +262,12 @@ class QueryToolTest extends GroovyTestCase {
             queryTool.query(queryErr4);
         }
         assertEquals(QueryParser.USAGE, msg);
+    }
+
+    public void testQueryGroupWithoutAggregate() {
+        def msg = shouldFail(IllegalArgumentException) {
+            queryTool.query(queryErr5);
+        }
+        assertEquals(QueryParser.GROUP_AND_AGGREGATE_ERR, msg);
     }
 }

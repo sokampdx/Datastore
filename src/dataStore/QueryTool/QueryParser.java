@@ -16,6 +16,8 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
   private List<String> tokens;
   private String nextToken;
   private int nextIndex;
+  private boolean hasGroup;
+  private boolean hasAggregate;
 
   private Expression expression;
 
@@ -25,6 +27,8 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
     this.tokens = null;
     this.nextToken = "";
     this.nextIndex = 0;
+    this.hasAggregate = false;
+    this.hasGroup = false;
   }
 
   public String query(String queryString) {
@@ -40,6 +44,9 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
     getToken();
     buildDataStoreQuery();
 
+    if (this.hasGroup && !this.hasAggregate) {
+      throw new IllegalArgumentException(GROUP_AND_AGGREGATE_ERR);
+    }
     if (!this.nextToken.equals(EOL)) {
       throw new IllegalArgumentException(USAGE);
     }
@@ -60,8 +67,6 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
     while (isValidCommand(this.nextToken)) {
       getCommandArgument();
     }
-
-    // TODO: Throw exception if GROUP function has no Aggregates
   }
 
   private boolean isValidCommand(String command) {
@@ -81,7 +86,6 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
   }
 
   private void getCommandArgument() {
-
     String token = this.nextToken;
     String command = token.substring(1,2);
     getToken();
@@ -164,6 +168,7 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
     } else if (command.equals(FILTER)) {
       criteria = getFilterCriteria();
     } else if (command.equals(GROUP)) {
+      this.hasGroup = true;
       criteria = getGroupCriteria();
     } else {
         throw new IllegalArgumentException(UNKNOWN_COMMAND_ERR);
@@ -206,13 +211,13 @@ public class QueryParser implements QueryKeywords, QueryErrorMessage {
 
   private Criteria getSelectCriteria() {
     final String[] AGGREGATES = {MAX, MIN, SUM, COUNT, COLLECT};
-    String aggregate;
     String column = getColumn();
 
     if (this.nextToken.equals(COLON)) {
       getToken();
       if (Arrays.asList(AGGREGATES).contains(this.nextToken)) {
-        aggregate = this.nextToken;
+        this.hasAggregate = true;
+        String aggregate = this.nextToken;
         getToken();
         return new SelectCriteria(column, aggregate);
       } else {

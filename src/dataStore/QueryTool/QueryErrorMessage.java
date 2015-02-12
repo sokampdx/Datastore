@@ -14,4 +14,5 @@ public interface QueryErrorMessage {
   public static final String INCORRECT_FILTER_ERR = "Must specified Filter criteria for the column";
   public static final String UNKNOWN_AGGREGATE_ERR = "Unrecognized aggregate function.";
   public static final String EXPECT_CLOSE_PARENT = "Expecting a close parenthesis.";
+  public static final String GROUP_AND_AGGREGATE_ERR = "Group must be accommadate with aggregate";
 }
