@@ -25,6 +25,7 @@ public class FilterCriteria extends Criteria {
     return this.binOp.length() > 0;
   }
 
+  @Override
   public String getMatch() {
     return this.match;
   }
@@ -33,13 +34,12 @@ public class FilterCriteria extends Criteria {
     return this.binOp;
   }
 
-  // TODO: Avoid type cast here
-  @Override
+    @Override
   public boolean equals (Criteria filterCriteria) {
     boolean isMatch = super.equals(filterCriteria);
     if (filterCriteria instanceof FilterCriteria) {
-      isMatch &= this.match.equals(((FilterCriteria) filterCriteria).match);
-      isMatch &= this.binOp.equals(((FilterCriteria) filterCriteria).binOp);
+      isMatch &= this.match.equals(filterCriteria.getMatch());
+      isMatch &= this.binOp.equals(filterCriteria.getBinOp());
     } else {
       isMatch = false;
     }

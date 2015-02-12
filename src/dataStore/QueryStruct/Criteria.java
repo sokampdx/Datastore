@@ -10,6 +10,14 @@ public abstract class Criteria {
     this.column = column;
   }
 
+  public String getMatch() {
+    return "";
+  }
+
+  public String getBinOp() {
+    return "";
+  }
+
   public boolean equals(Criteria match) {
     return this.column.equals(match.column);
   }

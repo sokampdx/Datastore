@@ -33,7 +33,6 @@ public class DataFactory implements Keywords {
     }
 
     if (this.commandList.containsKey(GROUP)) {
-      // TODO: Group split the table by Distinct value, feed sub-tables to SELECT and recombine them
       this.records = group();
     } else if (this.commandList.containsKey(SELECT)) {
       this.records = select();
@@ -208,31 +207,6 @@ public class DataFactory implements Keywords {
     return (aggType.equals(SUM) && record.isSummable());
   }
 
-  public List<List<Record>> filter() {
-    List<Criteria> criteria = this.commandList.get(FILTER).getArguments();
-    List<List<Record>> result = new ArrayList<List<Record>>();
-
-    int criteriaIndex = 0;
-    Criteria c = criteria.get(criteriaIndex);
-
-    // TODO: use the tree structure recursively combine filter results
-    while (c.isBinOp()) {
-      ++criteriaIndex;
-      c = criteria.get(criteriaIndex);
-    }
-
-    int index = this.columns.indexOf(c.getColumn());
-    String match = ((FilterCriteria) c).getMatch();
-
-    for (List<Record> record : this.records) {
-      if (record.get(index).getData().equals(match)) {
-        result.add(new ArrayList<Record>(record));
-      }
-    }
-
-    return result;
-  }
-
   public List<List<Record>> order() {
     List<Criteria> criteria = this.commandList.get(ORDER).getArguments();
     List<List<Record>> result = new ArrayList<List<Record>>(this.records);
@@ -253,4 +227,37 @@ public class DataFactory implements Keywords {
       }
     }
   }
+
+ /* public List<List<Record>> filter() {
+    List<Criteria> criteria = this.commandList.get(FILTER).getArguments();
+    AdvancedFilter advancedFilter = new AdvancedFilter(this.records, this.columns, criteria);
+    return advancedFilter.filter();
+  }*/
+
+  public List<List<Record>> filter() {
+    List<Criteria> criteria = this.commandList.get(FILTER).getArguments();
+    List<List<Record>> result = new ArrayList<List<Record>>();
+
+    int criteriaIndex = 0;
+    Criteria c = criteria.get(criteriaIndex);
+
+    // TODO: use the tree structure recursively combine filter results
+    while (c.isBinOp()) {
+      ++criteriaIndex;
+      c = criteria.get(criteriaIndex);
+    }
+
+    int index = this.columns.indexOf(c.getColumn());
+    String match = c.getMatch();
+
+    for (List<Record> record : this.records) {
+      if (record.get(index).getData().equals(match)) {
+        result.add(new ArrayList<Record>(record));
+      }
+    }
+
+    return result;
+  }
+
+
 }
