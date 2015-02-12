@@ -33,6 +33,7 @@ public class FilterCriteria extends Criteria {
     return this.binOp;
   }
 
+  // TODO: Avoid type cast here
   @Override
   public boolean equals (Criteria filterCriteria) {
     boolean isMatch = super.equals(filterCriteria);

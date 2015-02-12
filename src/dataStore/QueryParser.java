@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class QueryParser {
+public class QueryParser implements QueryKeywords{
   public static final String USAGE = "USAGE: ./query " +
       "-s column[:aggregate],... -o column,... -g column,... -f column=data (AND|OR) ... ";
   public static final String COLUMN_ERR = "Column Name is not in the Database.";
@@ -14,26 +14,6 @@ public class QueryParser {
   public static final String INCORRECT_FILTER_ERR = "Must specified Filter criteria for the column";
   public static final String UNKNOWN_AGGREGATE_ERR = "Unrecognized aggregate function.";
   private static final String EXPECT_CLOSE_PARENT = "Expecting a close parenthesis.";
-  public static final String EOL = "\n";
-  public static final String COMMA = ",";
-  public static final String COLON = ":";
-  public static final String EQUAL = "=";
-  public static final String DASH = "-";
-  public static final String SELECT = "s";
-  public static final String ORDER = "o";
-  public static final String FILTER = "f";
-  public static final String GROUP = "g";
-  public static final String OPEN = "(";
-  public static final String CLOSE = ")";
-  public static final String AND = "AND";
-  public static final String OR = "OR";
-
-  public final String[] AGGREGATES = {MAX, MIN, SUM, COUNT, COLLECT};
-  public static final String MAX = "max";
-  public static final String MIN = "min";
-  public static final String SUM = "sum";
-  public static final String COUNT = "count";
-  public static final String COLLECT = "collect";
 
   private DataStore dataStore;
   private List<String> tokens;
@@ -84,7 +64,7 @@ public class QueryParser {
       getCommandArgument();
     }
 
-    // TODO Throw exception if GROUP is found but there is no Aggregates
+    // TODO: Throw exception if GROUP is found but there is no Aggregates
   }
 
   private boolean isValidCommand(String command) {
@@ -228,6 +208,7 @@ public class QueryParser {
   }
 
   private Criteria getSelectCriteria() {
+    final String[] AGGREGATES = {MAX, MIN, SUM, COUNT, COLLECT};
     String aggregate;
     String column = getColumn();
 

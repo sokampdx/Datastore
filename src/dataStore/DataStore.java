@@ -1,7 +1,5 @@
 package dataStore;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
 import java.util.*;
 
 /**
@@ -121,6 +119,8 @@ public abstract class DataStore {
     return records;
   }
 
+  // TODO: Move select, order, filter and group into its own class
+
   public List<List<Record>> select(List<Criteria> criteria, List<List<Record>> records) {
     List<List<Record>> result = new ArrayList<List<Record>>();
     List<Integer> index = new ArrayList<Integer>();
@@ -163,19 +163,15 @@ public abstract class DataStore {
                                         List<Integer> index,
                                         List<String> aggregate,
                                         List<Record> aggregateValue) {
-    int numOfRow = records.size();
     int numOfCol = index.size();
     Record record;
     Record aggValue;
-    List<Record> currentRow;
 
     for (int i = 0; i < numOfCol; ++i) {
       String aggType = aggregate.get(i);
       List<Record> columnRecords = new ArrayList<Record>();
 
-      for (int j = 0; j < numOfRow; ++j) {
-        currentRow = records.get(j);
-
+      for (List<Record> currentRow : records) {
         aggValue = aggregateValue.get(i);
         record = currentRow.get(index.get(i));
 
@@ -183,7 +179,7 @@ public abstract class DataStore {
           aggregateValue.set(i, record);
         } else if (isMAX(record, aggType, aggValue)) {
           aggregateValue.set(i, record);
-        } else if (isCOUNT(aggType) || isCOLLECT(aggType))  {
+        } else if (isCOUNT(aggType) || isCOLLECT(aggType)) {
           columnRecords.add(record);
         } else if (isSUM(record, aggType)) {
           aggValue.add(record);

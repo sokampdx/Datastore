@@ -6,21 +6,11 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class QueryScanner {
-  public static final String EOL = "\n";
-  public static final String BLANK = " ";
-  public static final String COMMA = ",";
-  public static final String COLON = ":";
-  public static final String EQUAL = "=";
-  public static final String OPEN = "(";
-  public static final String CLOSE = ")";
-  public static final String DOUBLE_QUOTE = "\"";
-  public static final String SINGLE_QUOTE = "'";
+public class QueryScanner implements QueryKeywords{
 
   public static final String USAGE = "USAGE: ./query " +
       "-s column[:aggregate],... -o column,... -g column,... -f column=data (AND|OR) ... ";
   public static final String EXPECTED_QUOTE = "Expect a matching quote." + EOL + USAGE;
-
 
   private String stream;
   private String nextChar;
