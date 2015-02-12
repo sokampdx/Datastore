@@ -28,6 +28,17 @@ public abstract class Record implements Comparable<Record> {
     return false;
   }
 
+  public void add(Record record) {
+    if (this.isSummable() && record.isSummable()) {
+      Double sum = Double.parseDouble(this.data) + Double.parseDouble(record.data);
+      this.data = sum.toString();
+    }
+  }
+
+  public boolean equals(Record record) {
+    return this.data.equals(record.data);
+  }
+
   public int compareTo(Record record) {
     if (record == null) {
       return 1;

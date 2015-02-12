@@ -46,7 +46,6 @@ public abstract class Main {
 
     if (commandList.containsKey(SELECT)) {
         current = dataStore.select(commandList.get(SELECT).getArguments(), current);
-
     }
 
     return MyUtil.ListOfListOfRecordToString(current);

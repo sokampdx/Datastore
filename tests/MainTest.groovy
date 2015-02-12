@@ -1,4 +1,5 @@
 import dataStore.Main
+import dataStore.MyUtil
 
 /**
  * Created by sokam on 2/10/15.
@@ -53,6 +54,24 @@ class MainTest extends GroovyTestCase  {
 
     public final String query11 = "-s TITLE,PROVIDER:max,VIEW_TIME:max";
     public final String query11Answer = "the matrix,warner bros,2:45\n"
+
+    public final String query12 = "-s DATE:count -f DATE=2014-04-02";
+    public final String query12Answer = "1\n";
+
+    public final String query13 = "-s PROVIDER:count";
+    public final String query13Answer = "2\n";
+
+    public final String query14 = "-s TITLE:collect";
+    public final String query14Answer = "[the hobbit, the matrix, unbreakable]\n";
+
+    public final String query15 = "-s TITLE,DATE:collect";
+    public final String query15Answer = "the matrix,[2014-04-01, 2014-04-02, 2014-04-03]\n"
+
+    public final String query16 = "-s REV:sum";
+    public final String query16Answer = "22.0\n";
+
+    public final String query17 = "-s TITLE,DATE:collect -f TITLE=\"the matrix\"";
+    public final String query17Answer = "the matrix,[2014-04-01, 2014-04-02]\n"
 
     public void testSimpleSelect () {
         String result = Main.run(query1);
@@ -121,4 +140,35 @@ class MainTest extends GroovyTestCase  {
         assertEquals(query11Answer.toString(), result.toString());
     }
 
+    public void testCountDATEWithFilter () {
+        String result = Main.run(query12);
+        assertEquals(query12Answer.toString(), result.toString());
+    }
+
+    public void testCountPROVIDER () {
+        String result = Main.run(query13);
+        assertEquals(query13Answer.toString(), result.toString());
+    }
+
+    public void testCollectTitle () {
+        String result = Main.run(query14);
+        assertEquals(query14Answer.toString(), result.toString());
+    }
+
+    public void testCollectDATEWithTITLE () {
+        String result = Main.run(query15);
+        assertEquals(query15Answer.toString(), result.toString());
+    }
+
+    public void testSumREV () {
+        String result = Main.run(query16);
+        assertEquals(query16Answer.toString(), result.toString());
+    }
+
+    public void testFilterTitle () {
+        String result = Main.run(query17);
+        assertEquals(query17Answer.toString(), result.toString());
+//        MyUtil.print(query17Answer.toString());
+//        MyUtil.print(result.toString());
+    }
 }

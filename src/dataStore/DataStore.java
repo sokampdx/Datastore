@@ -153,7 +153,7 @@ public abstract class DataStore {
                                      List<String> aggregate,
                                      List<Record> aggregateValue) {
 
-    setInitialAggregteValue(records, index, aggregate, aggregateValue);
+    setInitialAggregateValue(records, index, aggregate, aggregateValue);
     findAggregateValueResult(records, index, aggregate, aggregateValue);
   }
 
@@ -164,37 +164,59 @@ public abstract class DataStore {
     int numOfRow = records.size();
     int numOfCol = index.size();
     Record record;
+    Record aggValue;
     List<Record> currentRow;
 
-    for (int j = 1; j < numOfRow; ++j) {
-      currentRow = records.get(j);
-      for (int i = 0; i < numOfCol; ++i) {
-        record = currentRow.get(index.get(i));
-        String agg = aggregate.get(i);
-        Record aggValue = aggregateValue.get(i);
+    for (int i = 0; i < numOfCol; ++i) {
+      String aggType = aggregate.get(i);
+      List<Record> columnRecords = new ArrayList<Record>();
 
-        if (isMIN(record, agg, aggValue)) {
+      for (int j = 0; j < numOfRow; ++j) {
+        currentRow = records.get(j);
+
+        aggValue = aggregateValue.get(i);
+        record = currentRow.get(index.get(i));
+
+        if (isMIN(record, aggType, aggValue)) {
           aggregateValue.set(i, record);
-        } else if (isMAX(record, agg, aggValue)) {
+        } else if (isMAX(record, aggType, aggValue)) {
           aggregateValue.set(i, record);
+        } else if (isCOUNT(aggType) || isCOLLECT(aggType))  {
+          columnRecords.add(record);
+        } else if (isSUM(record, aggType)) {
+          aggValue.add(record);
         }
+      }
+      Set<Record> set = new TreeSet<Record>(columnRecords);
+      if (isCOUNT(aggType)) {
+        aggregateValue.set(i, new IntegerRecord(set.size()));
+      } else if (isCOLLECT(aggType)) {
+        List<Record> unique = new ArrayList<Record>(set);
+        aggregateValue.get(i).setData(unique.toString());
       }
     }
   }
 
-  private void setInitialAggregteValue(List<List<Record>> records,
-                                       List<Integer> index,
-                                       List<String> aggregate,
-                                       List<Record> aggregateValue) {
+  private void setInitialAggregateValue(List<List<Record>> records,
+                                        List<Integer> index,
+                                        List<String> aggregate,
+                                        List<Record> aggregateValue) {
     int numOfCol = index.size();
     Record record = null;
     int currentIndex = 0;
     List<Record> currentRow = records.get(currentIndex);
     for (int i = 0; i < numOfCol; ++i) {
-      String agg = aggregate.get(i);
-      if (agg.equals(MIN) || agg.equals(MAX) || agg.equals("")) {
+      String aggType = aggregate.get(i);
+      if (aggType.equals(MIN) || aggType.equals(MAX) || aggType.equals("")) {
         record = currentRow.get(index.get(i));
+      } else if (aggType.equals(SUM)) {
+        record = new MoneyRecord("0.00");
+      } else if (isCOUNT(aggType)) {
+        record = new IntegerRecord(0);
+      } else if (isCOLLECT(aggType)) {
+        record = new TextRecord("");
       }
+
       aggregateValue.add(record);
     }
   }
@@ -215,12 +237,24 @@ public abstract class DataStore {
     return hasAggregate;
   }
 
-  private boolean isMIN(Record record, String agg, Record aggValue) {
-    return (agg.equals(MIN) && record.compareTo(aggValue) < 0);
+  private boolean isMIN(Record record, String aggType, Record aggValue) {
+    return (aggType.equals(MIN) && record.compareTo(aggValue) < 0);
   }
 
-  private boolean isMAX(Record record, String agg, Record aggValue) {
-    return (agg.equals(MAX) && record.compareTo(aggValue) > 0);
+  private boolean isMAX(Record record, String aggType, Record aggValue) {
+    return (aggType.equals(MAX) && record.compareTo(aggValue) > 0);
+  }
+
+  private boolean isCOUNT(String aggType) {
+    return aggType.equals(COUNT);
+  }
+
+  private boolean isCOLLECT(String aggType) {
+    return aggType.equals(COLLECT);
+  }
+
+  private boolean isSUM(Record record, String aggType) {
+    return (aggType.equals(SUM) && record.isSummable());
   }
 
   public List<List<Record>> filter(List<Criteria> criteria, List<List<Record>> records) {
