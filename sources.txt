@@ -10,10 +10,12 @@ src/dataStore/QueryStruct/FilterCriteria.java
 src/dataStore/QueryStruct/GroupCriteria.java
 src/dataStore/QueryStruct/OrderCriteria.java
 src/dataStore/QueryStruct/SelectCriteria.java
-src/dataStore/QueryTool/QueryErrorMessage.java
-src/dataStore/QueryTool/QueryKeywords.java
-src/dataStore/QueryTool/QueryParser.java
-src/dataStore/QueryTool/QueryScanner.java
+src/dataStore/QueryTool/AdvancedFilter.java
+src/dataStore/QueryTool/DataFactory.java
+src/dataStore/QueryTool/ErrorMessage.java
+src/dataStore/QueryTool/Keywords.java
+src/dataStore/QueryTool/Parser.java
+src/dataStore/QueryTool/Tokenizer.java
 src/dataStore/Records/DateRecord.java
 src/dataStore/Records/DoubleRecord.java
 src/dataStore/Records/IntegerRecord.java
