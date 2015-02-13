@@ -6,21 +6,21 @@ import java.util.List;
 /**
  * Created by sokam on 2/8/15.
  */
-public class Scanner implements Keywords, ErrorMessage {
+public class Tokenizer implements Keywords, ErrorMessage {
 
   private String stream;
   private String nextChar;
   private int nextIndex;
   private List<String> tokens;
 
-  public Scanner()  {
+  public Tokenizer()  {
     this.stream = "";
     this.tokens = new ArrayList<String>();
     this.nextChar = "";
     this.nextIndex = 0;
   }
 
-  public Scanner(String stream){
+  public Tokenizer(String stream){
     this.stream = stream;
     this.tokens = new ArrayList<String>();
     this.nextChar = "";

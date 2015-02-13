@@ -30,9 +30,9 @@ public abstract class Main {
     List<List<Record>> records = dataStore.getRecords();
     List<String> columns = dataStore.getColumns();
 
-    Scanner scanner = new Scanner(input);
+    Tokenizer tokenizer = new Tokenizer(input);
     Parser queryParser = new Parser(columns);
-    queryParser.query(scanner.getTokens());
+    queryParser.query(tokenizer.getTokens());
 
     Expression expression = queryParser.getQuery();
     Map<String, CommandArgumentList> commandList = expression.getExpression();

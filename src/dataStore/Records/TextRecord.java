@@ -39,4 +39,8 @@ public class TextRecord extends Record {
     return getData().length() <= this.max_Char_Allow;
   }
 
+  @Override
+  public Record clone() {
+    return new TextRecord(getData());
+  }
 }

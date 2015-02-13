@@ -39,4 +39,9 @@ public class IntegerRecord extends Record {
   public static boolean isValid (String data) {
     return data.matches(REGEX);
   }
+
+  @Override
+  public Record clone() {
+    return new IntegerRecord(Integer.parseInt(getData()));
+  }
 }

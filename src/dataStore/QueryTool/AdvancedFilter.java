@@ -5,8 +5,9 @@ import dataStore.Records.Record;
 import dataStore.Util.MyUtil;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by sokam on 2/12/15.
@@ -15,61 +16,61 @@ public class AdvancedFilter implements Keywords{
   private List<Criteria> criteriaList;
   private List<List<Record>> records;
   private List<String> columns;
-
-  private int nextIndex;
+  private Criteria criteria;
 
   public AdvancedFilter (List<List<Record>> records,
                          List<String> columns,
                          List<Criteria> criteriaList) {
-    this.records = new ArrayList<List<Record>>(records);
+    this.records = records;
     this.criteriaList = criteriaList;
     this.columns = columns;
-    this.nextIndex = 0;
+    this.criteria = criteriaList.get(0);
   }
 
   public List<List<Record>> filter () {
-    if (noMoreCriteria()) {
-      return null;
-    }
-
-
-
-    Criteria c = getCriteria();
-    if (c.isBinOp()) {
-      if (c.getBinOp().equals(AND)) {
-        return andBinOp(filter(), filter());
-      } else if (c.getBinOp().equals(OR)) {
-        return orBinOp(filter(), filter());
-      } else {
-        return null;
-      }
-    } else {
-      return filterOne();
-    }
-  }
-
-  private boolean noMoreCriteria() {
-    boolean isDone = this.nextIndex >= this.criteriaList.size();
-    System.out.println(nextIndex + " " + criteriaList.size());
-    return isDone;
-  }
-
-  private Criteria getCriteria() {
-    Criteria c = this.criteriaList.get(this.nextIndex);
-    ++this.nextIndex;
-    System.out.println(nextIndex);
-    return c;
-  }
-
-  private List<List<Record>> filterOne() {
-    if (noMoreCriteria()) {
-      return null;
-    }
-
     List<List<Record>> result = new ArrayList<List<Record>>();
-    Criteria c = getCriteria();
-    String match = c.getMatch();
-    int index = this.columns.indexOf(c.getColumn());
+    if(!moreCriteria()) {
+      return result;
+    }
+
+    do {
+      getCriteria();
+      if (this.criteria.isBinOp()) {
+        if (this.criteria.getBinOp().equals(AND)) {
+          result.addAll(andBinOp(filter(), filter()));
+        } else if (this.criteria.getBinOp().equals(OR)) {
+          result.addAll(orBinOp(filter(), filter()));
+        }
+      } else {
+        result.addAll(filterOne());
+      }
+    } while (moreCriteria());
+
+    MyUtil.printResultAt("filter", result);
+    return result;
+  }
+
+  private boolean moreCriteria() {
+    MyUtil.print("MoreCriteria", this.criteriaList.size()+"");
+    return !this.criteriaList.isEmpty();
+  }
+
+  private void getCriteria() {
+    this.criteria = this.criteriaList.remove(0);
+    String text = "";
+    if (this.criteria.isBinOp()) {
+      text = this.criteria.getBinOp();
+    } else {
+      text = this.criteria.getColumn();
+    }
+    MyUtil.print("getCriteria", MyUtil.DIVIDER, text);
+  }
+
+  public List<List<Record>> filterOne() {
+    List<List<Record>> result = new ArrayList<List<Record>>();
+
+    String match = this.criteria.getMatch();
+    int index = this.columns.indexOf(this.criteria.getColumn());
 
     for (List<Record> record : this.records) {
       if (record.get(index).getData().equals(match)) {
@@ -77,13 +78,35 @@ public class AdvancedFilter implements Keywords{
       }
     }
 
+    MyUtil.printResultAt("filterOne", result);
     return result;
+  }
+
+  private List<List<Record>> orBinOp (List<List<Record>> first,
+                                      List<List<Record>> second) {
+    Set<List<Record>> result = new HashSet<List<Record>>();
+    result.addAll(first);
+    result.addAll(second);
+
+    return new ArrayList<List<Record>>(result);
   }
 
   private List<List<Record>> andBinOp (List<List<Record>> first,
                                        List<List<Record>> second) {
     List<List<Record>> result = new ArrayList<List<Record>>();
 
+    for (List<Record> row : first) {
+      if(second.contains(row)) {
+        result.add(row);
+      }
+    }
+    return result;
+  }
+
+
+/*  private List<List<Record>> andBinOp (List<List<Record>> first,
+                                       List<List<Record>> second) {
+    List<List<Record>> result = new ArrayList<List<Record>>();
     System.out.println(AND + MyUtil.DIVIDER);
 
     if (first.isEmpty() || second.isEmpty())
@@ -93,33 +116,33 @@ public class AdvancedFilter implements Keywords{
       if (second.contains(f))
         result.add(f);
     }
-    return result;
+
+    MyUtil.printResultAt("andBinOp", result);
+    return MyUtil.cloneRecords(result);
   }
 
   private List<List<Record>> orBinOp (List<List<Record>> first,
                                       List<List<Record>> second) {
     List<List<Record>> result = new ArrayList<List<Record>>();
-
     System.out.println(OR + MyUtil.DIVIDER);
 
     if (first.isEmpty() && second.isEmpty())
       return result;
 
-    if (first.isEmpty())
-      return second;
+    if (first.isEmpty()) {
+      result = second;
+    } else if (second.isEmpty()) {
+      result = first;
+    } else {
+      result.addAll(first);
+      for (List<Record> f : first) {
+        if (second.contains(f))
+          result.remove(f);
+      }
+      result.addAll(second);
+     }
 
-    if (second.isEmpty())
-      return first;
-
-    result.addAll(first);
-
-    for (List<Record> f : first) {
-      if (second.contains(f))
-        result.remove(f);
-    }
-
-    result.addAll(second);
-
-    return result;
-  }
+    MyUtil.printResultAt("orBinOp", result);
+    return MyUtil.cloneRecords(result);
+  }*/
 }

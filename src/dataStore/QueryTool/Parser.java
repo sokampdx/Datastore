@@ -29,8 +29,8 @@ public class Parser implements Keywords, ErrorMessage {
   }
 
   public String query(String queryString) {
-    Scanner queryScanner = new Scanner(queryString);
-    return query(queryScanner.getTokens());
+    Tokenizer queryTokenizer = new Tokenizer(queryString);
+    return query(queryTokenizer.getTokens());
   }
 
   public String query(List<String> tokens) {

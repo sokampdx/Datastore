@@ -73,4 +73,9 @@ public class TimeRecord extends Record {
       return compareHour;
     }
   }
+
+  @Override
+  public Record clone() {
+    return new TimeRecord(getData());
+  }
 }

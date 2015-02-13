@@ -85,8 +85,19 @@ class MainTest extends GroovyTestCase  {
             "[stb1],unbreakable,buena vista,2:05\n" +
             "[stb1, stb3],the matrix,warner bros,1:30\n";
 
-    public final String query20 = "-s TITLE,REV -f (STB=\"stb1\" OR STB=\"stb2\") AND (TITLE=\"the hobbit\" OR TITLE=\"unbreakable\") AND DATE=2014-04-01";
+    public final String query20 = "-s TITLE,REV -f STB=\"stb1\" AND STB=\"stb2\"";
     public final String query20Answer =
+            "the hobbit,8.00\n" +
+            "the matrix,4.00\n";
+
+    public final String query21 = "-s TITLE,REV -o TITLE -f STB=\"stb1\" OR STB=\"stb2\"";
+    public final String query21Answer =
+            "the hobbit,8.00\n" +
+            "the matrix,4.00\n" +
+            "unbreakable,6.00\n";
+
+    public final String query22 = "-s TITLE,REV -f (STB=\"stb2\" OR STB=\"stb2\") AND (TITLE=\"the hobbit\" OR TITLE=\"unbreakable\") AND DATE=2014-04-01";
+    public final String query22Answer =
             "the hobbit,8.00\n" +
             "unbreakable,6.00\n";
 
@@ -197,10 +208,24 @@ class MainTest extends GroovyTestCase  {
         assertEquals(query19Answer.toString(), result.toString());
     }
 
-/*    public void testAdvanceFilter () {
+/*    public void testAdvanceFilterAND() {
         String result = Main.run(query20);
         assertEquals(query20Answer.toString(), result.toString());
         MyUtil.print(query20Answer.toString());
         MyUtil.print(result.toString());
+    }*/
+
+    public void testAdvanceFilterOR () {
+        String result = Main.run(query21);
+        assertEquals(query21Answer.toString(), result.toString());
+        MyUtil.print(query21Answer.toString());
+        MyUtil.print(result.toString());
+    }
+
+    /*    public void testAdvanceFilterBOTH () {
+    String result = Main.run(query22);
+    assertEquals(query22Answer.toString(), result.toString());
+    MyUtil.print(query22Answer.toString());
+    MyUtil.print(result.toString());
     }*/
 }

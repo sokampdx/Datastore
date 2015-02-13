@@ -74,4 +74,9 @@ public class DoubleRecord extends Record {
       throw new IllegalArgumentException(COMPARED_TO_DIFFERENT_OBJECT);
     }
   }
+
+  @Override
+  public Record clone() {
+    return new DoubleRecord(getData());
+  }
 }

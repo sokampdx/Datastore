@@ -3,7 +3,7 @@ package dataStore.Records;
 /**
  * Created by sokam on 2/7/15.
  */
-public abstract class Record implements Comparable<Record> {
+public abstract class Record implements Comparable<Record>, Cloneable {
   private String REGEX = "\\d+(\\.\\d+)?";
   private String data;
 
@@ -38,6 +38,8 @@ public abstract class Record implements Comparable<Record> {
       this.data = sum.toString();
     }
   }
+
+  public abstract Record clone();
 
   public boolean equals(Record record) {
     return this.data.equals(record.data);

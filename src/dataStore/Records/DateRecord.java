@@ -51,6 +51,11 @@ public class DateRecord extends Record {
     return date.matches(REGEX) && DateChecker.isValid(year, month, day);
   }
 
+  @Override
+  public Record clone() {
+    return new DateRecord(getData());
+  }
+
 }
 
 

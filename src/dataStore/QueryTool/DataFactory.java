@@ -2,6 +2,8 @@ package dataStore.QueryTool;
 
 import dataStore.QueryStruct.*;
 import dataStore.Records.*;
+import dataStore.Util.MyUtil;
+
 import java.util.*;
 
 public class DataFactory implements Keywords {
@@ -228,36 +230,52 @@ public class DataFactory implements Keywords {
     }
   }
 
- /* public List<List<Record>> filter() {
-    List<Criteria> criteria = this.commandList.get(FILTER).getArguments();
-    AdvancedFilter advancedFilter = new AdvancedFilter(this.records, this.columns, criteria);
-    return advancedFilter.filter();
-  }*/
-
   public List<List<Record>> filter() {
     List<Criteria> criteria = this.commandList.get(FILTER).getArguments();
+    AdvancedFilter advancedFilter = new AdvancedFilter(
+        MyUtil.cloneRecords(this.records),
+        this.columns, criteria);
+    return advancedFilter.filter();
+  }
+
+
+/*
+
+  public List<List<Record>> filter() {
+    List<Criteria> criteriaList = this.commandList.get(FILTER).getArguments();
     List<List<Record>> result = new ArrayList<List<Record>>();
 
     int criteriaIndex = 0;
-    Criteria c = criteria.get(criteriaIndex);
+    Criteria criteria = criteriaList.get(criteriaIndex);
 
     // TODO: use the tree structure recursively combine filter results
-    while (c.isBinOp()) {
+    while (criteria.isBinOp()) {
       ++criteriaIndex;
-      c = criteria.get(criteriaIndex);
+      criteria = criteriaList.get(criteriaIndex);
     }
 
-    int index = this.columns.indexOf(c.getColumn());
-    String match = c.getMatch();
+    List<Criteria> temp = new ArrayList<Criteria>();
+    temp.add(criteria);
+
+    AdvancedFilter advancedFilter = new AdvancedFilter(this.records, this.columns, temp);
+    result = advancedFilter.filterOne();
+
+
+*/
+/*
+    int index = this.columns.indexOf(criteria.getColumn());
+    String match = criteria.getMatch();
 
     for (List<Record> record : this.records) {
       if (record.get(index).getData().equals(match)) {
         result.add(new ArrayList<Record>(record));
       }
-    }
+    }*//*
+
 
     return result;
   }
 
+*/
 
 }

@@ -50,4 +50,9 @@ public class MoneyRecord extends DoubleRecord {
     return data.matches(REGEX);
   }
 
+  @Override
+  public Record clone() {
+    return new MoneyRecord(getData());
+  }
+
 }

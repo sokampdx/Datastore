@@ -47,40 +47,40 @@ class QueryToolTest extends GroovyTestCase {
     private Parser queryTool = new Parser(dataStore.getColumns());
 
     public void testScannerForSelect() {
-        Scanner scanner = new Scanner(query1);
+        Tokenizer scanner = new Tokenizer(query1);
         assertEquals(query1Scan, scanner.getTokens().toString());
     }
 
     public void testScannerForSelectOrder() {
-        Scanner scanner = new Scanner(query2);
+        Tokenizer scanner = new Tokenizer(query2);
         assertEquals(query2Scan, scanner.getTokens().toString());
     }
 
     public void testScannerForSelectFilter() {
-        Scanner scanner = new Scanner(query3);
+        Tokenizer scanner = new Tokenizer(query3);
         assertEquals(query3Scan, scanner.getTokens().toString());
     }
 
     public void testScannerForSelectAggregateGroup() {
-        Scanner scanner = new Scanner(query4);
+        Tokenizer scanner = new Tokenizer(query4);
         assertEquals(query4Scan, scanner.getTokens().toString());
     }
 
     public void testScannerForSelectAdvanceFilter() {
-        Scanner scanner = new Scanner(query5);
+        Tokenizer scanner = new Tokenizer(query5);
         assertEquals(query5Scan, scanner.getTokens().toString());
     }
 
     public void testScannerForSelectAdvanceFilterWithParen() {
-        Scanner scanner = new Scanner(query8);
+        Tokenizer scanner = new Tokenizer(query8);
         assertEquals(query8Scan, scanner.getTokens().toString());
     }
 
     public void testScannerForIncorrectAdvanceFilter() {
         def msg = shouldFail(IllegalArgumentException) {
-            new Scanner(query6);
+            new Tokenizer(query6);
         }
-        assertEquals(Scanner.EXPECTED_QUOTE, msg);
+        assertEquals(Tokenizer.EXPECTED_QUOTE, msg);
     }
 
     public void testQueryForSelect() {

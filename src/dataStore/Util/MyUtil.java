@@ -1,6 +1,8 @@
 package dataStore.Util;
 
 import dataStore.Records.Record;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,6 +11,7 @@ import java.util.List;
 public abstract class MyUtil {
   public static final String DIVIDER = "---------------";
   public static final String COMMA = ",";
+  public static final String EOL = "\n";
 
   public static String ListOfListOfRecordToString(List<List<Record>> collection) {
     String str = "";
@@ -42,10 +45,34 @@ public abstract class MyUtil {
     return str;
   }
 
+  public static List<Record> cloneList(List<Record> recordList) {
+    List<Record> newList = new ArrayList<Record>();
+
+    for (Record record : recordList) {
+      newList.add(record);
+    }
+    return newList;
+  }
+
+  public static List<List<Record>> cloneRecords(List<List<Record>> records) {
+    List<List<Record>> newRecords = new ArrayList<List<Record>>();
+
+    for (List<Record> list : records) {
+      newRecords.add(cloneList(list));
+    }
+    return newRecords;
+  }
+
   public static void print(String... msgs) {
     for (String msg : msgs)
-      System.out.print(msg + " | ");
+      System.out.print(" | " + msg);
     System.out.println();
+  }
+
+  public static void printResultAt(String method, List<List<Record>> result) {
+    System.out.println(MyUtil.DIVIDER + method + EOL +
+        MyUtil.ListOfListOfRecordToString(result) + EOL +
+        MyUtil.DIVIDER + EOL);
   }
 
   public static String ArrayListToString (List<String> strings) {
