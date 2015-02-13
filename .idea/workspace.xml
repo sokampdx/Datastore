@@ -30,6 +30,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool/Parser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="3645">
+              <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dataStore/Main.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -59,8 +71,8 @@
       <file leaf-file-name="DataFactory.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool/DataFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3142" max-vertical-offset="4290">
-              <caret line="237" column="0" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2542" max-vertical-offset="3690">
+              <caret line="239" column="0" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1187#1201#0" expanded="true" />
@@ -93,14 +105,17 @@
       <file leaf-file-name="AdvancedFilter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool/AdvancedFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2310">
-              <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="36" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1650">
+              <caret line="43" column="3" selection-start-line="43" selection-start-column="3" selection-end-line="43" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#842#856#0" expanded="true" />
-                <element signature="e#1894#1908#0" expanded="true" />
-                <element signature="e#2436#2450#0" expanded="true" />
-                <element signature="e#2739#2753#0" expanded="true" />
+                <element signature="e#936#937#0" expanded="true" />
+                <element signature="e#981#982#0" expanded="true" />
+                <element signature="e#1013#1014#0" expanded="true" />
+                <element signature="e#1066#1067#0" expanded="true" />
+                <element signature="e#1156#1170#0" expanded="true" />
+                <element signature="e#2023#2037#0" expanded="true" />
+                <element signature="e#2326#2340#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -109,8 +124,8 @@
       <file leaf-file-name="MainTest.groovy" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/MainTest.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2813589" vertical-offset="1057" max-vertical-offset="3555">
-              <caret line="92" column="57" selection-start-line="92" selection-start-column="57" selection-end-line="92" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.3597561" vertical-offset="1072" max-vertical-offset="3570">
+              <caret line="99" column="136" selection-start-line="99" selection-start-column="35" selection-end-line="99" selection-end-column="141" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -171,11 +186,11 @@
         <option value="$PROJECT_DIR$/src/dataStore/Records/MoneyRecord.java" />
         <option value="$PROJECT_DIR$/src/dataStore/Records/TextRecord.java" />
         <option value="$PROJECT_DIR$/src/dataStore/Records/TimeRecord.java" />
-        <option value="$PROJECT_DIR$/src/dataStore/QueryTool/DataFactory.java" />
         <option value="$PROJECT_DIR$/src/dataStore/Util/MyUtil.java" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryTool/Scanner.java" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryTool/Tokenizer.java" />
         <option value="$PROJECT_DIR$/src/dataStore/QueryTool/AdvancedFilter.java" />
+        <option value="$PROJECT_DIR$/src/dataStore/QueryTool/DataFactory.java" />
         <option value="$PROJECT_DIR$/tests/MainTest.groovy" />
       </list>
     </option>
@@ -557,52 +572,6 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="MainTest.testFilterTitle" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="Datastore" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MainTest" />
-      <option name="METHOD_NAME" value="testFilterTitle" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="MainTest.testAdvanceFilter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="Datastore" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MainTest" />
-      <option name="METHOD_NAME" value="testAdvanceFilter" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
     <configuration default="false" name="MainTest.testAdvanceFilterAND" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="Datastore" />
@@ -627,7 +596,9 @@
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="true" />
       </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
     <configuration default="false" name="MainTest.testCountDATEWithFilter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
@@ -656,6 +627,52 @@
       </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="MainTest.testAdvanceFilterMultipleOR" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="Datastore" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MainTest" />
+      <option name="METHOD_NAME" value="testAdvanceFilterMultipleOR" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="MainTest.testAdvanceFilterBOTH" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="Datastore" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MainTest" />
+      <option name="METHOD_NAME" value="testAdvanceFilterBOTH" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -818,18 +835,18 @@
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="JUnit.com.example.sokam in Datastore" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.All in Datastore" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.MainTest.testFilterTitle" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilter" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilterAND" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.MainTest.testCountDATEWithFilter" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilterAND" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.MainTest.testCountDATEWithFilter" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilterMultipleOR" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilterBOTH" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JUnit.All in Datastore" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.MainTest.testCountDATEWithFilter" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilterBOTH" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilterAND" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.MainTest.testFilterTitle" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilter" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.MainTest.testAdvanceFilterMultipleOR" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.MainTest.testCountDATEWithFilter" />
       </list>
     </recent_temporary>
   </component>
@@ -895,7 +912,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23699422" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39967105" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34813598" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34813598" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947975" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1373,26 +1390,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7900697" vertical-offset="0" max-vertical-offset="3645">
-          <caret line="141" column="47" selection-start-line="141" selection-start-column="30" selection-end-line="141" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataStore/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="885">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStore/QueryStruct/FilterCriteria.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31007752" vertical-offset="0" max-vertical-offset="1161">
@@ -1423,10 +1420,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="3645">
+          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool/DataFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3204" max-vertical-offset="4290">
-          <caret line="237" column="0" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2542" max-vertical-offset="3690">
+          <caret line="239" column="0" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1187#1201#0" expanded="true" />
@@ -1457,22 +1464,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dataStore/QueryTool/AdvancedFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2310">
-          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="36" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1650">
+          <caret line="43" column="3" selection-start-line="43" selection-start-column="3" selection-end-line="43" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#842#856#0" expanded="true" />
-            <element signature="e#1894#1908#0" expanded="true" />
-            <element signature="e#2436#2450#0" expanded="true" />
-            <element signature="e#2739#2753#0" expanded="true" />
+            <element signature="e#936#937#0" expanded="true" />
+            <element signature="e#981#982#0" expanded="true" />
+            <element signature="e#1013#1014#0" expanded="true" />
+            <element signature="e#1066#1067#0" expanded="true" />
+            <element signature="e#1156#1170#0" expanded="true" />
+            <element signature="e#2023#2037#0" expanded="true" />
+            <element signature="e#2326#2340#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataStore/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="885">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/MainTest.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2813589" vertical-offset="1057" max-vertical-offset="3555">
-          <caret line="92" column="57" selection-start-line="92" selection-start-column="57" selection-end-line="92" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.3597561" vertical-offset="1072" max-vertical-offset="3570">
+          <caret line="99" column="136" selection-start-line="99" selection-start-column="35" selection-end-line="99" selection-end-column="141" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

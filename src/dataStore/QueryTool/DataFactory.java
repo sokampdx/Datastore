@@ -238,44 +238,4 @@ public class DataFactory implements Keywords {
     return advancedFilter.filter();
   }
 
-
-/*
-
-  public List<List<Record>> filter() {
-    List<Criteria> criteriaList = this.commandList.get(FILTER).getArguments();
-    List<List<Record>> result = new ArrayList<List<Record>>();
-
-    int criteriaIndex = 0;
-    Criteria criteria = criteriaList.get(criteriaIndex);
-
-    // TODO: use the tree structure recursively combine filter results
-    while (criteria.isBinOp()) {
-      ++criteriaIndex;
-      criteria = criteriaList.get(criteriaIndex);
-    }
-
-    List<Criteria> temp = new ArrayList<Criteria>();
-    temp.add(criteria);
-
-    AdvancedFilter advancedFilter = new AdvancedFilter(this.records, this.columns, temp);
-    result = advancedFilter.filterOne();
-
-
-*/
-/*
-    int index = this.columns.indexOf(criteria.getColumn());
-    String match = criteria.getMatch();
-
-    for (List<Record> record : this.records) {
-      if (record.get(index).getData().equals(match)) {
-        result.add(new ArrayList<Record>(record));
-      }
-    }*//*
-
-
-    return result;
-  }
-
-*/
-
 }
